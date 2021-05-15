@@ -52,6 +52,80 @@ class TaskCardWidget extends StatelessWidget {
   }
 }
 
+class BedroomCardWidget extends StatelessWidget {
+  final String bedroomNumber;
+  final String sortie;
+  final bool isPresent;
+  BedroomCardWidget({this.bedroomNumber, this.sortie, this.isPresent});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 80,
+      padding: EdgeInsets.symmetric(
+        vertical: 12.0,
+        horizontal: 24.0,
+      ),
+      margin: EdgeInsets.only(
+        bottom: 12.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.red[300],
+            width: 1,
+          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                bedroomNumber ?? 'Pas de numéro',
+                style: TextStyle(
+                  color: Colors.red[900],
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Container(
+                width: 25.0,
+                height: 25.0,
+                margin: EdgeInsets.only(
+                  left: 230.0,
+                ),
+                decoration: BoxDecoration(
+                  color: isPresent
+                      ? Colors.lightGreenAccent[400]
+                      : Colors.redAccent[400],
+                  borderRadius: BorderRadius.circular(45.0),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 5.0,
+            ),
+            child: Text(
+              sortie ?? 'Pas de sortie prévue',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class TodoWidget extends StatelessWidget {
   final String text;
   final bool isDone;

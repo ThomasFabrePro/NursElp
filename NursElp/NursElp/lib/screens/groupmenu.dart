@@ -1,4 +1,5 @@
 import 'package:NursElp/screens/bedroom.dart';
+import 'package:NursElp/screens/bedroommanagement.dart';
 import 'package:NursElp/screens/taskspage.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class _GroupmenuState extends State<Groupmenu> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Diclaimer !\n"
-                    "Aucune donnée médicale n'est destinée à être renseignée ici",
+                    "Aucune réelle information liée au secret professionnel n'est destinée à être renseignée sur cette application",
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -70,7 +71,8 @@ class _GroupmenuState extends State<Groupmenu> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
+                      MaterialPageRoute(
+                          builder: (context) => BedroomManagementPage()),
                     );
                   },
                   child: Padding(
