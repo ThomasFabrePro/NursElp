@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_to_do_list/database_helper.dart';
-import 'package:flutter_to_do_list/models/task.dart';
-import 'package:flutter_to_do_list/models/todo.dart';
+import 'package:NursElp/database_helper.dart';
+import 'package:NursElp/models/task.dart';
+import 'package:NursElp/models/todo.dart';
 
 import '../widgets.dart';
 
@@ -140,10 +140,12 @@ class _TaskpageState extends State<Taskpage> {
                           // keyboardType: TextInputType.multiline,
                           // maxLines: null,
                           focusNode: _descriptionFocus,
-                          onSubmitted: (value) {
+                          onSubmitted: (value) async {
                             if (value != "") {
                               if (_taskId != 0) {
-                                _dbHelper.updateTaskDescription(_taskId, value);
+                                await _dbHelper.updateTaskDescription(
+                                    _taskId, value);
+                                _taskDescription = value;
                               }
                             }
                             _todoFocus.requestFocus();
@@ -172,12 +174,21 @@ class _TaskpageState extends State<Taskpage> {
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () {
-                                    //Switch the todo completion state
+                                  onTap: () async {
+                                    if (snapshot.data[index].isDone == 0) {
+                                      await _dbHelper.updateTodoDone(
+                                          snapshot.data[index].id, 1);
+                                    } else {
+                                      await _dbHelper.updateTodoDone(
+                                          snapshot.data[index].id, 0);
+                                    }
+                                    setState(() {});
                                   },
                                   child: TodoWidget(
                                     text: snapshot.data[index].title,
-                                    isDone: true,
+                                    isDone: snapshot.data[index].isDone == 0
+                                        ? false
+                                        : true,
                                   ),
                                 );
                               },
@@ -216,20 +227,23 @@ class _TaskpageState extends State<Taskpage> {
                           Expanded(
                             child: TextField(
                               focusNode: _todoFocus,
+                              controller: TextEditingController()
+                                ..text =
+                                    '', //Remet le champ blanc apres avoir validé
                               onSubmitted: (value) async {
                                 //Check for empty field
                                 if (value != "") {
                                   //Check if the task is null
-                                  if (widget.task != null) {
+                                  if (_taskId != 0) {
                                     Todo _newTodo = Todo(
                                       title: value,
                                       isDone: 0,
-                                      taskId: widget.task.id,
+                                      taskId: _taskId,
                                     );
 
                                     await _dbHelper.insertTodo(_newTodo);
                                     setState(() {});
-                                    print("Todo Created");
+                                    _todoFocus.requestFocus();
                                     print(_newTodo.title);
                                   }
                                 }
@@ -252,12 +266,11 @@ class _TaskpageState extends State<Taskpage> {
                   bottom: 24.0,
                   right: 24.0,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Taskpage(task: null)),
-                      );
+                    onTap: () async {
+                      if (_taskId != 0) {
+                        await _dbHelper.deleteTask(_taskId);
+                      }
+                      Navigator.pop(context);
                     },
                     child: Container(
                       width: 60.0,

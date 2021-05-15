@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_to_do_list/screens/taskpage.dart';
-import 'package:flutter_to_do_list/screens/bedroom.dart';
-import 'package:flutter_to_do_list/widgets.dart';
+import 'package:NursElp/screens/taskpage.dart';
+import 'package:NursElp/screens/bedroom.dart';
+import 'package:NursElp/widgets.dart';
 
 import '../database_helper.dart';
 
@@ -83,7 +83,6 @@ class _HomepageState extends State<Homepage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      //TODO virer bedroom page et remettre task page
                       MaterialPageRoute(
                           builder: (context) => Taskpage(
                                 task: null,
@@ -119,7 +118,6 @@ class _HomepageState extends State<Homepage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      //TODO virer bedroom page et remettre task page
                       MaterialPageRoute(builder: (context) => BedroomPage()),
                       // builder: (context) => Taskpage(
                       //       task: null,
