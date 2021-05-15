@@ -9,17 +9,21 @@ class TaskCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: 90,
       padding: EdgeInsets.symmetric(
-        vertical: 32.0,
+        vertical: 12.0,
         horizontal: 24.0,
       ),
       margin: EdgeInsets.only(
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.red[300],
+            width: 1,
+          )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

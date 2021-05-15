@@ -43,7 +43,7 @@ class _BedroomPageState extends State<BedroomPage> {
         },
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
-            icon: Icon(Icons.airline_seat_individual_suite),
+            icon: Icon(Icons.hotel_rounded),
             title: Text('Chambre'),
             activeColor: Colors.redAccent,
             inactiveColor: Colors.black,
@@ -569,20 +569,17 @@ class _BedroomPageState extends State<BedroomPage> {
                             ),
                             Container(
                               width: double.infinity,
-                              height: 400,
-                              child: Expanded(
-                                child: TextField(
-                                  maxLines: null,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.yellow[100],
-                                    // enabledBorder: OutlineInputBorder(
-                                    //   borderSide: BorderSide(
-                                    //     color: Colors.red,
-                                    //     width: 5,
-                                    //   ),
-                                    // ),
-                                  ),
+                              child: TextField(
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.yellow[100],
+                                  // enabledBorder: OutlineInputBorder(
+                                  //   borderSide: BorderSide(
+                                  //     color: Colors.red,
+                                  //     width: 5,
+                                  //   ),
+                                  // ),
                                 ),
                               ),
                             ),

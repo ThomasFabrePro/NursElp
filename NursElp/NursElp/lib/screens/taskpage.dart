@@ -90,7 +90,7 @@ class _TaskpageState extends State<Taskpage> {
                               if (value != "") {
                                 //Check if the task is null
                                 if (widget.task == null) {
-                                  //DatabaseHelper _dbHelper = DatabaseHelper();
+                                  DatabaseHelper _dbHelper = DatabaseHelper();
 
                                   Task _newTask = Task(
                                     title: value,
