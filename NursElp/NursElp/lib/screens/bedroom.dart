@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-//import 'package:flutter_to_do_list/database_helper.dart';
 
 class BedroomPage extends StatefulWidget {
   @override
@@ -8,8 +6,6 @@ class BedroomPage extends StatefulWidget {
 }
 
 class _BedroomPageState extends State<BedroomPage> {
-  int currentIndex = 0;
-
   String bedroomNumber = '210';
   final double labelFontSize = 18.0;
   String side = ''; //savoir si porte, fenetre, seul
@@ -20,62 +16,11 @@ class _BedroomPageState extends State<BedroomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          margin: EdgeInsets.only(left: 65.0),
-          child: Text(
-            'Chambre $bedroomNumber',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-        backgroundColor: Colors.red[300],
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: currentIndex,
-        onItemSelected: (index) {
-          setState(
-            () {
-              currentIndex = index;
-            },
-          );
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-            icon: Icon(Icons.hotel_rounded),
-            title: Text('Chambre'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.airplay),
-            title: Text('Surveillances'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.article),
-            title: Text('Tâches'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.airport_shuttle),
-            title: Text('Déplacements'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-          ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             color: Colors.grey[100],
             width: double.infinity,
-            // padding: EdgeInsets.symmetric(
-            //   horizontal: 1.0,
-            // ),
             child: Stack(
               children: [
                 Column(

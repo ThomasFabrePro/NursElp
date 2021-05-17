@@ -1,6 +1,5 @@
-import 'package:NursElp/screens/groupmenu.dart';
+import 'package:nurselp/screens/groupmenu.dart';
 import 'package:flutter/material.dart';
-import 'package:NursElp/screens/taskspage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {

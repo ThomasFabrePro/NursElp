@@ -1,6 +1,7 @@
-import 'package:NursElp/screens/bedroom.dart';
-import 'package:NursElp/screens/bedroommanagement.dart';
-import 'package:NursElp/screens/taskspage.dart';
+import 'package:nurselp/screens/bedroom.dart';
+import 'package:nurselp/screens/bedroommanagement.dart';
+import 'package:nurselp/screens/bedroomnav.dart';
+import 'package:nurselp/screens/taskspage.dart';
 import 'package:flutter/material.dart';
 
 class Groupmenu extends StatefulWidget {
@@ -20,7 +21,7 @@ class _GroupmenuState extends State<Groupmenu> {
                 fontSize: 25,
               )),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
+          backgroundColor: Colors.red[400],
           actions: <Widget>[
             IconButton(icon: Icon(Icons.settings, size: 35), onPressed: () {})
           ],
@@ -46,9 +47,10 @@ class _GroupmenuState extends State<Groupmenu> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "Diclaimer !\n"
-                    "Aucune réelle information liée au secret professionnel n'est destinée à être renseignée sur cette application",
+                    "Aucune réelle information liée au secret professionnel "
+                    "n'est destinée à être renseignée sur cette application !",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 19,
                     ),
                   ),
                 ),
@@ -148,7 +150,7 @@ class _GroupmenuState extends State<Groupmenu> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
+                      MaterialPageRoute(builder: (context) => BedroomNav()),
                     );
                   },
                   child: Padding(
