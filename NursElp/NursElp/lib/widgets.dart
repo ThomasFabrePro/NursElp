@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final String title;
@@ -173,6 +174,52 @@ class TodoWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MenuCardWidget extends StatelessWidget {
+  final double boxMenuHeight = 65;
+  final Widget navigator;
+  final String title;
+
+  MenuCardWidget({this.navigator, this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //Item
+      width: double.infinity,
+      height: boxMenuHeight,
+      margin: EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 5,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.red[300],
+      ),
+      //color: Colors.red[300],
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => navigator),
+          );
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 20,
+            horizontal: 30,
+          ),
+          child: Text(title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              )),
+        ),
       ),
     );
   }

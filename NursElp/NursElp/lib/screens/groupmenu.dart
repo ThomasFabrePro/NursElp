@@ -3,6 +3,7 @@ import 'package:nurselp/screens/bedroommanagement.dart';
 import 'package:nurselp/screens/bedroomnav.dart';
 import 'package:nurselp/screens/taskspage.dart';
 import 'package:flutter/material.dart';
+import 'package:nurselp/widgets.dart';
 
 class Groupmenu extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _GroupmenuState extends State<Groupmenu> {
                   top: 10,
                 ),
                 width: double.infinity,
-                height: 200,
+                height: 125,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.black,
@@ -55,269 +56,34 @@ class _GroupmenuState extends State<Groupmenu> {
                   ),
                 ),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  left: 12,
-                  right: 12,
-                  top: 18,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BedroomManagementPage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text(
-                      'Gestion des chambres ',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Gestion des chambres',
+                navigator: BedroomManagementPage(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Taskspage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text(
-                      'Liste des tâches',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Liste des tâches',
+                navigator: Taskspage(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BedroomNav()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text(
-                      'Surveillances importantes',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Surveillances importantes',
+                navigator: BedroomNav(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text(
-                      'Déplacements',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Déplacements',
+                navigator: BedroomPage(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text(
-                      'Bloc notes',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Bloc Notes',
+                navigator: BedroomPage(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text('Historique des tâches',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )),
-                  ),
-                ),
+              MenuCardWidget(
+                title: 'Historique des tâches',
+                navigator: BedroomPage(),
               ),
-              Container(
-                //Item
-                width: double.infinity,
-                height: boxMenuHeight,
-                margin: EdgeInsets.only(
-                  right: 12,
-                  left: 12,
-                  top: 10,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.red[300],
-                ),
-                //color: Colors.red[300],
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BedroomPage()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 30,
-                    ),
-                    child: Text('Annuaire interne',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        )),
-                  ),
-                ),
-              ),
+              MenuCardWidget(
+                title: 'Annuaire interne',
+                navigator: BedroomPage(),
+              )
             ],
           ),
         ));
