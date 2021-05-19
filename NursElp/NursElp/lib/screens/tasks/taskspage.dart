@@ -1,27 +1,30 @@
-import 'package:nurselp/database_helper.dart';
-import 'package:nurselp/screens/bedroomnav.dart';
-import 'package:nurselp/screens/taskpage.dart';
-import 'package:nurselp/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:nurselp/screens/tasks/taskpage.dart';
+import 'package:nurselp/widgets.dart';
 
-class BedroomManagementPage extends StatefulWidget {
+import '../../database_helper.dart';
+
+class Taskspage extends StatefulWidget {
   @override
-  _BedroomManagementPageState createState() => _BedroomManagementPageState();
+  _TaskspageState createState() => _TaskspageState();
 }
 
-class _BedroomManagementPageState extends State<BedroomManagementPage> {
+class _TaskspageState extends State<Taskspage> {
   DatabaseHelper _dbHelper = DatabaseHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Gestion des chambres',
-          style: TextStyle(
-            color: Colors.white,
+        title: Container(
+          margin: EdgeInsets.only(left: 65.0),
+          child: Text(
+            'Liste des tâches',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
-        centerTitle: true,
         backgroundColor: Colors.red[300],
       ),
       body: SafeArea(
@@ -45,26 +48,27 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                         return ScrollConfiguration(
                           behavior: NoGlowBehaviour(),
                           child: ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BedroomNav(),
-                                      )).then((value) {
-                                    setState(() {});
-                                  });
-                                },
-                                child: BedroomCardWidget(
-                                  bedroomNumber: '221',
-                                  sortie: 'sortie le : 25 Mai',
-                                  isPresent: true,
-                                ),
-                              );
-                            },
-                          ),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Taskpage(
+                                            task: snapshot.data[index],
+                                          ),
+                                        )).then((value) {
+                                      setState(() {});
+                                    });
+                                  },
+                                  child: TaskCardWidget(
+                                    title: snapshot.data[index].title,
+                                    description:
+                                        snapshot.data[index].description,
+                                  ),
+                                );
+                              }),
                         );
                       },
                     ),

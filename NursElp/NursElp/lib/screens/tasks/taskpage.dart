@@ -3,7 +3,7 @@ import 'package:nurselp/database_helper.dart';
 import 'package:nurselp/models/task.dart';
 import 'package:nurselp/models/todo.dart';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 
 class Taskpage extends StatefulWidget {
   final Task task;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BedroomPage extends StatefulWidget {
   @override
@@ -16,10 +17,15 @@ class _BedroomPageState extends State<BedroomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Chambre $bedroomNumber"),
+        centerTitle: true,
+        backgroundColor: Colors.red[300],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             width: double.infinity,
             child: Stack(
               children: [
@@ -52,9 +58,10 @@ class _BedroomPageState extends State<BedroomPage> {
                                   bedroomNumber = value;
                                   setState(() {});
                                 },
+                                keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: labelFontSize,
                                 ),
                                 decoration: InputDecoration(
                                   filled: true,
@@ -62,7 +69,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                   hintText: '$bedroomNumber',
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.grey[100],
+                                      color: Colors.grey[200],
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
@@ -355,6 +362,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       padding: EdgeInsets.only(
                         top: 15,
                         left: 24,
+                        right: 24,
                       ),
                       child: Row(
                         children: [
@@ -366,7 +374,7 @@ class _BedroomPageState extends State<BedroomPage> {
                           ),
                           Flexible(
                             child: Container(
-                              width: 200.0,
+                              width: double.infinity,
                               height: 40.0,
                               margin: EdgeInsets.only(
                                 left: 10.0,
@@ -382,7 +390,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                   hintText: '20 Mai',
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.grey[100],
+                                      color: Colors.grey[200],
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
@@ -401,6 +409,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       padding: EdgeInsets.only(
                         top: 15,
                         left: 24,
+                        right: 24,
                       ),
                       child: Row(
                         children: [
@@ -412,7 +421,7 @@ class _BedroomPageState extends State<BedroomPage> {
                           ),
                           Flexible(
                             child: Container(
-                              width: 200.0,
+                              width: double.infinity,
                               height: 40.0,
                               margin: EdgeInsets.only(
                                 left: 10.0,
@@ -428,7 +437,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                   hintText: '25 Mai',
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.grey[100],
+                                      color: Colors.grey[200],
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
@@ -447,6 +456,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       padding: EdgeInsets.only(
                         top: 15,
                         left: 24,
+                        right: 24,
                       ),
                       child: Row(
                         children: [
@@ -458,7 +468,7 @@ class _BedroomPageState extends State<BedroomPage> {
                           ),
                           Flexible(
                             child: Container(
-                              width: 270.0,
+                              width: double.infinity,
                               height: 40.0,
                               margin: EdgeInsets.only(
                                 left: 10.0,
@@ -474,7 +484,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                   hintText: 'Hadajdj',
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.grey[100],
+                                      color: Colors.grey[200],
                                     ),
                                     borderRadius: BorderRadius.circular(40),
                                   ),
@@ -504,32 +514,30 @@ class _BedroomPageState extends State<BedroomPage> {
                         left: 24,
                         right: 24,
                       ),
-                      child: Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Notes',
-                              style: TextStyle(fontSize: labelFontSize),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              child: TextField(
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.yellow[100],
-                                  // enabledBorder: OutlineInputBorder(
-                                  //   borderSide: BorderSide(
-                                  //     color: Colors.red,
-                                  //     width: 5,
-                                  //   ),
-                                  // ),
-                                ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Notes',
+                            style: TextStyle(fontSize: labelFontSize),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: TextField(
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.yellow[100],
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderSide: BorderSide(
+                                //     color: Colors.red,
+                                //     width: 5,
+                                //   ),
+                                // ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     )
                   ],

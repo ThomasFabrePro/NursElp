@@ -1,6 +1,7 @@
-import 'package:nurselp/screens/bedroom.dart';
+import 'package:nurselp/screens/bedroom/bedroom.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:nurselp/screens/moves/arriving.dart';
 
 class BedroomNav extends StatefulWidget {
   @override
@@ -26,11 +27,6 @@ class _BedroomNavState extends State<BedroomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Chambre - - -"),
-        centerTitle: true,
-        backgroundColor: Colors.redAccent,
-      ),
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
@@ -45,9 +41,7 @@ class _BedroomNavState extends State<BedroomNav> {
             Container(
               color: Colors.green,
             ),
-            Container(
-              color: Colors.blue,
-            ),
+            ArrivingPage(),
           ],
         ),
       ),
