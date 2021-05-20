@@ -1,10 +1,10 @@
-import 'package:nurselp/screens/bedroom/bedroom.dart';
-import 'package:nurselp/screens/bedroom/bedroommanagement.dart';
-import 'package:nurselp/screens/bedroom/bedroomnav.dart';
-import 'package:nurselp/screens/moves/movesmanagement.dart';
-import 'package:nurselp/screens/tasks/taskspage.dart';
+import 'package:NursElp/screens/bedroom/bedroom.dart';
+import 'package:NursElp/screens/bedroom/bedroommanagement.dart';
+import 'package:NursElp/screens/bedroom/bedroomnav.dart';
+import 'package:NursElp/screens/moves/movesmanagement.dart';
+import 'package:NursElp/screens/tasks/taskspage.dart';
 import 'package:flutter/material.dart';
-import 'package:nurselp/widgets.dart';
+import 'package:NursElp/widgets.dart';
 
 class Groupmenu extends StatefulWidget {
   @override

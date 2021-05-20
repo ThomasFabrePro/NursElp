@@ -1,4 +1,5 @@
-import 'package:nurselp/screens/groupmenu.dart';
+import 'package:NursElp/screens/groupmenu.dart';
+import 'package:NursElp/screens/guests/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,8 +17,11 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.nunitoSansTextTheme(
           Theme.of(context).textTheme,
         ),
+        primaryColor: Colors.redAccent,
+        dividerColor: Colors.redAccent,
+        focusColor: Colors.redAccent,
       ),
-      home: Groupmenu(),
+      home: AuthPage(),
     );
   }
 }

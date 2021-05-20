@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nurselp/screens/moves/absence.dart';
-import 'package:nurselp/screens/moves/arriving.dart';
-import 'package:nurselp/screens/moves/bloc.dart';
-import 'package:nurselp/screens/moves/leaving.dart';
-import 'package:nurselp/widgets.dart';
+import 'package:NursElp/screens/moves/absence.dart';
+import 'package:NursElp/screens/moves/arriving.dart';
+import 'package:NursElp/screens/moves/bloc.dart';
+import 'package:NursElp/screens/moves/leaving.dart';
+import 'package:NursElp/widgets.dart';
 
 class ChooseNewMovePage extends StatefulWidget {
   @override

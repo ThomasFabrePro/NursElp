@@ -1,7 +1,7 @@
-import 'package:nurselp/screens/bedroom/bedroom.dart';
+import 'package:NursElp/screens/bedroom/bedroom.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:nurselp/screens/moves/arriving.dart';
+import 'package:NursElp/screens/moves/arriving.dart';
 
 class BedroomNav extends StatefulWidget {
   @override

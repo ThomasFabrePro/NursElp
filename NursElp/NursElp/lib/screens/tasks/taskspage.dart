@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nurselp/screens/tasks/taskpage.dart';
-import 'package:nurselp/widgets.dart';
+import 'package:NursElp/screens/tasks/taskpage.dart';
+import 'package:NursElp/widgets.dart';
 
 import '../../database_helper.dart';
 
