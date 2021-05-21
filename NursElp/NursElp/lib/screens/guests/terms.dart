@@ -21,7 +21,7 @@ class _TermsPageState extends State<TermsPage> {
               Padding(
                 padding: EdgeInsets.all(30),
                 child: Text(
-                    'termes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElp'),
+                    'termes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElptermes et conditions de NursElp'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),

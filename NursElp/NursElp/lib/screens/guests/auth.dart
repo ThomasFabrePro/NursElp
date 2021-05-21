@@ -1,3 +1,4 @@
+import 'package:NursElp/screens/guests/accountcreation.dart';
 import 'package:NursElp/screens/guests/terms.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,12 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final RegExp emailRegex = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
+  bool isSecret = true;
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,6 +67,7 @@ class _AuthPageState extends State<AuthPage> {
                         height: 40.0,
                       ),
                       Form(
+                        key: formKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment
                               .stretch, //Permet à la colonne de prendre toute la place dispo
@@ -67,6 +75,12 @@ class _AuthPageState extends State<AuthPage> {
                             Text('Entrez votre email'),
                             SizedBox(height: 10),
                             TextFormField(
+                              onChanged: (value) =>
+                                  setState(() => email = value),
+                              validator: (value) =>
+                                  value.isEmpty || !emailRegex.hasMatch(value)
+                                      ? 'Entrez un email valide'
+                                      : null,
                               decoration: InputDecoration(
                                 hintText: 'Ex: votre.mail@domaine.com',
                                 border: OutlineInputBorder(
@@ -87,8 +101,23 @@ class _AuthPageState extends State<AuthPage> {
                             Text('Et votre mot de passe'),
                             SizedBox(height: 10),
                             TextFormField(
-                              obscureText: true,
+                              onChanged: (value) =>
+                                  setState(() => password = value),
+                              validator: (value) => value.length < 6
+                                  ? '6 caractères minimum'
+                                  : null,
+                              obscureText: isSecret,
                               decoration: InputDecoration(
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    setState(() => isSecret = !isSecret);
+                                  },
+                                  child: Icon(
+                                    !isSecret
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
                                 hintText: 'Votre mot de passe',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(0),
@@ -105,13 +134,40 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                             ),
                             SizedBox(height: 20),
-                            ElevatedButton(
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TermsPage(),
-                                ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          AccountCreationPage(),
+                                    ),
+                                  );
+                                },
+                                child: Text('Pas encore de compte ?',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      decoration: TextDecoration.underline,
+                                    )),
                               ),
+                            ),
+                            SizedBox(height: 20),
+                            ElevatedButton(
+                              onPressed: !emailRegex.hasMatch(email) ||
+                                      password.length < 6
+                                  ? null
+                                  : () {
+                                      if (formKey.currentState.validate()) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => TermsPage(),
+                                          ),
+                                        );
+                                      }
+                                    },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.redAccent,
                                 elevation: 2,
