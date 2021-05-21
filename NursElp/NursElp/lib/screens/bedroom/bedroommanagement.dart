@@ -12,19 +12,19 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
   DatabaseHelper _dbHelper = DatabaseHelper();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Gestion des chambres',
-          style: TextStyle(
-            color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Gestion des chambres',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
-      ),
-      body: SafeArea(
-        child: Container(
+        body: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             horizontal: 24.0,

@@ -16,14 +16,14 @@ class _BedroomPageState extends State<BedroomPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Chambre $bedroomNumber"),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Chambre $bedroomNumber"),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
+        ),
+        body: SingleChildScrollView(
           child: Container(
             color: Colors.grey[200],
             width: double.infinity,

@@ -13,41 +13,43 @@ class ChooseNewMovePage extends StatefulWidget {
 class _ChooseNewMovePageState extends State<ChooseNewMovePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Nouveau déplacement',
-          style: TextStyle(
-            color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Nouveau déplacement',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MenuCardWidget(
-              title: 'Entrée',
-              navigator: ArrivingPage(),
-            ),
-            MenuCardWidget(
-              title: 'Sortie',
-              navigator: LeavingPage(),
-            ),
-            MenuCardWidget(
-              title: 'Bloc',
-              navigator: BlocPage(),
-            ),
-            MenuCardWidget(
-              title: 'Absence',
-              navigator: AbsencePage(),
-            ),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MenuCardWidget(
+                title: 'Entrée',
+                navigator: ArrivingPage(),
+              ),
+              MenuCardWidget(
+                title: 'Sortie',
+                navigator: LeavingPage(),
+              ),
+              MenuCardWidget(
+                title: 'Bloc',
+                navigator: BlocPage(),
+              ),
+              MenuCardWidget(
+                title: 'Absence',
+                navigator: AbsencePage(),
+              ),
+            ],
+          ),
         ),
       ),
     );

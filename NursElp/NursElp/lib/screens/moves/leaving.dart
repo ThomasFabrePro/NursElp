@@ -8,16 +8,18 @@ class LeavingPage extends StatefulWidget {
 class _LeavingPageState extends State<LeavingPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Sortie',
-          style: TextStyle(
-            color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Sortie',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
       ),
     );
   }

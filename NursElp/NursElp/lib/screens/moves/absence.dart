@@ -8,16 +8,18 @@ class AbsencePage extends StatefulWidget {
 class _AbsencePageState extends State<AbsencePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Absence',
-          style: TextStyle(
-            color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Absence',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
       ),
     );
   }

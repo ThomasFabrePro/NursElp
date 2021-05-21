@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText2: TextStyle(fontSize: 16),
         ),
+        backgroundColor: Colors.grey[100],
         primaryColor: Colors.redAccent,
         dividerColor: Colors.redAccent,
         focusColor: Colors.red[900],

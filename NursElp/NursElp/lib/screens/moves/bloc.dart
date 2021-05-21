@@ -8,16 +8,18 @@ class BlocPage extends StatefulWidget {
 class _BlocPageState extends State<BlocPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Bloc',
-          style: TextStyle(
-            color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Bloc',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: Colors.red[300],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.red[300],
       ),
     );
   }

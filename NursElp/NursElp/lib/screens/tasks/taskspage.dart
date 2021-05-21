@@ -14,21 +14,21 @@ class _TaskspageState extends State<Taskspage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          margin: EdgeInsets.only(left: 65.0),
-          child: Text(
-            'Liste des tâches',
-            style: TextStyle(
-              color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Container(
+            margin: EdgeInsets.only(left: 65.0),
+            child: Text(
+              'Liste des tâches',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
+          backgroundColor: Colors.red[300],
         ),
-        backgroundColor: Colors.red[300],
-      ),
-      body: SafeArea(
-        child: Container(
+        body: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
             horizontal: 24.0,

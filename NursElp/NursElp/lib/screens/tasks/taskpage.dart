@@ -53,9 +53,9 @@ class _TaskpageState extends State<Taskpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
           child: Stack(
             children: [
               Column(
