@@ -97,7 +97,9 @@ class _BedroomPageState extends State<BedroomPage> {
                                 isPresent = false;
                               } else
                                 isPresent = true;
+
                               setState(() {});
+                              print(isPresent);
                             },
                             child: Container(
                               width: 25.0,
