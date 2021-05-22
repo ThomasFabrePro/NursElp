@@ -1,7 +1,11 @@
 import 'package:NursElp/screens/guests/auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //Pour etre sur que tout est initialisé
+  Firebase.initializeApp(); //Pour connecter l'appli aux services google
   runApp(MyApp());
 }
 
