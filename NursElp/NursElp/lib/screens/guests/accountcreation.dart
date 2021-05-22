@@ -15,6 +15,29 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   String passwordCheck = ' ';
   bool isSecret = false;
   bool confirm = false;
+  FocusNode emailFocus;
+  FocusNode emailCheckFocus;
+  FocusNode passwordFocus;
+  FocusNode passwordCheckFocus;
+
+  @override
+  void initState() {
+    emailFocus = FocusNode();
+    emailCheckFocus = FocusNode();
+    passwordFocus = FocusNode();
+    passwordCheckFocus = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailFocus.dispose();
+    emailCheckFocus.dispose();
+    passwordFocus.dispose();
+    passwordCheckFocus.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,11 +58,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      onChanged: (value) => setState(() => email = value),
+                      focusNode: emailFocus,
+                      onChanged: (value) {
+                        setState(() => email = value);
+                      },
                       validator: (value) =>
                           value.isEmpty || !emailRegex.hasMatch(value)
                               ? 'Entrez un email valide'
                               : null,
+                      onFieldSubmitted: (value) =>
+                          emailCheckFocus.requestFocus(),
                       decoration: InputDecoration(
                         hintText: 'Ex: votre.mail@domaine.com',
                         border: OutlineInputBorder(
@@ -61,10 +89,12 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
+                      focusNode: emailCheckFocus,
                       onChanged: (value) => setState(() => emailCheck = value),
                       validator: (value) => value.isEmpty || email != emailCheck
                           ? 'Les adresses mail sont différentes'
                           : null,
+                      onFieldSubmitted: (value) => passwordFocus.requestFocus(),
                       decoration: InputDecoration(
                         hintText: 'Ex: votre.mail@domaine.com',
                         border: OutlineInputBorder(
@@ -86,9 +116,12 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
+                      focusNode: passwordFocus,
                       onChanged: (value) => setState(() => password = value),
                       validator: (value) =>
                           value.length < 6 ? '6 caractères minimum' : null,
+                      onFieldSubmitted: (value) =>
+                          passwordCheckFocus.requestFocus(),
                       obscureText: isSecret,
                       decoration: InputDecoration(
                         suffixIcon: InkWell(
@@ -119,6 +152,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
+                      focusNode: passwordCheckFocus,
                       onChanged: (value) =>
                           setState(() => passwordCheck = value),
                       validator: (value) => password == passwordCheck

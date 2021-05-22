@@ -14,6 +14,19 @@ class _AuthPageState extends State<AuthPage> {
   bool isSecret = true;
   String email = '';
   String password = '';
+  FocusNode passwordFocus;
+
+  @override
+  void initState() {
+    passwordFocus = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    passwordFocus.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +94,8 @@ class _AuthPageState extends State<AuthPage> {
                                   value.isEmpty || !emailRegex.hasMatch(value)
                                       ? 'Entrez un email valide'
                                       : null,
+                              onFieldSubmitted: (value) =>
+                                  passwordFocus.requestFocus(),
                               decoration: InputDecoration(
                                 hintText: 'Ex: votre.mail@domaine.com',
                                 border: OutlineInputBorder(
@@ -101,6 +116,7 @@ class _AuthPageState extends State<AuthPage> {
                             Text('Et votre mot de passe'),
                             SizedBox(height: 10),
                             TextFormField(
+                              focusNode: passwordFocus,
                               onChanged: (value) =>
                                   setState(() => password = value),
                               validator: (value) => value.length < 6
