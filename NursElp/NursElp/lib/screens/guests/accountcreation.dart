@@ -13,16 +13,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   String emailCheck = ' ';
   String password = '';
   String passwordCheck = ' ';
+  String pseudo = '';
   bool isSecret = false;
-  bool confirm = false;
-  FocusNode emailFocus;
   FocusNode emailCheckFocus;
   FocusNode passwordFocus;
   FocusNode passwordCheckFocus;
+  FocusNode pseudoFocus;
 
   @override
   void initState() {
-    emailFocus = FocusNode();
+    pseudoFocus = FocusNode();
     emailCheckFocus = FocusNode();
     passwordFocus = FocusNode();
     passwordCheckFocus = FocusNode();
@@ -31,7 +31,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
 
   @override
   void dispose() {
-    emailFocus.dispose();
+    pseudoFocus.dispose();
     emailCheckFocus.dispose();
     passwordFocus.dispose();
     passwordCheckFocus.dispose();
@@ -58,7 +58,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      focusNode: emailFocus,
                       onChanged: (value) {
                         setState(() => email = value);
                       },
@@ -96,7 +95,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                           : null,
                       onFieldSubmitted: (value) => passwordFocus.requestFocus(),
                       decoration: InputDecoration(
-                        hintText: 'Ex: votre.mail@domaine.com',
+                        hintText: 'Confirmation',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(0),
                           borderSide: BorderSide(
@@ -158,6 +157,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                       validator: (value) => password == passwordCheck
                           ? null
                           : 'Les mots de passe sont différents',
+                      onFieldSubmitted: (value) => pseudoFocus.requestFocus(),
                       obscureText: isSecret,
                       decoration: InputDecoration(
                         suffixIcon: InkWell(
@@ -184,22 +184,46 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                       ),
                     ),
                   ),
+                  Text('Votre pseudo'),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: TextFormField(
+                      focusNode: pseudoFocus,
+                      onChanged: (value) => setState(() => pseudo = value),
+                      decoration: InputDecoration(
+                        hintText: 'SupaNurse13',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+                          borderSide: BorderSide(
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: ElevatedButton(
-                      onPressed:
-                          !(email == emailCheck) || !(password == passwordCheck)
-                              ? null
-                              : () {
-                                  if (formKey.currentState.validate()) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => AuthPage(),
-                                      ),
-                                    );
-                                  }
-                                },
+                      onPressed: !(email == emailCheck) ||
+                              !(password == passwordCheck) ||
+                              pseudo == ''
+                          ? null
+                          : () {
+                              if (formKey.currentState.validate()) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AuthPage(),
+                                  ),
+                                );
+                              }
+                            },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.redAccent,
                         elevation: 2,
