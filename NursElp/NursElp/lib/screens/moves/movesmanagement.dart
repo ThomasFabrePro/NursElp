@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:NursElp/screens/moves/choosenewmove.dart';
+import 'package:NursElp/screens/moves/NewMove.dart';
 
 class MovesManagementPage extends StatefulWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/guests/auth.dart';
+import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:flutter/material.dart';
 
 class AccountCreationPage extends StatefulWidget {

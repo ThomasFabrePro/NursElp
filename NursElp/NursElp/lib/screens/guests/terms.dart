@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/groupmenu.dart';
+import 'package:NursElp/screens/GroupMenu.dart';
 import 'package:flutter/material.dart';
 
 class TermsPage extends StatefulWidget {

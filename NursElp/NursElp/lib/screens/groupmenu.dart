@@ -1,8 +1,8 @@
-import 'package:NursElp/screens/bedroom/bedroom.dart';
-import 'package:NursElp/screens/bedroom/bedroommanagement.dart';
-import 'package:NursElp/screens/bedroom/bedroomnav.dart';
-import 'package:NursElp/screens/moves/movesmanagement.dart';
-import 'package:NursElp/screens/tasks/taskspage.dart';
+import 'package:NursElp/screens/bedroom/Bedroom.dart';
+import 'package:NursElp/screens/bedroom/BedroomsManagement.dart';
+import 'package:NursElp/screens/bedroom/BedroomNav.dart';
+import 'package:NursElp/screens/moves/MovesManagement.dart';
+import 'package:NursElp/screens/tasks/TasksManagement.dart';
 import 'package:flutter/material.dart';
 import 'package:NursElp/widgets.dart';
 

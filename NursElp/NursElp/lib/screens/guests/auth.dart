@@ -1,5 +1,5 @@
-import 'package:NursElp/screens/guests/accountcreation.dart';
-import 'package:NursElp/screens/guests/terms.dart';
+import 'package:NursElp/screens/guests/AccountCreation.dart';
+import 'package:NursElp/screens/guests/Terms.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
