@@ -1,12 +1,37 @@
+import 'package:NursElp/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 class UserService {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  UserCredential userCredential;
 
-  Future<void> auth() async {
-    UserCredential userCredential = await _auth.signInAnonymously();
+  Stream<UserModel> get user {
+    //Vérifier User deja authentifié
+    return _auth
+        .authStateChanges()
+        .asyncMap((user) => UserModel(uid: user.uid, email: user.email));
+  }
 
-    print(userCredential.user);
+  Future<UserModel> auth(UserModel userModel) async {
+    print(userModel.toJson());
+    try {
+      userCredential = await _auth.signInWithEmailAndPassword(
+        email: userModel.email,
+        password: userModel.password,
+      );
+    } catch (e) {
+      userCredential = await _auth.createUserWithEmailAndPassword(
+        email: userModel.email,
+        password: userModel.password,
+      );
+    }
+    //userModel.setNickname = userCredential.user.displayName;
+    userModel.setUid = userCredential.user.uid;
+    return userModel;
+  }
+
+  Future<void> logout() async {
+    await _auth.signOut();
   }
 }

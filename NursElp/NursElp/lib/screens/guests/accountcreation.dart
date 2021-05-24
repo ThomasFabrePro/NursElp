@@ -1,4 +1,7 @@
-import 'package:NursElp/screens/guests/Auth.dart';
+import 'package:NursElp/models/UserModel.dart';
+import 'package:NursElp/screens/GroupMenu.dart';
+//import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/services/UserService.dart';
 import 'package:flutter/material.dart';
 
 class AccountCreationPage extends StatefulWidget {
@@ -7,31 +10,33 @@ class AccountCreationPage extends StatefulWidget {
 }
 
 class _AccountCreationPageState extends State<AccountCreationPage> {
+  UserService userService = UserService();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegExp emailRegex = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
   String email = '';
   String emailCheck = ' ';
   String password = '';
   String passwordCheck = ' ';
-  String pseudo = '';
+  String nickname = '';
   bool isSecret = false;
   FocusNode emailCheckFocus;
   FocusNode passwordFocus;
   FocusNode passwordCheckFocus;
-  FocusNode pseudoFocus;
+  FocusNode nicknameFocus;
 
   @override
   void initState() {
-    pseudoFocus = FocusNode();
+    nicknameFocus = FocusNode();
     emailCheckFocus = FocusNode();
     passwordFocus = FocusNode();
     passwordCheckFocus = FocusNode();
+    //userService.auth();
     super.initState();
   }
 
   @override
   void dispose() {
-    pseudoFocus.dispose();
+    nicknameFocus.dispose();
     emailCheckFocus.dispose();
     passwordFocus.dispose();
     passwordCheckFocus.dispose();
@@ -157,7 +162,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                       validator: (value) => password == passwordCheck
                           ? null
                           : 'Les mots de passe sont différents',
-                      onFieldSubmitted: (value) => pseudoFocus.requestFocus(),
+                      onFieldSubmitted: (value) => nicknameFocus.requestFocus(),
                       obscureText: isSecret,
                       decoration: InputDecoration(
                         suffixIcon: InkWell(
@@ -188,8 +193,8 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextFormField(
-                      focusNode: pseudoFocus,
-                      onChanged: (value) => setState(() => pseudo = value),
+                      focusNode: nicknameFocus,
+                      onChanged: (value) => setState(() => nickname = value),
                       decoration: InputDecoration(
                         hintText: 'SupaNurse13',
                         border: OutlineInputBorder(
@@ -212,23 +217,30 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                     child: ElevatedButton(
                       onPressed: !(email == emailCheck) ||
                               !(password == passwordCheck) ||
-                              pseudo == ''
+                              nickname == ''
                           ? null
                           : () {
                               if (formKey.currentState.validate()) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AuthPage(),
-                                  ),
-                                );
+                                userService
+                                    .auth(UserModel(
+                                      email: email,
+                                      password: password,
+                                      nickname: nickname,
+                                    ))
+                                    .then((value) => {
+                                          if (value.uid != null)
+                                            {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      GroupMenu(),
+                                                ),
+                                              ),
+                                            }
+                                        });
                               }
                             },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent,
-                        elevation: 2,
-                        shadowColor: Colors.redAccent,
-                      ),
                       child: Text(
                         'continuer'.toUpperCase(),
                         style: TextStyle(
