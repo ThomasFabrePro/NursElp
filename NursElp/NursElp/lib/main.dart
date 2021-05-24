@@ -2,10 +2,10 @@ import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); //Pour etre sur que tout est initialisé
-  Firebase.initializeApp(); //Pour connecter l'appli aux services google
+  await Firebase.initializeApp(); //Pour connecter l'appli aux services google
   runApp(MyApp());
 }
 
