@@ -1,6 +1,7 @@
-import 'package:NursElp/screens/guests/accountcreation.dart';
-import 'package:NursElp/screens/guests/terms.dart';
 import 'package:flutter/material.dart';
+import 'package:NursElp/screens/guests/AccountCreation.dart';
+import 'package:NursElp/screens/guests/Terms.dart';
+//import 'package:NursElp/screens/services/UserService.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);
@@ -9,6 +10,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  //UserService _userService = UserService();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegExp emailRegex = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
   bool isSecret = true;
@@ -19,6 +22,8 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     passwordFocus = FocusNode();
+    //_userService.auth();
+
     super.initState();
   }
 
@@ -184,11 +189,6 @@ class _AuthPageState extends State<AuthPage> {
                                         );
                                       }
                                     },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.redAccent,
-                                elevation: 2,
-                                shadowColor: Colors.redAccent,
-                              ),
                               child: Text(
                                 'continuer'.toUpperCase(),
                                 style: TextStyle(

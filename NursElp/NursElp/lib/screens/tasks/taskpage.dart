@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:NursElp/database_helper.dart';
-import 'package:NursElp/models/task.dart';
-import 'package:NursElp/models/todo.dart';
+import 'package:NursElp/models/TaskModel.dart';
+import 'package:NursElp/models/TodoModel.dart';
 
 import '../../widgets.dart';
 

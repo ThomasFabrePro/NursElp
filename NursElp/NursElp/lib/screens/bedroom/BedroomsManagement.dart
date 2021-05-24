@@ -1,5 +1,5 @@
 import 'package:NursElp/database_helper.dart';
-import 'package:NursElp/screens/bedroom/bedroomnav.dart';
+import 'package:NursElp/screens/bedroom/BedroomNav.dart';
 import 'package:NursElp/widgets.dart';
 import 'package:flutter/material.dart';
 

@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/groupmenu.dart';
+import 'package:NursElp/screens/GroupMenu.dart';
 import 'package:flutter/material.dart';
 
 class TermsPage extends StatefulWidget {
@@ -58,11 +58,6 @@ class _TermsPageState extends State<TermsPage> {
                             builder: (context) => GroupMenu(),
                           ),
                         ),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.redAccent,
-                  elevation: 2,
-                  shadowColor: Colors.redAccent,
-                ),
                 child: Text(
                   'lu et approuvé'.toUpperCase(),
                 ),

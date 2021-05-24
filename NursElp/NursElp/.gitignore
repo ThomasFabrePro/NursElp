@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+#IMPORTANT Pour éviter de donner les accès et info à la bdd via le répo publique
+android/app/google-services.json
