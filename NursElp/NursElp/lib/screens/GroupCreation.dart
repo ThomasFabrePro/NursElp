@@ -14,7 +14,7 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text('Groupe',
+          title: Text('GROUPE',
               style: TextStyle(
                 fontSize: 20,
               )),
@@ -111,8 +111,6 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                   height: 40,
                 ),
                 Container(
-                  // width: double.infinity,
-                  // height: 200,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

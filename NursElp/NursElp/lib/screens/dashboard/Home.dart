@@ -1,4 +1,6 @@
 import 'package:NursElp/screens/GroupCreation.dart';
+import 'package:NursElp/screens/GroupMenu.dart';
+import 'package:NursElp/screens/guests/AccountSettings.dart';
 import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:NursElp/screens/services/UserService.dart';
 import 'package:NursElp/widgets.dart';
@@ -17,10 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("HOME"),
+          title: Text("SERVICES"),
           centerTitle: true,
+          leading: Container(),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.settings, size: 35), onPressed: () {})
+            IconButton(
+                icon: Icon(Icons.settings, size: 35),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AccountSettingsPage()),
+                  );
+                })
           ],
         ),
         body: Column(
@@ -61,18 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
-                  //TODO bouton déco à récup
-                  // ElevatedButton(
-                  //   onPressed: () async {
-                  //     await userService.logout();
-                  //     Navigator.pushAndRemoveUntil(
-                  //         context,
-                  //         MaterialPageRoute(builder: (context) => AuthPage()),
-                  //         (route) => false);
-                  //   },
-                  //   child: Text('SE DECONNECTER'),
-                  // ),
                 ],
               ),
             ),
@@ -105,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     MenuCardWidget(
                       title: 'Bloc',
-                      navigator: AuthPage(),
+                      navigator: GroupMenu(),
                     ),
                     MenuCardWidget(
                       title: 'Nat',

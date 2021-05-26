@@ -22,7 +22,6 @@ class _BedroomPageState extends State<BedroomPage> {
         appBar: AppBar(
           title: Text("Chambre $bedroomNumber"),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
         ),
         body: SingleChildScrollView(
           child: Container(

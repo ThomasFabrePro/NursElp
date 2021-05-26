@@ -23,7 +23,6 @@ class _ChooseNewMovePageState extends State<ChooseNewMovePage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(

@@ -74,7 +74,7 @@ class BedroomCardWidget extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.0),
           border: Border.all(
-            color: Colors.red[300],
+            color: Colors.redAccent,
             width: 1,
           )),
       child: Column(
@@ -332,7 +332,6 @@ class MenuCardWidget extends StatelessWidget {
           end: Alignment(0.0, 1.0),
         ),
       ),
-      //color: Colors.red[300],
       child: InkWell(
         onTap: () {
           Navigator.push(

@@ -23,7 +23,7 @@ class _GroupMenuState extends State<GroupMenu> {
                 style: TextStyle(
                   fontSize: 25,
                 )),
-            leading: Container(), //désactiver fleche de retour
+            //leading: Container(), //désactiver fleche de retour
             centerTitle: true,
             backgroundColor: Colors.red[400],
             actions: <Widget>[

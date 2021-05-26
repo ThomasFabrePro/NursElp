@@ -1,5 +1,6 @@
 import 'package:NursElp/database_helper.dart';
 import 'package:NursElp/screens/bedroom/BedroomNav.dart';
+import 'package:NursElp/screens/bedroom/bedroom.dart';
 import 'package:NursElp/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,6 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
         ),
         body: Container(
           width: double.infinity,
@@ -51,8 +51,7 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            BedroomManagementPage(),
+                                        builder: (context) => BedroomPage(),
                                       )).then((value) {
                                     setState(() {});
                                   });
@@ -87,7 +86,7 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                     height: 60.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.red[900], Colors.red[300]],
+                        colors: [Colors.redAccent, Colors.red[300]],
                         begin: Alignment(0.0, -1.0),
                         end: Alignment(0.0, 1.0),
                       ),
