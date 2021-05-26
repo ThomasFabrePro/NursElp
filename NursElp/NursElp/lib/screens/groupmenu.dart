@@ -52,7 +52,7 @@ class _GroupMenuState extends State<GroupMenu> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Diclaimer !\n"
+                        "Disclaimer !\n"
                         "Aucune réelle information liée au secret professionnel "
                         "n'est destinée à être renseignée sur cette application !",
                         style: TextStyle(

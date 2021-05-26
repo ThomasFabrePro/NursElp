@@ -1,3 +1,4 @@
+import 'package:NursElp/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,54 +41,23 @@ class _BedroomPageState extends State<BedroomPage> {
                       ),
                       child: Row(
                         children: [
-                          Text(
-                            'Chambre',
-                            style: TextStyle(
-                              fontSize: labelFontSize,
+                          Expanded(
+                            child: LabelAndTextField(
+                              labelText: 'Chambre',
+                              textFieldHint: '200',
+                              keyboardInputType: TextInputType.number,
                             ),
                           ),
-                          Flexible(
-                            child: Container(
-                              width: 90.0,
-                              height: 40.0,
-                              margin: EdgeInsets.only(
-                                left: 10.0,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 70.0,
                               ),
-                              child: TextField(
-                                onSubmitted: (value) {
-                                  bedroomNumber = value;
-                                  setState(() {});
-                                },
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
+                              child: Text(
+                                'Présent ?',
                                 style: TextStyle(
                                   fontSize: labelFontSize,
                                 ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: '$bedroomNumber',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
-                                    ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 48.0,
-                            ),
-                            child: Text(
-                              'Présent ?',
-                              style: TextStyle(
-                                fontSize: labelFontSize,
                               ),
                             ),
                           ),
@@ -105,7 +75,8 @@ class _BedroomPageState extends State<BedroomPage> {
                               width: 25.0,
                               height: 25.0,
                               margin: EdgeInsets.only(
-                                left: 10.0,
+                                //left: 10.0,
+                                right: 20,
                               ),
                               decoration: BoxDecoration(
                                 color: isPresent
@@ -128,115 +99,11 @@ class _BedroomPageState extends State<BedroomPage> {
                         top: 15,
                         left: 24,
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Sexe :',
-                            style: TextStyle(
-                              fontSize: labelFontSize,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (!isMale) {
-                                isMale = true;
-                                setState(() {});
-                              }
-                            },
-                            child: Container(
-                              //CheckBox
-                              width: 20.0,
-                              height: 20.0,
-                              margin: EdgeInsets.only(
-                                left: 40.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isMale
-                                    ? Colors.red[900]
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(6.0),
-                                border: isMale
-                                    ? null
-                                    : Border.all(
-                                        color: Colors.grey,
-                                        width: 1.5,
-                                      ),
-                              ),
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/check_icon.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                              ),
-                              child: Text(
-                                'Homme',
-                                style: TextStyle(
-                                  color: isMale ? Colors.red[900] : Colors.grey,
-                                  fontSize: 16.0,
-                                  fontWeight: isMale
-                                      ? FontWeight.bold
-                                      : FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (isMale) {
-                                isMale = false;
-                                setState(() {});
-                              }
-                            },
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              margin: EdgeInsets.only(
-                                left: 40.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: !isMale
-                                    ? Colors.red[900]
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(6.0),
-                                border: !isMale
-                                    ? null
-                                    : Border.all(
-                                        color: Colors.grey,
-                                        width: 1.5,
-                                      ),
-                              ),
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/check_icon.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                              ),
-                              child: Text(
-                                'Femme',
-                                style: TextStyle(
-                                  color:
-                                      !isMale ? Colors.red[900] : Colors.grey,
-                                  fontSize: 16.0,
-                                  fontWeight: !isMale
-                                      ? FontWeight.bold
-                                      : FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: DoubleCheckBox(
+                        label: 'Sexe',
+                        labelOption1: 'femme',
+                        labelOption2: 'homme',
+                        valueToSwitch: isMale,
                       ),
                     ),
                     Padding(
@@ -245,167 +112,25 @@ class _BedroomPageState extends State<BedroomPage> {
                         top: 15,
                         left: 24,
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Contagieux :',
-                            style: TextStyle(
-                              fontSize: labelFontSize,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (!isContagious) {
-                                isContagious = true;
-                                setState(() {});
-                              }
-                            },
-                            child: Container(
-                              //CheckBox
-                              width: 20.0,
-                              height: 20.0,
-                              margin: EdgeInsets.only(
-                                left: 40.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isContagious
-                                    ? Colors.red[900]
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(6.0),
-                                border: isContagious
-                                    ? null
-                                    : Border.all(
-                                        color: Colors.grey,
-                                        width: 1.5,
-                                      ),
-                              ),
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/check_icon.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                              ),
-                              child: Text(
-                                'Oui',
-                                style: TextStyle(
-                                  color: isContagious
-                                      ? Colors.red[900]
-                                      : Colors.grey,
-                                  fontSize: 16.0,
-                                  fontWeight: isContagious
-                                      ? FontWeight.bold
-                                      : FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (isContagious) {
-                                isContagious = false;
-                                setState(() {});
-                              }
-                            },
-                            child: Container(
-                              width: 20.0,
-                              height: 20.0,
-                              margin: EdgeInsets.only(
-                                left: 40.0,
-                              ),
-                              decoration: BoxDecoration(
-                                color: !isContagious
-                                    ? Colors.red[900]
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(6.0),
-                                border: !isContagious
-                                    ? null
-                                    : Border.all(
-                                        color: Colors.grey,
-                                        width: 1.5,
-                                      ),
-                              ),
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/check_icon.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                              ),
-                              child: Text(
-                                'Non',
-                                style: TextStyle(
-                                  color: !isContagious
-                                      ? Colors.red[900]
-                                      : Colors.grey,
-                                  fontSize: 16.0,
-                                  fontWeight: !isContagious
-                                      ? FontWeight.bold
-                                      : FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: DoubleCheckBox(
+                        label: 'Contagieux',
+                        labelOption1: 'oui',
+                        labelOption2: 'non',
+                        valueToSwitch: isContagious,
                       ),
                     ),
                     Padding(
-                      //Entree
-                      padding: EdgeInsets.only(
-                        top: 15,
-                        left: 24,
-                        right: 24,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Date d'entrée :",
-                            style: TextStyle(
-                              fontSize: labelFontSize,
-                            ),
-                          ),
-                          Flexible(
-                            child: Container(
-                              width: double.infinity,
-                              height: 40.0,
-                              margin: EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: '20 Mai',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
-                                    ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        //Entree
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          left: 24,
+                          right: 24,
+                        ),
+                        child: LabelAndTextField(
+                          labelText: "Date d'entrée",
+                          textFieldHint: '20/05',
+                          keyboardInputType: TextInputType.datetime,
+                        )),
                     Padding(
                       //Sortie
                       padding: EdgeInsets.only(
@@ -413,93 +138,23 @@ class _BedroomPageState extends State<BedroomPage> {
                         left: 24,
                         right: 24,
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Sortie prévue :',
-                            style: TextStyle(
-                              fontSize: labelFontSize,
-                            ),
-                          ),
-                          Flexible(
-                            child: Container(
-                              width: double.infinity,
-                              height: 40.0,
-                              margin: EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: '25 Mai',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
-                                    ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: LabelAndTextField(
+                        labelText: 'Sortie prévue',
+                        textFieldHint: '21/05',
+                        keyboardInputType: TextInputType.datetime,
                       ),
                     ),
                     Padding(
-                      //Médecin
-                      padding: EdgeInsets.only(
-                        top: 15,
-                        left: 24,
-                        right: 24,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Médecin :',
-                            style: TextStyle(
-                              fontSize: labelFontSize,
-                            ),
-                          ),
-                          Flexible(
-                            child: Container(
-                              width: double.infinity,
-                              height: 40.0,
-                              margin: EdgeInsets.only(
-                                left: 10.0,
-                              ),
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: 'Hadajdj',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
-                                    ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        //Médecin
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          left: 24,
+                          right: 24,
+                        ),
+                        child: LabelAndTextField(
+                          labelText: 'Médecin',
+                          textFieldHint: 'Nom du médecin',
+                        )),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const Divider(

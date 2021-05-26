@@ -178,6 +178,136 @@ class TodoWidget extends StatelessWidget {
   }
 }
 
+class DoubleCheckBox extends StatefulWidget {
+  DoubleCheckBox({
+    Key key,
+    this.label,
+    this.labelOption1,
+    this.labelOption2,
+    this.valueToSwitch,
+  });
+  final String label;
+  final String labelOption1;
+  final String labelOption2;
+  bool valueToSwitch;
+
+  @override
+  _DoubleCheckBoxState createState() => _DoubleCheckBoxState();
+}
+
+class _DoubleCheckBoxState extends State<DoubleCheckBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          widget.label ?? 'PAS DE LABEL',
+        ),
+        GestureDetector(
+          onTap: () {
+            if (!widget.valueToSwitch) {
+              widget.valueToSwitch = true;
+              setState(() {});
+            }
+          },
+          child: Container(
+            //CheckBox
+            width: 20.0,
+            height: 20.0,
+            margin: EdgeInsets.only(
+              left: 40.0,
+            ),
+            decoration: BoxDecoration(
+              color:
+                  widget.valueToSwitch ? Colors.red[600] : Colors.transparent,
+              borderRadius: BorderRadius.circular(6.0),
+              border: widget.valueToSwitch
+                  ? null
+                  : Border.all(
+                      color: Colors.grey,
+                      width: 1.5,
+                    ),
+            ),
+            child: widget.valueToSwitch
+                ? Image(
+                    image: AssetImage(
+                      'assets/images/check_icon.png',
+                    ),
+                  )
+                : null,
+          ),
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 8.0,
+            ),
+            child: Text(
+              widget.labelOption1,
+              style: TextStyle(
+                color: widget.valueToSwitch ? Colors.red[600] : Colors.grey,
+                fontSize: 16.0,
+                fontWeight:
+                    widget.valueToSwitch ? FontWeight.bold : FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            if (widget.valueToSwitch) {
+              widget.valueToSwitch = !widget.valueToSwitch;
+
+              setState(() {});
+            }
+          },
+          child: Container(
+            width: 20.0,
+            height: 20.0,
+            margin: EdgeInsets.only(
+              left: 40.0,
+            ),
+            decoration: BoxDecoration(
+              color:
+                  !widget.valueToSwitch ? Colors.red[600] : Colors.transparent,
+              borderRadius: BorderRadius.circular(6.0),
+              border: !widget.valueToSwitch
+                  ? null
+                  : Border.all(
+                      color: Colors.grey,
+                      width: 1.5,
+                    ),
+            ),
+            child: !widget.valueToSwitch
+                ? Image(
+                    image: AssetImage(
+                      'assets/images/check_icon.png',
+                    ),
+                  )
+                : null,
+          ),
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 8.0,
+            ),
+            child: Text(
+              widget.labelOption2,
+              style: TextStyle(
+                color: !widget.valueToSwitch ? Colors.red[600] : Colors.grey,
+                fontSize: 16.0,
+                fontWeight:
+                    !widget.valueToSwitch ? FontWeight.bold : FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class MenuCardWidget extends StatelessWidget {
   final double boxMenuHeight = 65;
   final Widget navigator;
@@ -192,7 +322,7 @@ class MenuCardWidget extends StatelessWidget {
       height: boxMenuHeight,
       margin: EdgeInsets.symmetric(
         horizontal: 12,
-        vertical: 5,
+        vertical: 10,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -220,6 +350,60 @@ class MenuCardWidget extends StatelessWidget {
               )),
         ),
       ),
+    );
+  }
+}
+
+class LabelAndTextField extends StatelessWidget {
+  final String labelText;
+  final String textFieldHint;
+  final TextInputType keyboardInputType;
+  final double textFieldWidth;
+
+  const LabelAndTextField({
+    Key key,
+    this.labelText,
+    this.textFieldHint,
+    this.keyboardInputType,
+    this.textFieldWidth,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(labelText),
+        Flexible(
+          child: Container(
+            width: textFieldWidth,
+            height: 40.0,
+            margin: EdgeInsets.only(
+              left: 10.0,
+            ),
+            child: TextField(
+              keyboardType: keyboardInputType,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.0,
+              ),
+              //TODO peut etre implémenter le changement de variable
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                hintText: textFieldHint,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey[200],
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                contentPadding: EdgeInsets.only(
+                  bottom: 0.0,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

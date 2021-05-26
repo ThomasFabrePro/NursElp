@@ -1,3 +1,4 @@
+import 'package:NursElp/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ArrivingPage extends StatefulWidget {
@@ -33,46 +34,11 @@ class _ArrivingPageState extends State<ArrivingPage> {
                   top: 12,
                   left: 24,
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      'Chambre',
-                      style: TextStyle(
-                        fontSize: labelFontSize,
-                      ),
-                    ),
-                    Flexible(
-                      child: Container(
-                        width: 90.0,
-                        height: 40.0,
-                        margin: EdgeInsets.only(
-                          left: 10.0,
-                        ),
-                        child: TextField(
-                          onSubmitted: (value) {},
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: labelFontSize,
-                          ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: 'Numéro',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey[200],
-                              ),
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                            contentPadding: EdgeInsets.only(
-                              bottom: 0.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                child: LabelAndTextField(
+                  labelText: 'Chambre',
+                  textFieldHint: '200',
+                  keyboardInputType: TextInputType.number,
+                  textFieldWidth: 100,
                 ),
               ),
               Padding(

@@ -22,8 +22,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     passwordFocus = FocusNode();
-    //_userService.auth();
-
     super.initState();
   }
 

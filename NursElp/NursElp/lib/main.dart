@@ -1,4 +1,6 @@
+import 'package:NursElp/screens/GroupCreation.dart';
 import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/GroupMenu.dart';
 import 'package:NursElp/screens/guests/auth.dart';
 //import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(
-          bodyText2: TextStyle(fontSize: 16),
+          bodyText2: TextStyle(fontSize: 18),
         ),
         backgroundColor: Colors.grey[100],
         primaryColor: Colors.redAccent,
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
             shadowColor: Colors.redAccent,
           ),
         ),
+        scaffoldBackgroundColor: Colors.grey[100],
       ),
       home: StreamBuilder(
         stream: userService.user,
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomeScreen();
             }
-            return AuthPage();
+            return HomeScreen();
           }
           return SafeArea(
             child: Scaffold(
