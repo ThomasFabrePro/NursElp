@@ -40,9 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) => GroupCreationPage()),
                       );
                     },
-                    child: Icon(
-                      Icons.add,
-                      size: 80,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      width: 60.0,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.redAccent, Colors.red[300]],
+                          begin: Alignment(0.0, -1.0),
+                          end: Alignment(0.0, 1.0),
+                        ),
+                        borderRadius: BorderRadius.circular(45.0),
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        size: 40,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
 
@@ -59,9 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 20,
             ),
             Container(
               child: Row(
