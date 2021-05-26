@@ -326,7 +326,11 @@ class MenuCardWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.red[300],
+        gradient: LinearGradient(
+          colors: [Colors.redAccent, Colors.red[300]],
+          begin: Alignment(0.0, -1.0),
+          end: Alignment(0.0, 1.0),
+        ),
       ),
       //color: Colors.red[300],
       child: InkWell(

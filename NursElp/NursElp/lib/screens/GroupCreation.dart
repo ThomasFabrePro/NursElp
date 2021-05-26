@@ -29,7 +29,11 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                 Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.red[400],
+                    gradient: LinearGradient(
+                      colors: [Colors.redAccent, Colors.red[300]],
+                      begin: Alignment(0.0, -1.0),
+                      end: Alignment(0.0, 1.0),
+                    ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -112,7 +116,11 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.red[400],
+                    gradient: LinearGradient(
+                      colors: [Colors.redAccent, Colors.red[300]],
+                      begin: Alignment(0.0, -1.0),
+                      end: Alignment(0.0, 1.0),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
