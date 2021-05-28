@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("HOME"),
+          title: Text("T'ES SAUVE"),
           centerTitle: true,
           actions: <Widget>[
             IconButton(icon: Icon(Icons.settings, size: 35), onPressed: () {})
