@@ -26,7 +26,6 @@ class _TaskspageState extends State<Taskspage> {
               ),
             ),
           ),
-          backgroundColor: Colors.red[300],
         ),
         body: Container(
           width: double.infinity,
@@ -96,7 +95,7 @@ class _TaskspageState extends State<Taskspage> {
                     height: 60.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.red[900], Colors.red[300]],
+                        colors: [Colors.redAccent, Colors.red[300]],
                         begin: Alignment(0.0, -1.0),
                         end: Alignment(0.0, 1.0),
                       ),

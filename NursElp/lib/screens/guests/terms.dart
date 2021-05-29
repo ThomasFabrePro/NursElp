@@ -1,4 +1,5 @@
 import 'package:NursElp/screens/GroupMenu.dart';
+import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:flutter/material.dart';
 
 class TermsPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _TermsPageState extends State<TermsPage> {
                     : () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GroupMenu(),
+                            builder: (context) => HomeScreen(),
                           ),
                         ),
                 child: Text(

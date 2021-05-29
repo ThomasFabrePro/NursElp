@@ -19,7 +19,6 @@ class _MovesManagementPageState extends State<MovesManagementPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
           actions: <Widget>[
             IconButton(icon: Icon(Icons.filter_alt, size: 35), onPressed: () {})
           ],
@@ -43,7 +42,7 @@ class _MovesManagementPageState extends State<MovesManagementPage> {
                   height: 60.0,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.red[900], Colors.red[300]],
+                      colors: [Colors.redAccent, Colors.red[300]],
                       begin: Alignment(0.0, -1.0),
                       end: Alignment(0.0, 1.0),
                     ),

@@ -22,7 +22,6 @@ class _ArrivingPageState extends State<ArrivingPage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.red[300],
         ),
         body: Container(
           color: Colors.grey[200],
