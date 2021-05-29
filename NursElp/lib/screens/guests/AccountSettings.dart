@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:NursElp/screens/guests/auth.dart';
 import 'package:NursElp/screens/services/UserService.dart';
-import 'package:NursElp/widgets.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
 
 class AccountSettingsPage extends StatefulWidget {
   @override

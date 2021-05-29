@@ -1,7 +1,7 @@
 import 'package:NursElp/database_helper.dart';
 import 'package:NursElp/screens/bedroom/BedroomNav.dart';
 import 'package:NursElp/screens/bedroom/bedroom.dart';
-import 'package:NursElp/widgets.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 
 class BedroomManagementPage extends StatefulWidget {

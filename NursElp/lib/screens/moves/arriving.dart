@@ -1,4 +1,4 @@
-import 'package:NursElp/widgets.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 
 class ArrivingPage extends StatefulWidget {

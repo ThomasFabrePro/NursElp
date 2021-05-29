@@ -1,9 +1,9 @@
-import 'package:NursElp/screens/GroupCreation.dart';
-import 'package:NursElp/screens/GroupMenu.dart';
+import 'package:NursElp/screens/group/GroupCreation.dart';
+import 'package:NursElp/screens/group/GroupMenu.dart';
 import 'package:NursElp/screens/guests/AccountSettings.dart';
 import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:NursElp/screens/services/UserService.dart';
-import 'package:NursElp/widgets.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

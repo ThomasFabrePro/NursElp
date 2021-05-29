@@ -3,7 +3,7 @@ import 'package:NursElp/screens/moves/Absence.dart';
 import 'package:NursElp/screens/moves/Arriving.dart';
 import 'package:NursElp/screens/moves/Bloc.dart';
 import 'package:NursElp/screens/moves/Leaving.dart';
-import 'package:NursElp/widgets.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
 
 class ChooseNewMovePage extends StatefulWidget {
   @override

@@ -1,10 +1,11 @@
-import 'package:NursElp/screens/bedroom/Bedroom.dart';
-import 'package:NursElp/screens/bedroom/BedroomsManagement.dart';
-import 'package:NursElp/screens/bedroom/BedroomNav.dart';
-import 'package:NursElp/screens/moves/MovesManagement.dart';
-import 'package:NursElp/screens/tasks/TasksManagement.dart';
+import 'package:NursElp/screens/group/GroupSettings.dart';
 import 'package:flutter/material.dart';
-import 'package:NursElp/widgets.dart';
+import '../bedroom/BedroomsManagement.dart';
+import '../bedroom/bedroom.dart';
+import '../bedroom/bedroomnav.dart';
+import '../moves/movesmanagement.dart';
+import '../tasks/TasksManagement.dart';
+import '../../widgets/CardWidgets.dart';
 
 class GroupMenu extends StatefulWidget {
   @override
@@ -27,7 +28,16 @@ class _GroupMenuState extends State<GroupMenu> {
             centerTitle: true,
             backgroundColor: Colors.red[400],
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.settings, size: 35), onPressed: () {})
+              IconButton(
+                  icon: Icon(Icons.settings, size: 35),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GroupSettingsPage(),
+                      ),
+                    );
+                  })
             ],
           ),
           body: SingleChildScrollView(
