@@ -1,4 +1,5 @@
 import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/guests/accountcreation.dart';
 //import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomeScreen();
             }
-            return HomeScreen();
+            return AccountCreationPage();
           }
           return SafeArea(
             child: Scaffold(
