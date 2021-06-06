@@ -1,3 +1,4 @@
+import 'package:NursElp/screens/services/AddBedroom.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,9 +9,11 @@ class BedroomPage extends StatefulWidget {
 }
 
 class _BedroomPageState extends State<BedroomPage> {
-  String bedroomNumber = '210';
+  String bedroomNumber = '';
   final double labelFontSize = 18.0;
   String side = ''; //savoir si porte, fenetre, seul
+  String doctor = '';
+  String notes = '';
   bool isMale = false;
   bool isContagious = true;
   bool isPresent = true;
@@ -40,17 +43,49 @@ class _BedroomPageState extends State<BedroomPage> {
                       ),
                       child: Row(
                         children: [
-                          Expanded(
-                            child: LabelAndTextField(
-                              labelText: 'Chambre',
-                              textFieldHint: '200',
-                              keyboardInputType: TextInputType.number,
+                          Text(
+                            'Chambre',
+                          ),
+                          Flexible(
+                            child: Container(
+                              width: double.infinity,
+                              height: 40.0,
+                              margin: EdgeInsets.only(
+                                left: 10.0,
+                              ),
+                              child: TextField(
+                                onChanged: (value) =>
+                                    setState(() => bedroomNumber = value),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[200],
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  contentPadding: EdgeInsets.only(
+                                    top: 0,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                left: 70.0,
+                                left: 30,
                               ),
                               child: Text(
                                 'Présent ?',
@@ -62,12 +97,12 @@ class _BedroomPageState extends State<BedroomPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (isPresent) {
-                                isPresent = false;
-                              } else
-                                isPresent = true;
-
-                              setState(() {});
+                              setState(() {
+                                if (isPresent) {
+                                  isPresent = false;
+                                } else
+                                  isPresent = true;
+                              });
                               print(isPresent);
                             },
                             child: Container(
@@ -98,26 +133,248 @@ class _BedroomPageState extends State<BedroomPage> {
                         top: 15,
                         left: 24,
                       ),
-                      child: DoubleCheckBox(
-                        label: 'Sexe',
-                        labelOption1: 'femme',
-                        labelOption2: 'homme',
-                        valueToSwitch: isMale,
+                      child: Row(
+                        children: [
+                          Text(
+                            'sexe',
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (!isMale) {
+                                  isMale = true;
+                                }
+                              });
+                            },
+                            child: Container(
+                              //CheckBox
+                              width: 20.0,
+                              height: 20.0,
+                              margin: EdgeInsets.only(
+                                left: 40.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isMale
+                                    ? Colors.red[600]
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(6.0),
+                                border: isMale
+                                    ? null
+                                    : Border.all(
+                                        color: Colors.grey,
+                                        width: 1.5,
+                                      ),
+                              ),
+                              child: isMale
+                                  ? Image(
+                                      image: AssetImage(
+                                        'assets/images/check_icon.png',
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          ),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                              ),
+                              child: Text(
+                                'Homme',
+                                style: TextStyle(
+                                  color: isMale ? Colors.red[600] : Colors.grey,
+                                  fontSize: 16.0,
+                                  fontWeight: isMale
+                                      ? FontWeight.bold
+                                      : FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(
+                                () {
+                                  if (isMale) {
+                                    isMale = !isMale;
+                                  }
+                                },
+                              );
+                            },
+                            child: Container(
+                              width: 20.0,
+                              height: 20.0,
+                              margin: EdgeInsets.only(
+                                left: 40.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: !isMale
+                                    ? Colors.red[600]
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(6.0),
+                                border: !isMale
+                                    ? null
+                                    : Border.all(
+                                        color: Colors.grey,
+                                        width: 1.5,
+                                      ),
+                              ),
+                              child: !isMale
+                                  ? Image(
+                                      image: AssetImage(
+                                        'assets/images/check_icon.png',
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          ),
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                              ),
+                              child: Text(
+                                'Femme',
+                                style: TextStyle(
+                                  color:
+                                      !isMale ? Colors.red[600] : Colors.grey,
+                                  fontSize: 16.0,
+                                  fontWeight: !isMale
+                                      ? FontWeight.bold
+                                      : FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
-                      //Contagieux
-                      padding: EdgeInsets.only(
-                        top: 15,
-                        left: 24,
-                      ),
-                      child: DoubleCheckBox(
-                        label: 'Contagieux',
-                        labelOption1: 'oui',
-                        labelOption2: 'non',
-                        valueToSwitch: isContagious,
-                      ),
-                    ),
+                        //Contagieux
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          left: 24,
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Contagieux',
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  if (!isContagious) {
+                                    isContagious = true;
+                                  }
+                                  print(isContagious);
+                                });
+                              },
+                              child: Container(
+                                //CheckBox
+                                width: 20.0,
+                                height: 20.0,
+                                margin: EdgeInsets.only(
+                                  left: 40.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: isContagious
+                                      ? Colors.red[600]
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border: isContagious
+                                      ? null
+                                      : Border.all(
+                                          color: Colors.grey,
+                                          width: 1.5,
+                                        ),
+                                ),
+                                child: isContagious
+                                    ? Image(
+                                        image: AssetImage(
+                                          'assets/images/check_icon.png',
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                ),
+                                child: Text(
+                                  'Oui',
+                                  style: TextStyle(
+                                    color: isContagious
+                                        ? Colors.red[600]
+                                        : Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: isContagious
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(
+                                  () {
+                                    if (isContagious) {
+                                      isContagious = !isContagious;
+                                    }
+                                    print(isContagious);
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: 20.0,
+                                height: 20.0,
+                                margin: EdgeInsets.only(
+                                  left: 40.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: !isContagious
+                                      ? Colors.red[600]
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border: !isContagious
+                                      ? null
+                                      : Border.all(
+                                          color: Colors.grey,
+                                          width: 1.5,
+                                        ),
+                                ),
+                                child: !isContagious
+                                    ? Image(
+                                        image: AssetImage(
+                                          'assets/images/check_icon.png',
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                ),
+                                child: Text(
+                                  'Non',
+                                  style: TextStyle(
+                                    color: !isContagious
+                                        ? Colors.red[600]
+                                        : Colors.grey,
+                                    fontSize: 16.0,
+                                    fontWeight: !isContagious
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                     Padding(
                         //Entree
                         padding: EdgeInsets.only(
@@ -144,16 +401,57 @@ class _BedroomPageState extends State<BedroomPage> {
                       ),
                     ),
                     Padding(
-                        //Médecin
-                        padding: EdgeInsets.only(
-                          top: 15,
-                          left: 24,
-                          right: 24,
-                        ),
-                        child: LabelAndTextField(
-                          labelText: 'Médecin',
-                          textFieldHint: 'Nom du médecin',
-                        )),
+                      //Médecin
+                      padding: EdgeInsets.only(
+                        top: 15,
+                        left: 24,
+                        right: 24,
+                      ),
+                      child: Row(
+                        children: [
+                          Text('Médecin'),
+                          Flexible(
+                            child: Container(
+                              width: double.infinity,
+                              height: 40.0,
+                              margin: EdgeInsets.only(
+                                left: 10.0,
+                              ),
+                              child: TextField(
+                                keyboardType: TextInputType.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                                onSubmitted: (value) => setState(() {
+                                  doctor = value;
+                                }),
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  hintText: 'Nom',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[200],
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  contentPadding: EdgeInsets.only(
+                                    bottom: 0.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const Divider(
@@ -180,19 +478,23 @@ class _BedroomPageState extends State<BedroomPage> {
                           Container(
                             width: double.infinity,
                             child: TextField(
+                              onSubmitted: (value) => (setState(
+                                () {
+                                  notes = value;
+                                  print(notes);
+                                },
+                              )),
+                              textCapitalization: TextCapitalization.sentences,
+                              textInputAction: TextInputAction.done,
                               maxLines: null,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.yellow[100],
-                                // enabledBorder: OutlineInputBorder(
-                                //   borderSide: BorderSide(
-                                //     color: Colors.red,
-                                //     width: 5,
-                                //   ),
-                                // ),
                               ),
                             ),
                           ),
+                          AddBedroom(1, isPresent, bedroomNumber, isMale,
+                              isContagious, doctor, null, null, null, notes, 1)
                         ],
                       ),
                     )

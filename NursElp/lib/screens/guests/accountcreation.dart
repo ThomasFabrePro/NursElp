@@ -1,9 +1,7 @@
 import 'package:NursElp/models/UserModel.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
-//import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/services/AddGroup.dart';
 import 'package:NursElp/screens/services/UserService.dart';
-import 'package:NursElp/widgets/TextField.dart';
-import 'package:NursElp/widgets/WhiteText.dart';
 import 'package:flutter/material.dart';
 
 class AccountCreationPage extends StatefulWidget {
@@ -32,7 +30,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
     emailCheckFocus = FocusNode();
     passwordFocus = FocusNode();
     passwordCheckFocus = FocusNode();
-    //userService.auth();
     super.initState();
   }
 
@@ -54,7 +51,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
           centerTitle: true,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(right: 12.0, left: 12.0, top: 24),
           child: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.all(16),
@@ -71,7 +68,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    WhiteText(text: 'Adresse mail'),
+                    Text(
+                      'Adresse mail',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
@@ -97,7 +97,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                         ),
                       ),
                     ),
-                    WhiteText(text: 'Confirmez votre mail'),
+                    Text(
+                      'Confirmez votre mail',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
@@ -123,7 +126,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                         ),
                       ),
                     ),
-                    WhiteText(text: 'Mot de passe'),
+                    Text(
+                      'Mot de passe',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
@@ -157,7 +163,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                         ),
                       ),
                     ),
-                    WhiteText(text: 'Confirmez votre mot de passe'),
+                    Text(
+                      'Confirmez votre mot de passe',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
@@ -193,7 +202,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                         ),
                       ),
                     ),
-                    WhiteText(text: 'Votre pseudo'),
+                    Text(
+                      'Votre pseudo',
+                      style: TextStyle(color: Colors.white),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
@@ -254,7 +266,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                           'continuer'.toUpperCase(),
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.red[400],
+                            color: Colors.black,
                           ),
                         ),
                       ),

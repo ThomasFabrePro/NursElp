@@ -1,5 +1,6 @@
 import 'package:NursElp/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 //import 'package:firebase_core/firebase_core.dart';
 
 class UserService {
@@ -21,12 +22,8 @@ class UserService {
         password: userModel.password,
       );
     } catch (e) {
-      userCredential = await _auth.createUserWithEmailAndPassword(
-        email: userModel.email,
-        password: userModel.password,
-      );
+      print('pas de mail correspondant');
     }
-    //userModel.setNickname = userCredential.user.displayName;
     userModel.setUid = userCredential.user.uid;
     return userModel;
   }

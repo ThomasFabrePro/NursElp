@@ -1,7 +1,10 @@
+import 'package:NursElp/models/UserModel.dart';
+import 'package:NursElp/screens/services/AddUser.dart';
 import 'package:flutter/material.dart';
 import 'package:NursElp/screens/guests/AccountCreation.dart';
 import 'package:NursElp/screens/guests/Terms.dart';
-//import 'package:NursElp/screens/services/UserService.dart';
+
+import 'package:NursElp/screens/services/UserService.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);
@@ -10,18 +13,18 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  //UserService _userService = UserService();
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RegExp emailRegex = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
   bool isSecret = true;
   String email = '';
   String password = '';
   FocusNode passwordFocus;
+  UserService userService;
 
   @override
   void initState() {
     passwordFocus = FocusNode();
+    userService = UserService();
     super.initState();
   }
 
