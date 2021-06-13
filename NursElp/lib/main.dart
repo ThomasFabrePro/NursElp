@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomeScreen();
             }
-            return AuthPage();
+            return AccountCreationPage();
           }
           return SafeArea(
             child: Scaffold(

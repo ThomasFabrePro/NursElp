@@ -2,6 +2,7 @@ import 'package:NursElp/screens/group/GroupCreation.dart';
 import 'package:NursElp/screens/group/GroupMenu.dart';
 import 'package:NursElp/screens/guests/AccountSettings.dart';
 import 'package:NursElp/screens/guests/Auth.dart';
+import 'package:NursElp/screens/services/GroupsServices.dart';
 import 'package:NursElp/screens/services/UserService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
@@ -98,54 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.red,
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    MenuCardWidget(
-                      title: 'Bloc',
-                      navigator: GroupMenu(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Nat',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Cardio',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Onco',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Pneumo',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Réa',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Psy',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Gastro',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'Uro',
-                      navigator: AuthPage(),
-                    ),
-                    MenuCardWidget(
-                      title: 'EHPAD',
-                      navigator: AuthPage(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            //DisplayGroup()
           ],
         ),
       ),

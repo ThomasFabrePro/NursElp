@@ -1,6 +1,5 @@
 import 'package:NursElp/models/UserModel.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/services/AddGroup.dart';
 import 'package:NursElp/screens/services/UserService.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +17,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   String password = '';
   String passwordCheck = ' ';
   String nickname = '';
+  bool test;
   bool isSecret = false;
   FocusNode emailCheckFocus;
   FocusNode passwordFocus;
@@ -239,11 +239,12 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                             ? null
                             : () {
                                 if (formKey.currentState.validate()) {
+                                  userService.addUser(
+                                      email, password, nickname);
                                   userService
-                                      .auth(UserModel(
+                                      .createAccount(UserModel(
                                         email: email,
                                         password: password,
-                                        nickname: nickname,
                                       ))
                                       .then((value) => {
                                             if (value.uid != null)

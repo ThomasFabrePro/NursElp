@@ -1,5 +1,4 @@
 import 'package:NursElp/models/UserModel.dart';
-import 'package:NursElp/screens/services/AddUser.dart';
 import 'package:flutter/material.dart';
 import 'package:NursElp/screens/guests/AccountCreation.dart';
 import 'package:NursElp/screens/guests/Terms.dart';
