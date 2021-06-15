@@ -1,4 +1,5 @@
 import 'package:NursElp/models/UserModel.dart';
+import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:NursElp/screens/services/UserService.dart';
 import 'package:flutter/material.dart';
@@ -239,12 +240,11 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                             ? null
                             : () {
                                 if (formKey.currentState.validate()) {
-                                  userService.addUser(
-                                      email, password, nickname);
                                   userService
                                       .createAccount(UserModel(
                                         email: email,
                                         password: password,
+                                        nickname: nickname,
                                       ))
                                       .then((value) => {
                                             if (value.uid != null)
@@ -253,9 +253,10 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        GroupMenu(),
+                                                        HomeScreen(),
                                                   ),
                                                 ),
+                                                print(userService.getUserId())
                                               }
                                           });
                                 }

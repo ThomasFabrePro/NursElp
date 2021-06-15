@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/services/AddBedroom.dart';
+import 'package:NursElp/screens/services/BedroomService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,7 +1,8 @@
 import 'package:NursElp/models/UserModel.dart';
+import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:flutter/material.dart';
 import 'package:NursElp/screens/guests/AccountCreation.dart';
-import 'package:NursElp/screens/guests/Terms.dart';
 
 import 'package:NursElp/screens/services/UserService.dart';
 
@@ -181,12 +182,23 @@ class _AuthPageState extends State<AuthPage> {
                                   ? null
                                   : () {
                                       if (formKey.currentState.validate()) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => TermsPage(),
-                                          ),
-                                        );
+                                        userService
+                                            .auth(UserModel(
+                                              email: email,
+                                              password: password,
+                                            ))
+                                            .then((value) => {
+                                                  if (value.uid != null)
+                                                    {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              HomeScreen(),
+                                                        ),
+                                                      ),
+                                                    }
+                                                });
                                       }
                                     },
                               child: Text(

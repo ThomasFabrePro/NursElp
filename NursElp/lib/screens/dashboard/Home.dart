@@ -1,10 +1,8 @@
 import 'package:NursElp/screens/group/GroupCreation.dart';
-import 'package:NursElp/screens/group/GroupMenu.dart';
 import 'package:NursElp/screens/guests/AccountSettings.dart';
-import 'package:NursElp/screens/guests/Auth.dart';
-import 'package:NursElp/screens/services/GroupsServices.dart';
+import 'package:NursElp/screens/services/GroupsService.dart';
 import 'package:NursElp/screens/services/UserService.dart';
-import 'package:NursElp/widgets/CardWidgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,13 +12,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   UserService userService = UserService();
-
+  GroupService groupService = GroupService();
+  UserCredential userCredential;
+  //String userId = userCredential.user.uid;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("T'ES SAUVE"),
+          title: Text("Services"),
           centerTitle: true,
           leading: Container(),
           actions: <Widget>[
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.red,
               ),
             ),
-            //DisplayGroup()
+            Expanded(child: GetGroups())
           ],
         ),
       ),

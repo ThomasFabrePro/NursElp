@@ -1,4 +1,5 @@
 import 'package:NursElp/screens/dashboard/Home.dart';
+import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:NursElp/screens/guests/AccountCreation.dart';
 import 'package:NursElp/screens/guests/auth.dart';
 //import 'package:NursElp/screens/guests/Auth.dart';
@@ -59,3 +60,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//TODO bouton quitter le groupe dans les settings du groupe

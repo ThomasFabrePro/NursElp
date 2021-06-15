@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/services/GroupsServices.dart';
+import 'package:NursElp/screens/services/GroupsService.dart';
 import 'package:flutter/material.dart';
 
 class GroupCreationPage extends StatefulWidget {
@@ -8,9 +8,11 @@ class GroupCreationPage extends StatefulWidget {
 
 class _GroupCreationPageState extends State<GroupCreationPage> {
   String groupToReachPassword;
+  String groupToReachName;
   String groupName;
   String groupPassword;
   String numberMember;
+  int groupCode;
   @override
   Widget build(BuildContext context) {
     int numberMember;
@@ -53,14 +55,50 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      MyTextField(
-                        hintText: 'Nom du groupe',
+                      TextFormField(
+                        onChanged: (value) =>
+                            setState(() => groupToReachName = value),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Nom du groupe',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      MyTextField(
-                        hintText: 'Code du groupe',
+                      TextFormField(
+                        onChanged: (value) =>
+                            setState(() => groupCode = int.parse(value)),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Code du groupe',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 5,
@@ -113,19 +151,8 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () => {setState(() {})},
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                        ),
-                        child: Text(
-                          'Rejoindre ce groupe',
-                          style: TextStyle(
-                            color: Colors.red[400],
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
+                      JoinGroup(
+                          groupToReachName, groupToReachPassword, groupCode)
                     ],
                   ),
                 ),
