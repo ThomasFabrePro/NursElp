@@ -54,9 +54,11 @@ class TaskCardWidget extends StatelessWidget {
 
 class BedroomCardWidget extends StatelessWidget {
   final String bedroomNumber;
-  final String sortie;
+  final String leaving;
   final bool isPresent;
-  BedroomCardWidget({this.bedroomNumber, this.sortie, this.isPresent});
+  final Widget navigator;
+  BedroomCardWidget(
+      {this.bedroomNumber, this.leaving, this.isPresent, this.navigator});
 
   @override
   Widget build(BuildContext context) {
@@ -77,50 +79,60 @@ class BedroomCardWidget extends StatelessWidget {
             color: Colors.redAccent,
             width: 1,
           )),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                bedroomNumber ?? 'Pas de numéro',
-                style: TextStyle(
-                  color: Colors.red[900],
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Container(
-                width: 25.0,
-                height: 25.0,
-                margin: EdgeInsets.only(
-                  left: 230.0,
-                ),
-                decoration: BoxDecoration(
-                  color: isPresent
-                      ? Colors.lightGreenAccent[400]
-                      : Colors.redAccent[400],
-                  borderRadius: BorderRadius.circular(45.0),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.5,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => navigator),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    bedroomNumber ?? '',
+                    style: TextStyle(
+                      color: Colors.red[900],
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 5.0,
+                Container(
+                  width: 25.0,
+                  height: 25.0,
+                  margin: EdgeInsets.only(
+                    left: 230.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isPresent
+                        ? Colors.lightGreenAccent[400]
+                        : Colors.redAccent[400],
+                    borderRadius: BorderRadius.circular(45.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Text(
-              sortie ?? 'Pas de sortie prévue',
-              style: TextStyle(
-                fontSize: 16.0,
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5.0,
+              ),
+              child: Text(
+                'Sortie : $leaving' ?? 'Pas de sortie prévue',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

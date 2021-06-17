@@ -1,67 +1,132 @@
+import 'package:NursElp/screens/bedroom/bedroom.dart';
+import 'package:NursElp/screens/bedroom/bedroomnav.dart';
+import 'package:NursElp/screens/group/groupmenu.dart';
+import 'package:NursElp/screens/services/GroupsService.dart';
+import 'package:NursElp/widgets/CardWidgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-// Import the firebase_core and cloud_firestore plugin
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+class BedroomService {
+  GroupService groupService = GroupService();
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
 
-class AddBedroom extends StatelessWidget {
-  final int groupId;
-  final bool isHere;
-  final String roomNumber;
-  final bool sexe;
-  //quel type pour les dates d'entrée/sortie ?
-  final bool contagious;
-  final String doctor;
-  final List surveillances;
-  final List bedroomTasks;
-  final List moves;
-  final String notes;
-  final int sector;
+  addBedroom(
+    String groupId,
+    String notes,
+    String doctor,
+    String arriving,
+    String leaving,
+    String side,
+    String bedroomNumber,
+    bool sexe,
+    bool contagious,
+    bool isPresent,
+    List surveillances,
+    List bedroomTasks,
+    List moves,
+    int sector,
+  ) {
+    String bedroomCodeId = groupService.generateCode(4).toString();
+    String bedroomId;
+    bedrooms.add({
+      'groupId': groupId,
+      'isPresent': isPresent ?? true,
+      'bedroomNumber': bedroomNumber ?? '000',
+      'sexe': sexe ?? false,
+      'contagious': contagious ?? false,
+      'doctor': doctor ?? '',
+      'arriving': arriving ?? '',
+      'leaving': leaving ?? '',
+      'side': '' ?? '',
+      'bedroomId': bedroomCodeId,
+      'surveillances': surveillances ?? null,
+      'bedroomTasks': bedroomTasks ?? null,
+      'moves': moves ?? null,
+      'notes': notes ?? '',
+      'sector': sector ?? 1,
+    });
 
-  AddBedroom(
-      this.groupId,
-      this.isHere,
-      this.roomNumber,
-      this.sexe,
-      this.contagious,
-      this.doctor,
-      this.surveillances,
-      this.bedroomTasks,
-      this.moves,
-      this.notes,
-      this.sector);
+    bedrooms
+        .where('bedroomId', isEqualTo: bedroomCodeId)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      bedroomId = querySnapshot.docs.single.id;
+      if (bedroomCodeId.toString() != bedroomId) {
+        querySnapshot.docs.single.reference.update({'bedroomId': bedroomId});
+      }
+    });
+  }
+  //TODO faire une fonction qui récupère une donnée (prend en parametre le nom de la donnée demandée)
+
+  deleteBedroom(String bedroomId) {
+    CollectionReference bedrooms =
+        FirebaseFirestore.instance.collection('bedrooms');
+    bedrooms.doc(bedroomId).delete();
+  }
+}
+
+class GetBedrooms extends StatefulWidget {
+  final String groupId;
+  GetBedrooms(this.groupId);
 
   @override
+  _GetBedroomsState createState() => _GetBedroomsState();
+}
+
+class _GetBedroomsState extends State<GetBedrooms> {
+  @override
   Widget build(BuildContext context) {
-    // Create a CollectionReference called users that references the firestore collection
     CollectionReference bedrooms =
         FirebaseFirestore.instance.collection('bedrooms');
 
-    Future<void> addBedroom() {
-      // Call the bedrooms's CollectionReference to add a new bedroom
-      return bedrooms
-          .add({
-            'groupId': groupId,
-            'isHere': isHere,
-            'roomNumber': roomNumber,
-            'sexe': sexe,
-            'contagious': contagious,
-            'doctor': doctor,
-            'surveillances': surveillances,
-            'bedroomTasks': bedroomTasks,
-            'moves': moves,
-            'notes': notes,
-            'sector': sector, // 42
-          })
-          .then((value) => {print(value.id)})
-          .catchError((error) => print("Failed to add bedroom: $error"));
-    }
+    return StreamBuilder<QuerySnapshot>(
+      stream: bedrooms.where('groupId', isEqualTo: widget.groupId).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print('erreur');
+          return Text('Something went wrong');
+        }
 
-    return TextButton(
-      onPressed: addBedroom,
-      child: Text(
-        "Add User",
-      ),
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        if (snapshot.connectionState == ConnectionState.active) {
+          return ListView(
+            children: snapshot.data.docs.map(
+              (DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document?.data() as Map<String, dynamic>;
+                return BedroomCardWidget(
+                  bedroomNumber: data['bedroomNumber'] ?? '000',
+                  isPresent: data['isPresent'] ?? '',
+                  leaving: data['leaving'] ?? '',
+                  navigator: BedroomNav(
+                    groupId: widget.groupId,
+                    bedroomId: data['bedroomId'] ?? '',
+                    isPresent: data['isPresent'] ?? true,
+                    leaving: data['leaving'] ?? '',
+                    arriving: data['arriving'] ?? '',
+                    doctor: data['doctor'] ?? '',
+                    bedroomNumber: data['bedroomNumber'] ?? '',
+                    sexe: data['sexe'] ?? true,
+                    contagious: data['contagious'] ?? false,
+                    notes: data['notes'] ?? '',
+                    sector: data['sector'] ?? 1,
+                    side: data['side'] ?? '',
+                    surveillances: data['surveillances'] ??
+                        null, //peut etre tout mettre entre crochet si ca marche pas
+                    bedroomTasks: data['bedroomTasks'] ?? null,
+                    moves: data['moves'] ?? null,
+                  ),
+                );
+              },
+            ).toList(),
+          );
+        }
+        return Text('aucune chambre');
+      },
     );
   }
 }

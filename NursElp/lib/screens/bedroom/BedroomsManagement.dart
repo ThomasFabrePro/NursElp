@@ -1,17 +1,30 @@
 import 'package:NursElp/database_helper.dart';
 import 'package:NursElp/screens/bedroom/BedroomNav.dart';
 import 'package:NursElp/screens/bedroom/bedroom.dart';
-import 'package:NursElp/widgets/CardWidgets.dart';
+import 'package:NursElp/screens/services/BedroomService.dart';
 import 'package:flutter/material.dart';
 
 class BedroomManagementPage extends StatefulWidget {
+  final String groupId;
+
+  BedroomManagementPage({
+    Key key,
+    this.groupId,
+  }) : super(key: key);
   @override
   _BedroomManagementPageState createState() => _BedroomManagementPageState();
 }
 
 class _BedroomManagementPageState extends State<BedroomManagementPage> {
   DatabaseHelper _dbHelper = DatabaseHelper();
+  String groupId = '';
+
   @override
+  void initState() {
+    groupId = widget.groupId;
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -37,37 +50,10 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: FutureBuilder(
-                      initialData: [],
-                      future: _dbHelper.getTasks(),
-                      builder: (context, snapshot) {
-                        return ScrollConfiguration(
-                          behavior: NoGlowBehaviour(),
-                          child: ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BedroomPage(),
-                                      )).then((value) {
-                                    setState(() {});
-                                  });
-                                },
-                                child: BedroomCardWidget(
-                                  bedroomNumber: '221',
-                                  sortie: 'sortie le : 25 Mai',
-                                  isPresent: true,
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
+                    child: GetBedrooms(
+                      groupId,
                     ),
-                  )
+                  ),
                 ],
               ),
               Positioned(
@@ -78,7 +64,26 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BedroomNav()),
+                      MaterialPageRoute(
+                        builder: (context) => BedroomNav(
+                          //Création d'une nouvelle chambre
+                          groupId: groupId,
+                          bedroomId: '',
+                          isPresent: false,
+                          leaving: '',
+                          arriving: '',
+                          doctor: '',
+                          bedroomNumber: '',
+                          sexe: true,
+                          contagious: false,
+                          notes: '',
+                          sector: 1,
+                          side: '',
+                          surveillances: [],
+                          bedroomTasks: [],
+                          moves: [],
+                        ),
+                      ),
                     );
                   },
                   child: Container(

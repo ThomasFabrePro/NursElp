@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:NursElp/screens/bedroom/bedroom.dart';
 import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
@@ -10,17 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GroupService {
-  String currentGroupId = '7AbGe6aQJIOYSsq3QYEZ';
-
-  String setCurrentGroupId(String groupId) {
-    currentGroupId = groupId;
-  }
-
-  int generateCode() {
+  int generateCode(int codeLength) {
     Random rng = new Random();
     String codeGenerated = '';
     int nextInt;
-    int codeLength = 4;
+
     int finalCode;
     for (var i = 0; i < codeLength; i++) {
       nextInt = rng.nextInt(9);
@@ -33,6 +26,7 @@ class GroupService {
 }
 
 class GetGroupCode extends StatelessWidget {
+  //Utilisé nul part pour le moment, peut etre à transformer en simple fonction
   final String groupId;
 
   GetGroupCode(this.groupId);
@@ -82,9 +76,6 @@ class JoinGroup extends StatelessWidget {
         FirebaseFirestore.instance.collection('groups');
     UserService userService = UserService();
     String groupId;
-    String dbGroupName;
-    String dbGroupPassword;
-    var data;
     String userId = userService.getUserId();
     DocumentReference user =
         FirebaseFirestore.instance.collection('users').doc(userId);
@@ -162,7 +153,7 @@ class CreateGroup extends StatelessWidget {
     int code;
     String uid = userService.getUserId();
     Future<void> createGroup() {
-      code = groupService.generateCode();
+      code = groupService.generateCode(10);
       // Call the user's CollectionReference to add a new user
       return groups
           .add({
@@ -202,14 +193,7 @@ class GetGroups extends StatelessWidget {
 
     UserService userService = UserService();
     String userId = userService.getUserId();
-    // groups
-    //     .where('groupMember', arrayContains: userId)
-    //     .get()
-    //     .then((QuerySnapshot querySnapshot) {
-    //   querySnapshot.docs.forEach((doc) {
-    //     return Text(doc["groupName"]);
-    //   });
-    // });
+
     return StreamBuilder<QuerySnapshot>(
         stream: groups.where('groupMember', arrayContains: userId).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -227,7 +211,10 @@ class GetGroups extends StatelessWidget {
                   document.data() as Map<String, dynamic>;
               return MenuCardWidget(
                 title: data['groupName'],
-                navigator: GroupMenu(),
+                navigator: GroupMenu(
+                  groupName: data['groupName'],
+                  groupId: data['groupId'],
+                ),
               );
             }).toList(),
           );

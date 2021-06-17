@@ -1,3 +1,4 @@
+import 'package:NursElp/models/GroupModel.dart';
 import 'package:NursElp/screens/group/GroupSettings.dart';
 import 'package:flutter/material.dart';
 import '../bedroom/BedroomsManagement.dart';
@@ -8,19 +9,35 @@ import '../tasks/TasksManagement.dart';
 import '../../widgets/CardWidgets.dart';
 
 class GroupMenu extends StatefulWidget {
+  final String groupName;
+  final String groupId;
+
+  GroupMenu({
+    Key key,
+    this.groupName,
+    this.groupId,
+  }) : super(key: key);
   @override
   _GroupMenuState createState() => _GroupMenuState();
 }
 
 class _GroupMenuState extends State<GroupMenu> {
   double boxMenuHeight = 65;
+  String title = '';
+  String groupId = '';
 
   @override
+  void initState() {
+    title = widget.groupName;
+    groupId = widget.groupId;
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: const Text('Service Onco',
+            title: Text(title,
                 style: TextStyle(
                   fontSize: 25,
                 )),
@@ -73,7 +90,9 @@ class _GroupMenuState extends State<GroupMenu> {
                   ),
                   MenuCardWidget(
                     title: 'Gestion des chambres',
-                    navigator: BedroomManagementPage(),
+                    navigator: BedroomManagementPage(
+                      groupId: groupId,
+                    ),
                   ),
                   MenuCardWidget(
                     title: 'Liste des tâches',

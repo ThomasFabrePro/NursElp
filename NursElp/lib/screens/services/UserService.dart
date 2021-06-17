@@ -55,7 +55,7 @@ class UserService {
 
   void addUser(String email, String password, String nickname, String uid) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    // Call the user's CollectionReference to add a new user
+
     users
         .where('email', isEqualTo: email)
         .get()

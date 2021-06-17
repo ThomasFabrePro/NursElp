@@ -4,6 +4,41 @@ import 'package:flutter/material.dart';
 import 'package:NursElp/screens/moves/Arriving.dart';
 
 class BedroomNav extends StatefulWidget {
+  final String groupId;
+  final String bedroomId;
+
+  final bool isPresent;
+  final String bedroomNumber;
+  final bool sexe;
+  final bool contagious;
+  final String doctor;
+  final String arriving;
+  final String leaving;
+  final String side;
+  final List surveillances;
+  final List bedroomTasks;
+  final List moves;
+  final String notes;
+  final int sector;
+
+  const BedroomNav({
+    Key key,
+    this.groupId,
+    this.bedroomId,
+    this.isPresent,
+    this.bedroomNumber,
+    this.sexe,
+    this.contagious,
+    this.doctor,
+    this.arriving,
+    this.leaving,
+    this.side,
+    this.surveillances,
+    this.bedroomTasks,
+    this.moves,
+    this.notes,
+    this.sector,
+  }) : super(key: key);
   @override
   _BedroomNavState createState() => _BedroomNavState();
 }
@@ -11,9 +46,42 @@ class BedroomNav extends StatefulWidget {
 class _BedroomNavState extends State<BedroomNav> {
   int _currentIndex = 0;
   PageController _pageController;
+  String bedroomNumber = '';
+  String bedroomId = '';
+  String side = '';
+  String doctor = '';
+  String notes = '';
+  String groupId = '';
+  String arriving = '';
+  String leaving = '';
+
+  bool sexe = false;
+  bool isContagious = true;
+  bool isPresent = true;
+
+  List surveillances;
+  List bedroomTasks;
+  List moves;
+
+  int sector = 1;
 
   @override
   void initState() {
+    bedroomNumber = widget.bedroomNumber;
+    bedroomId = widget.bedroomId;
+    side = widget.side;
+    doctor = widget.doctor;
+    notes = widget.notes;
+    groupId = widget.groupId;
+    arriving = widget.arriving;
+    leaving = widget.leaving;
+    sexe = widget.sexe;
+    isContagious = widget.contagious;
+    surveillances = widget.surveillances;
+    bedroomTasks = widget.bedroomTasks;
+    moves = widget.moves;
+    sector = widget.sector;
+
     super.initState();
     _pageController = PageController();
   }
@@ -34,7 +102,23 @@ class _BedroomNavState extends State<BedroomNav> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            BedroomPage(),
+            BedroomPage(
+              groupId: groupId,
+              bedroomId: bedroomId,
+              isPresent: isPresent,
+              leaving: leaving,
+              arriving: arriving,
+              doctor: doctor,
+              bedroomNumber: bedroomNumber,
+              sexe: sexe,
+              contagious: isContagious,
+              notes: notes,
+              sector: sector,
+              side: side,
+              surveillances: surveillances,
+              bedroomTasks: bedroomTasks,
+              moves: moves,
+            ),
             Container(
               color: Colors.red,
             ),
