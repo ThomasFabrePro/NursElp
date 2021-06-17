@@ -54,9 +54,11 @@ class TaskCardWidget extends StatelessWidget {
 
 class BedroomCardWidget extends StatelessWidget {
   final String bedroomNumber;
-  final String sortie;
+  final String leaving;
   final bool isPresent;
-  BedroomCardWidget({this.bedroomNumber, this.sortie, this.isPresent});
+  final Widget navigator;
+  BedroomCardWidget(
+      {this.bedroomNumber, this.leaving, this.isPresent, this.navigator});
 
   @override
   Widget build(BuildContext context) {
@@ -77,50 +79,60 @@ class BedroomCardWidget extends StatelessWidget {
             color: Colors.redAccent,
             width: 1,
           )),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                bedroomNumber ?? 'Pas de numéro',
-                style: TextStyle(
-                  color: Colors.red[900],
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Container(
-                width: 25.0,
-                height: 25.0,
-                margin: EdgeInsets.only(
-                  left: 230.0,
-                ),
-                decoration: BoxDecoration(
-                  color: isPresent
-                      ? Colors.lightGreenAccent[400]
-                      : Colors.redAccent[400],
-                  borderRadius: BorderRadius.circular(45.0),
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.5,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => navigator),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    bedroomNumber ?? '',
+                    style: TextStyle(
+                      color: Colors.red[900],
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 5.0,
+                Container(
+                  width: 25.0,
+                  height: 25.0,
+                  margin: EdgeInsets.only(
+                    left: 230.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isPresent
+                        ? Colors.lightGreenAccent[400]
+                        : Colors.redAccent[400],
+                    borderRadius: BorderRadius.circular(45.0),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Text(
-              sortie ?? 'Pas de sortie prévue',
-              style: TextStyle(
-                fontSize: 16.0,
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5.0,
+              ),
+              child: Text(
+                'Sortie : $leaving' ?? 'Pas de sortie prévue',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -178,136 +190,6 @@ class TodoWidget extends StatelessWidget {
   }
 }
 
-class DoubleCheckBox extends StatefulWidget {
-  DoubleCheckBox({
-    Key key,
-    this.label,
-    this.labelOption1,
-    this.labelOption2,
-    this.valueToSwitch,
-  });
-  final String label;
-  final String labelOption1;
-  final String labelOption2;
-  bool valueToSwitch;
-
-  @override
-  _DoubleCheckBoxState createState() => _DoubleCheckBoxState();
-}
-
-class _DoubleCheckBoxState extends State<DoubleCheckBox> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          widget.label ?? 'PAS DE LABEL',
-        ),
-        GestureDetector(
-          onTap: () {
-            if (!widget.valueToSwitch) {
-              widget.valueToSwitch = true;
-              setState(() {});
-            }
-          },
-          child: Container(
-            //CheckBox
-            width: 20.0,
-            height: 20.0,
-            margin: EdgeInsets.only(
-              left: 40.0,
-            ),
-            decoration: BoxDecoration(
-              color:
-                  widget.valueToSwitch ? Colors.red[600] : Colors.transparent,
-              borderRadius: BorderRadius.circular(6.0),
-              border: widget.valueToSwitch
-                  ? null
-                  : Border.all(
-                      color: Colors.grey,
-                      width: 1.5,
-                    ),
-            ),
-            child: widget.valueToSwitch
-                ? Image(
-                    image: AssetImage(
-                      'assets/images/check_icon.png',
-                    ),
-                  )
-                : null,
-          ),
-        ),
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-            ),
-            child: Text(
-              widget.labelOption1,
-              style: TextStyle(
-                color: widget.valueToSwitch ? Colors.red[600] : Colors.grey,
-                fontSize: 16.0,
-                fontWeight:
-                    widget.valueToSwitch ? FontWeight.bold : FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            if (widget.valueToSwitch) {
-              widget.valueToSwitch = !widget.valueToSwitch;
-
-              setState(() {});
-            }
-          },
-          child: Container(
-            width: 20.0,
-            height: 20.0,
-            margin: EdgeInsets.only(
-              left: 40.0,
-            ),
-            decoration: BoxDecoration(
-              color:
-                  !widget.valueToSwitch ? Colors.red[600] : Colors.transparent,
-              borderRadius: BorderRadius.circular(6.0),
-              border: !widget.valueToSwitch
-                  ? null
-                  : Border.all(
-                      color: Colors.grey,
-                      width: 1.5,
-                    ),
-            ),
-            child: !widget.valueToSwitch
-                ? Image(
-                    image: AssetImage(
-                      'assets/images/check_icon.png',
-                    ),
-                  )
-                : null,
-          ),
-        ),
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-            ),
-            child: Text(
-              widget.labelOption2,
-              style: TextStyle(
-                color: !widget.valueToSwitch ? Colors.red[600] : Colors.grey,
-                fontSize: 16.0,
-                fontWeight:
-                    !widget.valueToSwitch ? FontWeight.bold : FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class MenuCardWidget extends StatelessWidget {
   final double boxMenuHeight = 65;
   final Widget navigator;
@@ -357,42 +239,52 @@ class MenuCardWidget extends StatelessWidget {
   }
 }
 
-class LabelAndTextField extends StatelessWidget {
+//ignore: must_be_immutable
+class LabelAndTextField extends StatefulWidget {
+  LabelAndTextField(
+      {Key key,
+      this.labelText,
+      this.textFieldHint,
+      this.keyboardInputType,
+      this.textFieldWidth,
+      this.valueToSwitch});
   final String labelText;
   final String textFieldHint;
   final TextInputType keyboardInputType;
   final double textFieldWidth;
+  String valueToSwitch;
 
-  const LabelAndTextField({
-    Key key,
-    this.labelText,
-    this.textFieldHint,
-    this.keyboardInputType,
-    this.textFieldWidth,
-  }) : super(key: key);
+  @override
+  _LabelAndTextFieldState createState() => _LabelAndTextFieldState();
+}
+
+class _LabelAndTextFieldState extends State<LabelAndTextField> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(labelText),
+        Text(widget.labelText),
         Flexible(
           child: Container(
-            width: textFieldWidth,
+            width: widget.textFieldWidth,
             height: 40.0,
             margin: EdgeInsets.only(
               left: 10.0,
             ),
             child: TextField(
-              keyboardType: keyboardInputType,
+              keyboardType: widget.keyboardInputType,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18.0,
               ),
-              //TODO peut etre implémenter le changement de variable
+              onChanged: (value) => setState(() {
+                widget.valueToSwitch = value;
+                print(widget.valueToSwitch);
+              }),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                hintText: textFieldHint,
+                hintText: widget.textFieldHint,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey[200],
