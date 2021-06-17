@@ -81,6 +81,7 @@ class _BedroomNavState extends State<BedroomNav> {
     bedroomTasks = widget.bedroomTasks;
     moves = widget.moves;
     sector = widget.sector;
+    isPresent = widget.isPresent;
 
     super.initState();
     _pageController = PageController();

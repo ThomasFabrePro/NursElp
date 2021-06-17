@@ -256,7 +256,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                                         HomeScreen(),
                                                   ),
                                                 ),
-                                                print(userService.getUserId())
                                               }
                                           });
                                 }

@@ -16,7 +16,7 @@ class BedroomManagementPage extends StatefulWidget {
 }
 
 class _BedroomManagementPageState extends State<BedroomManagementPage> {
-  DatabaseHelper _dbHelper = DatabaseHelper();
+  BedroomService bedroomService = BedroomService();
   String groupId = '';
 
   @override
@@ -62,29 +62,9 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                 right: 0.0,
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BedroomNav(
-                          //Création d'une nouvelle chambre
-                          groupId: groupId,
-                          bedroomId: '',
-                          isPresent: false,
-                          leaving: '',
-                          arriving: '',
-                          doctor: '',
-                          bedroomNumber: '',
-                          sexe: true,
-                          contagious: false,
-                          notes: '',
-                          sector: 1,
-                          side: '',
-                          surveillances: [],
-                          bedroomTasks: [],
-                          moves: [],
-                        ),
-                      ),
-                    );
+                    setState(() {
+                      bedroomService.addBedroom(groupId);
+                    });
                   },
                   child: Container(
                     width: 60.0,
