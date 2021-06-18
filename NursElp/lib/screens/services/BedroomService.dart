@@ -1,4 +1,5 @@
-import 'package:NursElp/screens/bedroom/bedroom.dart';
+import 'package:NursElp/models/BedroomModel.dart';
+import 'package:NursElp/screens/bedroom/bedroomPage.dart';
 import 'package:NursElp/screens/bedroom/bedroomnav.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:NursElp/screens/services/GroupsService.dart';
@@ -15,6 +16,8 @@ class BedroomService {
   ) {
     String bedroomCodeId = groupService.generateCode(4).toString();
     String bedroomId;
+    final String day = DateTime.now().day.toString();
+    final String month = DateTime.now().month.toString();
     bedrooms.add({
       'groupId': groupId,
       'isPresent': true,
@@ -22,7 +25,7 @@ class BedroomService {
       'sexe': false,
       'contagious': false,
       'doctor': '',
-      'arriving': '',
+      'arriving': '$day/$month',
       'leaving': '',
       'side': '',
       'bedroomId': bedroomCodeId,
@@ -95,26 +98,11 @@ class _GetBedroomsState extends State<GetBedrooms> {
               Map<String, dynamic> data =
                   document?.data() as Map<String, dynamic>;
               return BedroomCardWidget(
-                bedroomNumber: data['bedroomNumber'] ?? '000',
-                isPresent: data['isPresent'],
-                leaving: data['leaving'],
+                bedroomNumber: Bedroom.fromJson(data).bedroomNumber,
+                isPresent: Bedroom.fromJson(data).isPresent,
+                leaving: Bedroom.fromJson(data).leaving,
                 navigator: BedroomNav(
-                  groupId: widget.groupId,
-                  bedroomId: data['bedroomId'],
-                  isPresent: data['isPresent'],
-                  leaving: data['leaving'],
-                  arriving: data['arriving'],
-                  doctor: data['doctor'],
-                  bedroomNumber: data['bedroomNumber'],
-                  sexe: data['sexe'],
-                  contagious: data['contagious'],
-                  notes: data['notes'],
-                  sector: data['sector'],
-                  side: data['side'],
-                  surveillances: data['surveillances'] ??
-                      null, //peut etre tout mettre entre crochet si ca marche pas
-                  bedroomTasks: data['bedroomTasks'] ?? null,
-                  moves: data['moves'] ?? null,
+                  bedroom: Bedroom.fromJson(data),
                 ),
               );
             },

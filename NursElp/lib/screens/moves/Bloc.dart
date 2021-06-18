@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BlocPage extends StatefulWidget {
+  final String bedroomId;
+
+  const BlocPage({Key key, this.bedroomId}) : super(key: key);
   @override
   _BlocPageState createState() => _BlocPageState();
 }

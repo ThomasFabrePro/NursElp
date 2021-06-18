@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:NursElp/screens/bedroom/bedroom.dart';
+import 'package:NursElp/screens/bedroom/bedroomPage.dart';
 import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:NursElp/screens/services/UserService.dart';

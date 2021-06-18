@@ -1,36 +1,27 @@
-import 'package:NursElp/database_helper.dart';
-import 'package:NursElp/screens/bedroom/BedroomNav.dart';
-import 'package:NursElp/screens/bedroom/bedroomPage.dart';
-import 'package:NursElp/screens/services/BedroomService.dart';
+import 'package:NursElp/models/SurveillancesModel.dart';
+import 'package:NursElp/screens/guests/auth.dart';
+import 'package:NursElp/screens/services/SurveillanceService.dart';
+import 'package:NursElp/screens/surveillances/SurveillancePage.dart';
 import 'package:flutter/material.dart';
 
-class BedroomManagementPage extends StatefulWidget {
-  final String groupId;
-
-  BedroomManagementPage({
+class SurveillancesManagementPage extends StatefulWidget {
+  const SurveillancesManagementPage({
     Key key,
-    this.groupId,
   }) : super(key: key);
   @override
-  _BedroomManagementPageState createState() => _BedroomManagementPageState();
+  _SurveillancesManagementPageState createState() =>
+      _SurveillancesManagementPageState();
 }
 
-class _BedroomManagementPageState extends State<BedroomManagementPage> {
-  BedroomService bedroomService = BedroomService();
-  String groupId = '';
-
+class _SurveillancesManagementPageState
+    extends State<SurveillancesManagementPage> {
   @override
-  void initState() {
-    groupId = widget.groupId;
-    super.initState();
-  }
-
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Gestion des chambres',
+            'Surveillances',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -46,25 +37,17 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
           color: Colors.grey[100],
           child: Stack(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: GetBedrooms(
-                      groupId,
-                    ),
-                  ),
-                ],
-              ),
+              GetSurveillances(groupId: '7AbGe6aQJIOYSsq3QYEZ'),
               Positioned(
                 //Bouton ajouter
                 bottom: 24.0,
-                right: 0.0,
+                right: 24.0,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      bedroomService.addBedroom(groupId);
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AuthPage()),
+                    );
                   },
                   child: Container(
                     width: 60.0,

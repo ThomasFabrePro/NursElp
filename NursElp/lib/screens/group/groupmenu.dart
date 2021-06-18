@@ -1,9 +1,8 @@
-import 'package:NursElp/models/GroupModel.dart';
+import 'package:NursElp/screens/bedroom/BedroomsManagement.dart';
 import 'package:NursElp/screens/group/GroupSettings.dart';
+import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
 import 'package:flutter/material.dart';
-import '../bedroom/BedroomsManagement.dart';
-import '../bedroom/bedroom.dart';
-import '../bedroom/bedroomnav.dart';
+import '../bedroom/bedroomPage.dart';
 import '../moves/movesmanagement.dart';
 import '../tasks/TasksManagement.dart';
 import '../../widgets/CardWidgets.dart';
@@ -96,11 +95,11 @@ class _GroupMenuState extends State<GroupMenu> {
                   ),
                   MenuCardWidget(
                     title: 'Liste des tâches',
-                    navigator: Taskspage(),
+                    navigator: TasksManagementPage(),
                   ),
                   MenuCardWidget(
                     title: 'Surveillances importantes',
-                    navigator: BedroomNav(),
+                    navigator: SurveillancesManagementPage(),
                   ),
                   MenuCardWidget(
                     title: 'Déplacements',

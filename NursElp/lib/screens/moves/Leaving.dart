@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LeavingPage extends StatefulWidget {
+  final String bedroomId;
+
+  const LeavingPage({Key key, this.bedroomId}) : super(key: key);
   @override
   _LeavingPageState createState() => _LeavingPageState();
 }

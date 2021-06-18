@@ -4,12 +4,12 @@ import 'package:NursElp/widgets/CardWidgets.dart';
 
 import '../../database_helper.dart';
 
-class Taskspage extends StatefulWidget {
+class TasksManagementPage extends StatefulWidget {
   @override
-  _TaskspageState createState() => _TaskspageState();
+  _TasksManagementPageState createState() => _TasksManagementPageState();
 }
 
-class _TaskspageState extends State<Taskspage> {
+class _TasksManagementPageState extends State<TasksManagementPage> {
   DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override

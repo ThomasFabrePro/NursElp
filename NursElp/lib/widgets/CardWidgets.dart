@@ -1,3 +1,7 @@
+import 'package:NursElp/screens/moves/Absence.dart';
+import 'package:NursElp/screens/moves/Bloc.dart';
+import 'package:NursElp/screens/moves/Leaving.dart';
+import 'package:NursElp/screens/moves/arriving.dart';
 import 'package:flutter/material.dart';
 
 class TaskCardWidget extends StatelessWidget {
@@ -110,10 +114,10 @@ class BedroomCardWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isPresent
                         ? Colors.lightGreenAccent[400]
-                        : Colors.redAccent[400],
+                        : Colors.redAccent,
                     borderRadius: BorderRadius.circular(45.0),
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.black45,
                       width: 1.5,
                     ),
                   ),
@@ -126,6 +130,176 @@ class BedroomCardWidget extends StatelessWidget {
               ),
               child: Text(
                 'Sortie : $leaving' ?? 'Pas de sortie prévue',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SurveillanceCardWidget extends StatelessWidget {
+  final String bedroomNumber;
+  final String title;
+  final bool important;
+  final Widget navigator;
+  SurveillanceCardWidget(
+      {this.bedroomNumber, this.title, this.navigator, this.important});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 60,
+      padding: EdgeInsets.symmetric(
+        vertical: 12.0,
+        horizontal: 24.0,
+      ),
+      margin: EdgeInsets.only(
+        bottom: 12.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.redAccent,
+            width: 1,
+          )),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => navigator),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    bedroomNumber ?? 'rien',
+                    style: TextStyle(
+                      color: Colors.red[900],
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MoveCardWidget extends StatefulWidget {
+  final String bedroomNumber;
+  final String moveType;
+  final Widget navigator;
+  MoveCardWidget({
+    this.bedroomNumber,
+    this.moveType,
+    this.navigator,
+  });
+
+  @override
+  _MoveCardWidgetState createState() => _MoveCardWidgetState();
+}
+
+class _MoveCardWidgetState extends State<MoveCardWidget> {
+  String moveType = '';
+  @override
+  void initState() {
+    moveType = widget.moveType;
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 80,
+      padding: EdgeInsets.symmetric(
+        vertical: 12.0,
+        horizontal: 24.0,
+      ),
+      margin: EdgeInsets.only(
+        bottom: 12.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.redAccent,
+            width: 1,
+          )),
+      child: InkWell(
+        onTap: () {
+          switch (moveType) {
+            case 'arriving':
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ArrivingPage()),
+                );
+                break;
+              }
+            case 'leaving':
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LeavingPage()),
+                );
+                break;
+              }
+            case 'bloc':
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BlocPage()),
+                );
+                break;
+              }
+            case 'absence':
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AbsencePage()),
+                );
+                break;
+              }
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.bedroomNumber ?? '',
+                    style: TextStyle(
+                      color: Colors.red[900],
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: 5.0,
+              ),
+              child: Text(
+                'Déplacement : ${widget.moveType}',
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
