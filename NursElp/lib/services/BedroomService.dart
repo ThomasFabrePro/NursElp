@@ -1,8 +1,6 @@
 import 'package:NursElp/models/BedroomModel.dart';
-import 'package:NursElp/screens/bedroom/bedroomPage.dart';
 import 'package:NursElp/screens/bedroom/bedroomnav.dart';
-import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/services/GroupsService.dart';
+import 'package:NursElp/services/GroupsService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'package:NursElp/screens/bedroom/bedroomPage.dart';
-import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/UserService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 

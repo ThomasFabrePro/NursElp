@@ -1,4 +1,4 @@
-import 'package:NursElp/screens/services/GroupsService.dart';
+import 'package:NursElp/services/GroupsService.dart';
 import 'package:flutter/material.dart';
 
 class GroupCreationPage extends StatefulWidget {

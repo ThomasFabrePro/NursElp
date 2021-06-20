@@ -6,7 +6,7 @@ import 'package:NursElp/screens/guests/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/UserService.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -16,9 +16,9 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  UserService userService = UserService();
   @override
   Widget build(BuildContext context) {
+    UserService userService = UserService();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -60,4 +60,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//TODO vérifier que bedroomNumber est unique
 //TODO bouton quitter le groupe dans les settings du groupe

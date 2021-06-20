@@ -1,7 +1,7 @@
 import 'package:NursElp/screens/group/GroupCreation.dart';
 import 'package:NursElp/screens/guests/AccountSettings.dart';
-import 'package:NursElp/screens/services/GroupsService.dart';
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/GroupsService.dart';
+import 'package:NursElp/services/UserService.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

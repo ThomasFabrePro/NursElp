@@ -1,6 +1,5 @@
-import 'package:NursElp/models/SurveillancesModel.dart';
 import 'package:NursElp/screens/guests/auth.dart';
-import 'package:NursElp/screens/services/SurveillanceService.dart';
+import 'package:NursElp/services/SurveillanceService.dart';
 import 'package:NursElp/screens/surveillances/SurveillancePage.dart';
 import 'package:flutter/material.dart';
 
