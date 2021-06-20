@@ -18,6 +18,8 @@ class _BedroomPageState extends State<BedroomPage> {
   final double labelFontSize = 18.0;
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
+  Bedroom bedroom;
+
   String bedroomNumber = '';
   String bedroomId = '';
   String side = ''; //TODO ajouter pour savoir si porte, fenetre, seul
@@ -31,6 +33,8 @@ class _BedroomPageState extends State<BedroomPage> {
   bool isContagious = true;
   bool isPresent = false;
 
+  bool checkBedroom;
+
   List surveillances;
   List bedroomTasks;
   List moves;
@@ -39,6 +43,7 @@ class _BedroomPageState extends State<BedroomPage> {
 
   @override
   void initState() {
+    bedroom = widget.bedroom;
     bedroomId = widget.bedroom.bedroomId;
     side = widget.bedroom.side;
     notes = widget.bedroom.notes;
@@ -108,11 +113,30 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  bedroomNumber = value;
-                                  bedroomService.updateBedroom(bedroomId,
-                                      bedroomNumber, 'bedroomNumber');
-                                }),
+                                onSubmitted: (value) async {
+                                  checkBedroom =
+                                      await bedroomService.checkBedroomNumber(
+                                          value, groupId, bedroomId);
+                                  if (checkBedroom && value != '') {
+                                    setState(() {
+                                      bedroomNumber = value;
+                                      bedroomService.updateBedroom(
+                                          bedroomId, value, 'bedroomNumber');
+                                    });
+                                  } else {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          'Ce numéro de chambre existe déjà !'),
+                                      // action: SnackBarAction(
+                                      //   label: 'Undo',
+                                      //   onPressed: () {
+                                      //   },
+                                      // ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,

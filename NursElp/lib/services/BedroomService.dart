@@ -9,7 +9,7 @@ class BedroomService {
   GroupService groupService = GroupService();
   CollectionReference bedrooms =
       FirebaseFirestore.instance.collection('bedrooms');
-  addBedroom(
+  Future<String> addBedroom(
     String groupId,
   ) {
     String bedroomCodeId = groupService.generateCode(4).toString();
@@ -34,12 +34,13 @@ class BedroomService {
       'sector': 1,
     });
 
-    bedrooms
+    return bedrooms
         .where('bedroomId', isEqualTo: bedroomCodeId)
         .get()
         .then((QuerySnapshot querySnapshot) {
       bedroomId = querySnapshot.docs.single.id;
       querySnapshot.docs.single.reference.update({'bedroomId': bedroomId});
+      return bedroomId;
     });
   }
 
@@ -57,6 +58,29 @@ class BedroomService {
     DocumentReference bedroom =
         FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     bedroom.delete();
+  }
+
+  Future<bool> checkBedroomNumber(
+      String bedroomNumber, String groupId, String bedroomId) async {
+    //Future<bool> exists;
+    bool result;
+    // DocumentReference bedroom =
+    //     FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+    return bedrooms
+        .where('bedroomNumber', isEqualTo: bedroomNumber)
+        .where('groupId', isEqualTo: groupId)
+        .get()
+        .then((querySnapshot) {
+      if (querySnapshot.docs.isEmpty) {
+        print('Unique bedroom number');
+        result = true;
+      } else {
+        print('bedroom number already exists');
+        result = false;
+      }
+      print(result);
+      return result;
+    });
   }
 }
 
