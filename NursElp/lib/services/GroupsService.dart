@@ -134,6 +134,10 @@ class CreateGroup extends StatelessWidget {
   final String groupName;
   final String groupPassword;
   final int numberMember;
+  UserService userService = UserService();
+  GroupService groupService = GroupService();
+  CollectionReference groups = FirebaseFirestore.instance.collection('groups');
+  CollectionReference users = FirebaseFirestore.instance.collection("users");
 
   CreateGroup(
     this.groupName,
@@ -144,11 +148,7 @@ class CreateGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create a CollectionReference called users that references the firestore collection
-    CollectionReference groups =
-        FirebaseFirestore.instance.collection('groups');
-    CollectionReference users = FirebaseFirestore.instance.collection("users");
-    UserService userService = UserService();
-    GroupService groupService = GroupService();
+
     int code;
     String groupId;
     String uid = userService.getUserId();

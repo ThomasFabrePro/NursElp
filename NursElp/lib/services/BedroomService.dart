@@ -9,9 +9,10 @@ class BedroomService {
   GroupService groupService = GroupService();
   CollectionReference bedrooms =
       FirebaseFirestore.instance.collection('bedrooms');
+
   Future<String> addBedroom(
     String groupId,
-  ) {
+  ) async {
     String bedroomCodeId = groupService.generateCode(4).toString();
     String bedroomId;
     final String day = DateTime.now().day.toString();
@@ -61,7 +62,10 @@ class BedroomService {
   }
 
   Future<bool> checkBedroomNumber(
-      String bedroomNumber, String groupId, String bedroomId) async {
+    String bedroomNumber,
+    String groupId,
+    String bedroomId,
+  ) async {
     //Future<bool> exists;
     bool result;
     // DocumentReference bedroom =
@@ -78,7 +82,7 @@ class BedroomService {
         print('bedroom number already exists');
         result = false;
       }
-      print(result);
+
       return result;
     });
   }
@@ -93,11 +97,10 @@ class GetBedrooms extends StatefulWidget {
 }
 
 class _GetBedroomsState extends State<GetBedrooms> {
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
   @override
   Widget build(BuildContext context) {
-    CollectionReference bedrooms =
-        FirebaseFirestore.instance.collection('bedrooms');
-
     return StreamBuilder<QuerySnapshot>(
       stream: bedrooms
           .where('groupId', isEqualTo: widget.groupId)
@@ -131,6 +134,78 @@ class _GetBedroomsState extends State<GetBedrooms> {
           ).toList(),
         );
       },
+    );
+  }
+}
+
+class AddBedroomButton extends StatefulWidget {
+  final groupId;
+  const AddBedroomButton({Key key, this.groupId}) : super(key: key);
+
+  @override
+  _AddBedroomButtonState createState() => _AddBedroomButtonState();
+}
+
+class _AddBedroomButtonState extends State<AddBedroomButton> {
+  BedroomService bedroomService = BedroomService();
+  String groupId;
+  String bedroomId = '';
+  DocumentReference bedroom;
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
+  @override
+  void initState() {
+    groupId = widget.groupId;
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 24.0,
+      right: 0.0,
+      child: GestureDetector(
+        onTap: () async {
+          bedroomId = await bedroomService.addBedroom(groupId);
+          bedroom =
+              FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+          bedroom.get().then((document) {
+            Map<String, dynamic> data =
+                document?.data() as Map<String, dynamic>;
+            return Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BedroomNav(
+                  bedroom: Bedroom.fromJson(data),
+                ),
+              ),
+            );
+          });
+          // bedrooms
+          //     .where('bedroomId', isEqualTo: bedroomId)
+          //     .get()
+          //     .then((document)  {
+          //   Map<String, dynamic> data =
+          //       document.docs.single.data() as Map<String, dynamic>;
+          // });
+        },
+        child: Container(
+          width: 60.0,
+          height: 60.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.redAccent, Colors.red[300]],
+              begin: Alignment(0.0, -1.0),
+              end: Alignment(0.0, 1.0),
+            ),
+            borderRadius: BorderRadius.circular(45.0),
+          ),
+          child: Image(
+            image: AssetImage(
+              'assets/images/add_icon.png',
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
