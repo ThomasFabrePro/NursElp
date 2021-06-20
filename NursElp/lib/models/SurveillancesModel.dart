@@ -1,7 +1,7 @@
 class Surveillances {
   final String groupId;
   final String surveillanceId;
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String bedroomId;
   final String title;
   final bool isDone;

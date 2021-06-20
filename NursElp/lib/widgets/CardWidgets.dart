@@ -57,7 +57,7 @@ class TaskCardWidget extends StatelessWidget {
 }
 
 class BedroomCardWidget extends StatelessWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String leaving;
   final bool isPresent;
   final Widget navigator;
@@ -97,7 +97,7 @@ class BedroomCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    bedroomNumber ?? '',
+                    bedroomNumber.toString() ?? 0.toString(),
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,
@@ -143,7 +143,7 @@ class BedroomCardWidget extends StatelessWidget {
 }
 
 class SurveillanceCardWidget extends StatelessWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String title;
   final bool important;
   final Widget navigator;
@@ -183,7 +183,7 @@ class SurveillanceCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    bedroomNumber ?? 'rien',
+                    bedroomNumber.toString() ?? 'rien',
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,
@@ -201,7 +201,7 @@ class SurveillanceCardWidget extends StatelessWidget {
 }
 
 class MoveCardWidget extends StatefulWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String moveType;
   final Widget navigator;
   MoveCardWidget({
@@ -284,7 +284,7 @@ class _MoveCardWidgetState extends State<MoveCardWidget> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.bedroomNumber ?? '',
+                    widget.bedroomNumber.toString() ?? '',
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,

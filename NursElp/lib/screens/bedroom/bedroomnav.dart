@@ -20,7 +20,7 @@ class BedroomNav extends StatefulWidget {
 class _BedroomNavState extends State<BedroomNav> {
   int _currentIndex = 0;
   PageController _pageController;
-  String bedroomNumber = '';
+  int bedroomNumber = 0;
   String bedroomId = '';
   String side = '';
   String doctor = '';

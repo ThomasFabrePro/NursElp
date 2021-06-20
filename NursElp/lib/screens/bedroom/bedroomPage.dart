@@ -20,7 +20,7 @@ class _BedroomPageState extends State<BedroomPage> {
   BedroomService bedroomService = BedroomService();
   Bedroom bedroom;
 
-  String bedroomNumber = '';
+  int bedroomNumber = 0;
   String bedroomId = '';
   String side = ''; //TODO ajouter pour savoir si porte, fenetre, seul
   String doctor = '';
@@ -40,6 +40,7 @@ class _BedroomPageState extends State<BedroomPage> {
   List moves;
 
   int sector = 1;
+  int number = 0;
 
   @override
   void initState() {
@@ -76,6 +77,29 @@ class _BedroomPageState extends State<BedroomPage> {
                   Navigator.pop(context);
                 })
           ],
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  if (bedroomNumber != 0) {
+                    Navigator.pop(context);
+                  } else {
+                    final snackBar = SnackBar(
+                      content: Text(
+                          'Vous devez fournir un numéro de chambre valide'),
+                      // action: SnackBarAction(
+                      //   label: 'Undo',
+                      //   onPressed: () {
+                      //   },
+                      // ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+              );
+            },
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -95,7 +119,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       child: Row(
                         children: [
                           Text(
-                            'Chambre',
+                            'Numéro',
                           ),
                           Flexible(
                             child: Container(
@@ -106,22 +130,26 @@ class _BedroomPageState extends State<BedroomPage> {
                               ),
                               child: TextField(
                                 controller: TextEditingController(
-                                  text: bedroomNumber,
+                                  text: bedroomNumber.toString(),
                                 ),
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
+                                enableSuggestions: false,
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
                                 onSubmitted: (value) async {
+                                  number = int.parse(value);
+                                  print(number);
+                                  print(number.runtimeType);
                                   checkBedroom =
                                       await bedroomService.checkBedroomNumber(
-                                          value, groupId, bedroomId);
+                                          number, groupId, bedroomId);
                                   if (checkBedroom && value != '') {
                                     setState(() {
-                                      bedroomNumber = value;
+                                      bedroomNumber = int.parse(value);
                                       bedroomService.updateBedroom(
-                                          bedroomId, value, 'bedroomNumber');
+                                          bedroomId, number, 'bedroomNumber');
                                     });
                                   } else {
                                     final snackBar = SnackBar(

@@ -60,5 +60,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-//TODO vérifier que bedroomNumber est unique
+
 //TODO bouton quitter le groupe dans les settings du groupe

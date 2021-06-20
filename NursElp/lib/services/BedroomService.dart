@@ -20,7 +20,7 @@ class BedroomService {
     bedrooms.add({
       'groupId': groupId,
       'isPresent': true,
-      'bedroomNumber': '000',
+      'bedroomNumber': 000,
       'sexe': false,
       'contagious': false,
       'doctor': '',
@@ -62,7 +62,7 @@ class BedroomService {
   }
 
   Future<bool> checkBedroomNumber(
-    String bedroomNumber,
+    int bedroomNumber,
     String groupId,
     String bedroomId,
   ) async {
