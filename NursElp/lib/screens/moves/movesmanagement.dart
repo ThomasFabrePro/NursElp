@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:NursElp/screens/moves/NewMove.dart';
 
 class MovesManagementPage extends StatefulWidget {
+  final String groupId;
+  final String bedroomId;
+
+  const MovesManagementPage({Key key, this.groupId, this.bedroomId})
+      : super(key: key);
   @override
   _MovesManagementPageState createState() => _MovesManagementPageState();
 }

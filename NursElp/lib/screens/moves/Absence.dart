@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AbsencePage extends StatefulWidget {
+  final String bedroomId;
+
+  const AbsencePage({Key key, this.bedroomId}) : super(key: key);
   @override
   _AbsencePageState createState() => _AbsencePageState();
 }

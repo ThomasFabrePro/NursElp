@@ -1,45 +1,15 @@
-import 'package:NursElp/screens/services/BedroomService.dart';
+import 'package:NursElp/models/BedroomModel.dart';
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BedroomPage extends StatefulWidget {
-  final String groupId;
-  final String bedroomId;
-  final String notes;
-  final String doctor;
-  final String arriving;
-  final String leaving;
-  final String side;
-  final String bedroomNumber;
+  final Bedroom bedroom;
 
-  final bool isPresent;
-  final bool sexe;
-  final bool contagious;
-
-  final List surveillances;
-  final List bedroomTasks;
-  final List moves;
-
-  final int sector;
-
-  const BedroomPage(
-      {Key key,
-      this.bedroomId,
-      this.groupId,
-      this.isPresent,
-      this.bedroomNumber,
-      this.sexe,
-      this.contagious,
-      this.doctor,
-      this.arriving,
-      this.leaving,
-      this.side,
-      this.surveillances,
-      this.bedroomTasks,
-      this.moves,
-      this.notes,
-      this.sector})
-      : super(key: key);
+  const BedroomPage({
+    Key key,
+    this.bedroom,
+  }) : super(key: key);
   @override
   _BedroomPageState createState() => _BedroomPageState();
 }
@@ -48,6 +18,8 @@ class _BedroomPageState extends State<BedroomPage> {
   final double labelFontSize = 18.0;
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
+  Bedroom bedroom;
+
   String bedroomNumber = '';
   String bedroomId = '';
   String side = ''; //TODO ajouter pour savoir si porte, fenetre, seul
@@ -59,32 +31,34 @@ class _BedroomPageState extends State<BedroomPage> {
 
   bool isMale = false;
   bool isContagious = true;
-  bool isPresent = true;
-  //bool newBedroom = true;
+  bool isPresent = false;
+
+  bool checkBedroom;
 
   List surveillances;
   List bedroomTasks;
   List moves;
-  //String dataTest;
+
   int sector = 1;
+
   @override
   void initState() {
-    bedroomId = widget.bedroomId;
-    if (bedroomId != '') {
-      side = widget.side;
-      notes = widget.notes;
-      doctor = widget.doctor;
-      groupId = widget.groupId;
-      arriving = widget.arriving;
-      leaving = widget.leaving;
-      isMale = widget.sexe;
-      isContagious = widget.contagious;
-      isPresent = widget.isPresent;
-      surveillances = widget.surveillances;
-      bedroomTasks = widget.bedroomTasks;
-      moves = widget.moves;
-      bedroomNumber = widget.bedroomNumber;
-    }
+    bedroom = widget.bedroom;
+    bedroomId = widget.bedroom.bedroomId;
+    side = widget.bedroom.side;
+    notes = widget.bedroom.notes;
+    doctor = widget.bedroom.doctor;
+    groupId = widget.bedroom.groupId;
+    arriving = widget.bedroom.arriving;
+    leaving = widget.bedroom.leaving;
+    isMale = widget.bedroom.sexe;
+    isContagious = widget.bedroom.contagious;
+    isPresent = widget.bedroom.isPresent;
+    surveillances = widget.bedroom.surveillances;
+    bedroomTasks = widget.bedroom.bedroomTasks;
+    moves = widget.bedroom.moves;
+    bedroomNumber = widget.bedroom.bedroomNumber;
+
     super.initState();
   }
 
@@ -94,41 +68,6 @@ class _BedroomPageState extends State<BedroomPage> {
         appBar: AppBar(
           title: Text("Chambre $bedroomNumber"),
           centerTitle: true,
-          leading: bedroomId != ''
-              ? IconButton(
-                  onPressed: () {}, //TODO update les données !
-                  icon: Icon(Icons.check),
-                  color: Colors.white,
-                )
-              : IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                  ),
-                  color: Colors.white,
-                  onPressed: () {
-                    if (bedroomId == '') {
-                      bedroomService.addBedroom(
-                        widget.groupId,
-                        notes,
-                        doctor,
-                        arriving,
-                        leaving,
-                        side,
-                        bedroomNumber,
-                        isMale,
-                        isContagious,
-                        isPresent,
-                        null,
-                        null,
-                        null,
-                        1, //sector
-                      );
-                      print(bedroomId);
-                    }
-
-                    Navigator.pop(context);
-                  },
-                ),
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.delete_outline_rounded, size: 35),
@@ -150,7 +89,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                       //Chambre
                       padding: EdgeInsets.only(
-                        top: 12,
+                        top: 25,
                         left: 24,
                       ),
                       child: Row(
@@ -174,9 +113,30 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  bedroomNumber = value;
-                                }),
+                                onSubmitted: (value) async {
+                                  checkBedroom =
+                                      await bedroomService.checkBedroomNumber(
+                                          value, groupId, bedroomId);
+                                  if (checkBedroom && value != '') {
+                                    setState(() {
+                                      bedroomNumber = value;
+                                      bedroomService.updateBedroom(
+                                          bedroomId, value, 'bedroomNumber');
+                                    });
+                                  } else {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                          'Ce numéro de chambre existe déjà !'),
+                                      // action: SnackBarAction(
+                                      //   label: 'Undo',
+                                      //   onPressed: () {
+                                      //   },
+                                      // ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -215,10 +175,9 @@ class _BedroomPageState extends State<BedroomPage> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                if (isPresent) {
-                                  isPresent = false;
-                                } else
-                                  isPresent = true;
+                                isPresent = !isPresent;
+                                bedroomService.updateBedroom(
+                                    bedroomId, isPresent, 'isPresent');
                               });
                             },
                             child: Container(
@@ -229,12 +188,12 @@ class _BedroomPageState extends State<BedroomPage> {
                                 right: 20,
                               ),
                               decoration: BoxDecoration(
-                                color: isPresent
+                                color: isPresent == true
                                     ? Colors.lightGreenAccent[400]
-                                    : Colors.redAccent[400],
+                                    : Colors.redAccent,
                                 borderRadius: BorderRadius.circular(45.0),
                                 border: Border.all(
-                                  color: Colors.black,
+                                  color: Colors.black45,
                                   width: 1.5,
                                 ),
                               ),
@@ -246,7 +205,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                       //Sexe
                       padding: EdgeInsets.only(
-                        top: 15,
+                        top: 25,
                         left: 24,
                       ),
                       child: Row(
@@ -259,6 +218,8 @@ class _BedroomPageState extends State<BedroomPage> {
                               setState(() {
                                 if (!isMale) {
                                   isMale = true;
+                                  bedroomService.updateBedroom(
+                                      bedroomId, isMale, 'sexe');
                                 }
                               });
                             },
@@ -313,6 +274,8 @@ class _BedroomPageState extends State<BedroomPage> {
                                 () {
                                   if (isMale) {
                                     isMale = !isMale;
+                                    bedroomService.updateBedroom(
+                                        bedroomId, isMale, 'sexe');
                                   }
                                 },
                               );
@@ -368,7 +331,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                         //Contagieux
                         padding: EdgeInsets.only(
-                          top: 15,
+                          top: 25,
                           left: 24,
                         ),
                         child: Row(
@@ -381,8 +344,9 @@ class _BedroomPageState extends State<BedroomPage> {
                                 setState(() {
                                   if (!isContagious) {
                                     isContagious = true;
+                                    bedroomService.updateBedroom(
+                                        bedroomId, isContagious, 'contagious');
                                   }
-                                  print(isContagious);
                                 });
                               },
                               child: Container(
@@ -438,8 +402,9 @@ class _BedroomPageState extends State<BedroomPage> {
                                   () {
                                     if (isContagious) {
                                       isContagious = !isContagious;
+                                      bedroomService.updateBedroom(bedroomId,
+                                          isContagious, 'contagious');
                                     }
-                                    print(isContagious);
                                   },
                                 );
                               },
@@ -494,7 +459,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                       //Médecin
                       padding: EdgeInsets.only(
-                        top: 15,
+                        top: 25,
                         left: 24,
                         right: 24,
                       ),
@@ -510,9 +475,7 @@ class _BedroomPageState extends State<BedroomPage> {
                               ),
                               child: TextField(
                                 controller: TextEditingController(
-                                  text: arriving != ''
-                                      ? arriving
-                                      : date.toString(),
+                                  text: arriving,
                                 ),
                                 keyboardType: TextInputType.datetime,
                                 textAlign: TextAlign.center,
@@ -521,6 +484,8 @@ class _BedroomPageState extends State<BedroomPage> {
                                 ),
                                 onSubmitted: (value) => setState(() {
                                   arriving = value.toString();
+                                  bedroomService.updateBedroom(
+                                      bedroomId, arriving, 'arriving');
                                 }),
                                 decoration: InputDecoration(
                                   filled: true,
@@ -551,7 +516,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                       //Médecin
                       padding: EdgeInsets.only(
-                        top: 15,
+                        top: 25,
                         left: 24,
                         right: 24,
                       ),
@@ -576,6 +541,8 @@ class _BedroomPageState extends State<BedroomPage> {
                                 ),
                                 onSubmitted: (value) => setState(() {
                                   leaving = value.toString();
+                                  bedroomService.updateBedroom(
+                                      bedroomId, leaving, 'leaving');
                                 }),
                                 decoration: InputDecoration(
                                   filled: true,
@@ -606,7 +573,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     Padding(
                       //Médecin
                       padding: EdgeInsets.only(
-                        top: 15,
+                        top: 25,
                         left: 24,
                         right: 24,
                       ),
@@ -631,6 +598,8 @@ class _BedroomPageState extends State<BedroomPage> {
                                 ),
                                 onSubmitted: (value) => setState(() {
                                   doctor = value;
+                                  bedroomService.updateBedroom(
+                                      bedroomId, doctor, 'doctor');
                                 }),
                                 decoration: InputDecoration(
                                   filled: true,
@@ -659,7 +628,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: const Divider(
                         height: 15,
                         thickness: 3,
@@ -683,6 +652,7 @@ class _BedroomPageState extends State<BedroomPage> {
                           ),
                           Container(
                             width: double.infinity,
+                            height: 100,
                             child: TextField(
                               controller: TextEditingController(
                                 text: notes,
@@ -690,6 +660,8 @@ class _BedroomPageState extends State<BedroomPage> {
                               onSubmitted: (value) => (setState(
                                 () {
                                   notes = value;
+                                  bedroomService.updateBedroom(
+                                      bedroomId, notes, 'notes');
                                 },
                               )),
                               textCapitalization: TextCapitalization.sentences,
@@ -698,28 +670,13 @@ class _BedroomPageState extends State<BedroomPage> {
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.yellow[100],
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent)),
                               ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () => bedroomService.addBedroom(
-                              widget.groupId,
-                              notes,
-                              doctor,
-                              arriving,
-                              leaving,
-                              side,
-                              bedroomNumber,
-                              isMale,
-                              isContagious,
-                              isPresent,
-                              null,
-                              null,
-                              null,
-                              1, //sector
-                            ),
-                            child: Text(
-                              "Add Bedroom",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ],

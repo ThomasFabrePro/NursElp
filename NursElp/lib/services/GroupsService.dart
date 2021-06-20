@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'package:NursElp/screens/bedroom/bedroom.dart';
-import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/UserService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 
@@ -148,14 +146,16 @@ class CreateGroup extends StatelessWidget {
     // Create a CollectionReference called users that references the firestore collection
     CollectionReference groups =
         FirebaseFirestore.instance.collection('groups');
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
     UserService userService = UserService();
     GroupService groupService = GroupService();
     int code;
+    String groupId;
     String uid = userService.getUserId();
-    Future<void> createGroup() {
+    void createGroup() {
       code = groupService.generateCode(10);
       // Call the user's CollectionReference to add a new user
-      return groups
+      groups
           .add({
             'groupName': groupName ?? 'No group name yet', // John Doe
             'groupPassword': groupPassword, // Stokes and Sons
@@ -167,6 +167,15 @@ class CreateGroup extends StatelessWidget {
           })
           .then((value) => print("Group $groupName created"))
           .catchError((error) => print("Failed to create group: $error"));
+      groups
+          .where('groupCode', isEqualTo: code)
+          .where('groupName', isEqualTo: groupName)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        groupId = querySnapshot.docs.single.reference.id;
+        querySnapshot.docs.single.reference.update({'groupId': groupId});
+        users.doc(uid).update({'groupsId': groupId});
+      });
     }
 
     return TextButton(

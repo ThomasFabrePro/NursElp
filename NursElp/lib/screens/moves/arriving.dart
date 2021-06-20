@@ -2,6 +2,9 @@ import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:flutter/material.dart';
 
 class ArrivingPage extends StatefulWidget {
+  final String bedroomId;
+
+  const ArrivingPage({Key key, this.bedroomId}) : super(key: key);
   @override
   _ArrivingPageState createState() => _ArrivingPageState();
 }
@@ -64,7 +67,7 @@ class _ArrivingPageState extends State<ArrivingPage> {
                         child: TextField(
                           controller:
                               TextEditingController() //préremplir le champ
-                                ..text = '$day / $month',
+                                ..text = '$day/$month',
                           onSubmitted: (value) {},
                           keyboardType: TextInputType.datetime,
                           textAlign: TextAlign.center,

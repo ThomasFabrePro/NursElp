@@ -1,7 +1,7 @@
 import 'package:NursElp/models/UserModel.dart';
 import 'package:NursElp/screens/dashboard/Home.dart';
 import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/UserService.dart';
 import 'package:flutter/material.dart';
 
 class AccountCreationPage extends StatefulWidget {
@@ -256,7 +256,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                                         HomeScreen(),
                                                   ),
                                                 ),
-                                                print(userService.getUserId())
                                               }
                                           });
                                 }

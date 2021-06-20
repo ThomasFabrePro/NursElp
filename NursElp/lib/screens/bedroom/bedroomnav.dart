@@ -1,43 +1,17 @@
-import 'package:NursElp/screens/bedroom/Bedroom.dart';
+import 'package:NursElp/models/BedroomModel.dart';
+import 'package:NursElp/screens/bedroom/BedroomPage.dart';
+import 'package:NursElp/screens/moves/movesmanagement.dart';
+import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
+import 'package:NursElp/screens/tasks/TasksManagement.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:NursElp/screens/moves/Arriving.dart';
 
 class BedroomNav extends StatefulWidget {
-  final String groupId;
-  final String bedroomId;
-
-  final bool isPresent;
-  final String bedroomNumber;
-  final bool sexe;
-  final bool contagious;
-  final String doctor;
-  final String arriving;
-  final String leaving;
-  final String side;
-  final List surveillances;
-  final List bedroomTasks;
-  final List moves;
-  final String notes;
-  final int sector;
+  final Bedroom bedroom;
 
   const BedroomNav({
     Key key,
-    this.groupId,
-    this.bedroomId,
-    this.isPresent,
-    this.bedroomNumber,
-    this.sexe,
-    this.contagious,
-    this.doctor,
-    this.arriving,
-    this.leaving,
-    this.side,
-    this.surveillances,
-    this.bedroomTasks,
-    this.moves,
-    this.notes,
-    this.sector,
+    this.bedroom,
   }) : super(key: key);
   @override
   _BedroomNavState createState() => _BedroomNavState();
@@ -67,20 +41,21 @@ class _BedroomNavState extends State<BedroomNav> {
 
   @override
   void initState() {
-    bedroomNumber = widget.bedroomNumber;
-    bedroomId = widget.bedroomId;
-    side = widget.side;
-    doctor = widget.doctor;
-    notes = widget.notes;
-    groupId = widget.groupId;
-    arriving = widget.arriving;
-    leaving = widget.leaving;
-    sexe = widget.sexe;
-    isContagious = widget.contagious;
-    surveillances = widget.surveillances;
-    bedroomTasks = widget.bedroomTasks;
-    moves = widget.moves;
-    sector = widget.sector;
+    bedroomNumber = widget.bedroom.bedroomNumber;
+    bedroomId = widget.bedroom.bedroomId;
+    side = widget.bedroom.side;
+    doctor = widget.bedroom.doctor;
+    notes = widget.bedroom.notes;
+    groupId = widget.bedroom.groupId;
+    arriving = widget.bedroom.arriving;
+    leaving = widget.bedroom.leaving;
+    sexe = widget.bedroom.sexe;
+    isContagious = widget.bedroom.contagious;
+    surveillances = widget.bedroom.surveillances;
+    bedroomTasks = widget.bedroom.bedroomTasks;
+    moves = widget.bedroom.moves;
+    sector = widget.bedroom.sector;
+    isPresent = widget.bedroom.isPresent;
 
     super.initState();
     _pageController = PageController();
@@ -103,29 +78,11 @@ class _BedroomNavState extends State<BedroomNav> {
           },
           children: <Widget>[
             BedroomPage(
-              groupId: groupId,
-              bedroomId: bedroomId,
-              isPresent: isPresent,
-              leaving: leaving,
-              arriving: arriving,
-              doctor: doctor,
-              bedroomNumber: bedroomNumber,
-              sexe: sexe,
-              contagious: isContagious,
-              notes: notes,
-              sector: sector,
-              side: side,
-              surveillances: surveillances,
-              bedroomTasks: bedroomTasks,
-              moves: moves,
+              bedroom: widget.bedroom,
             ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.green,
-            ),
-            ArrivingPage(),
+            SurveillancesManagementPage(),
+            TasksManagementPage(),
+            MovesManagementPage(),
           ],
         ),
       ),

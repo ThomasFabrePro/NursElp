@@ -4,7 +4,7 @@ import 'package:NursElp/screens/group/groupmenu.dart';
 import 'package:flutter/material.dart';
 import 'package:NursElp/screens/guests/AccountCreation.dart';
 
-import 'package:NursElp/screens/services/UserService.dart';
+import 'package:NursElp/services/UserService.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key key}) : super(key: key);
