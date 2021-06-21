@@ -8,14 +8,16 @@ class Surveillances {
   final bool important;
   final String notes;
   //quel type pour la récurrence et le rappel?
-  Surveillances(this.bedroomNumber,
-      {this.groupId,
-      this.surveillanceId,
-      this.bedroomId,
-      this.title,
-      this.isDone,
-      this.important,
-      this.notes});
+  Surveillances({
+    this.bedroomNumber,
+    this.groupId,
+    this.surveillanceId,
+    this.bedroomId,
+    this.title,
+    this.isDone,
+    this.important,
+    this.notes,
+  });
 
   Surveillances.fromJson(Map<String, dynamic> data)
       : groupId = data['groupId'],

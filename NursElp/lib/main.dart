@@ -1,8 +1,5 @@
 import 'package:NursElp/screens/dashboard/Home.dart';
-import 'package:NursElp/screens/group/groupmenu.dart';
-import 'package:NursElp/screens/guests/AccountCreation.dart';
 import 'package:NursElp/screens/guests/auth.dart';
-//import 'package:NursElp/screens/guests/Auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -60,5 +57,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+//TODO piste de la vérification du numéro de chambre dans la bdd via chaque page de nav et non pas sur nav directement. chacun son appBar
 //TODO bouton quitter le groupe dans les settings du groupe

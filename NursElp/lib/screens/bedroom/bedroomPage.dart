@@ -34,6 +34,7 @@ class _BedroomPageState extends State<BedroomPage> {
   bool isPresent = false;
 
   bool checkBedroom;
+  bool checkBedroom2;
 
   List surveillances;
   List bedroomTasks;
@@ -81,18 +82,14 @@ class _BedroomPageState extends State<BedroomPage> {
             builder: (BuildContext context) {
               return IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {
+                onPressed: () async {
                   if (bedroomNumber != 0) {
+                    print('bedroomNumber from back arrow : $bedroomNumber');
                     Navigator.pop(context);
                   } else {
                     final snackBar = SnackBar(
                       content: Text(
                           'Vous devez fournir un numéro de chambre valide'),
-                      // action: SnackBarAction(
-                      //   label: 'Undo',
-                      //   onPressed: () {
-                      //   },
-                      // ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -140,26 +137,21 @@ class _BedroomPageState extends State<BedroomPage> {
                                 ),
                                 onSubmitted: (value) async {
                                   number = int.parse(value);
-                                  print(number);
-                                  print(number.runtimeType);
+
                                   checkBedroom =
                                       await bedroomService.checkBedroomNumber(
                                           number, groupId, bedroomId);
                                   if (checkBedroom && value != '') {
                                     setState(() {
-                                      bedroomNumber = int.parse(value);
+                                      bedroomNumber = number;
                                       bedroomService.updateBedroom(
                                           bedroomId, number, 'bedroomNumber');
                                     });
                                   } else {
                                     final snackBar = SnackBar(
                                       content: Text(
-                                          'Ce numéro de chambre existe déjà !'),
-                                      // action: SnackBarAction(
-                                      //   label: 'Undo',
-                                      //   onPressed: () {
-                                      //   },
-                                      // ),
+                                        'Ce numéro de chambre existe déjà !',
+                                      ),
                                     );
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);

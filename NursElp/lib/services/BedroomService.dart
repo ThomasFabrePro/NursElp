@@ -61,28 +61,46 @@ class BedroomService {
     bedroom.delete();
   }
 
+  Future<int> getBedroomNumber(String bedroomId) async {
+    int bedroomNumber;
+    DocumentReference bedroom =
+        FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+    return bedroom.get().then((document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      bedroomNumber = data['bedroomNumber'];
+      return bedroomNumber;
+    });
+  }
+
   Future<bool> checkBedroomNumber(
     int bedroomNumber,
     String groupId,
     String bedroomId,
   ) async {
-    //Future<bool> exists;
+    String testId;
     bool result;
-    // DocumentReference bedroom =
-    //     FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     return bedrooms
         .where('bedroomNumber', isEqualTo: bedroomNumber)
         .where('groupId', isEqualTo: groupId)
         .get()
         .then((querySnapshot) {
-      if (querySnapshot.docs.isEmpty) {
+      if (querySnapshot.docs.isEmpty && bedroomNumber != 0) {
         print('Unique bedroom number');
         result = true;
       } else {
-        print('bedroom number already exists');
-        result = false;
-      }
+        Map<String, dynamic> data =
+            querySnapshot.docs.single.data() as Map<String, dynamic>;
+        testId = data['bedroomId'];
 
+        if (testId == bedroomId) {
+          print("C'est déjà le numéro de cette chambre");
+          result = true;
+        } else {
+          print('bedroom number already exists');
+
+          result = false;
+        }
+      }
       return result;
     });
   }
@@ -138,21 +156,21 @@ class _GetBedroomsState extends State<GetBedrooms> {
   }
 }
 
-class AddBedroomButton extends StatefulWidget {
+class BedroomAddButton extends StatefulWidget {
   final groupId;
-  const AddBedroomButton({Key key, this.groupId}) : super(key: key);
+  const BedroomAddButton({Key key, this.groupId}) : super(key: key);
 
   @override
-  _AddBedroomButtonState createState() => _AddBedroomButtonState();
+  _BedroomAddButtonState createState() => _BedroomAddButtonState();
 }
 
-class _AddBedroomButtonState extends State<AddBedroomButton> {
+class _BedroomAddButtonState extends State<BedroomAddButton> {
   BedroomService bedroomService = BedroomService();
   String groupId;
   String bedroomId = '';
   DocumentReference bedroom;
-  CollectionReference bedrooms =
-      FirebaseFirestore.instance.collection('bedrooms');
+  // CollectionReference bedrooms =
+  //     FirebaseFirestore.instance.collection('bedrooms');
   @override
   void initState() {
     groupId = widget.groupId;
@@ -180,13 +198,6 @@ class _AddBedroomButtonState extends State<AddBedroomButton> {
               ),
             );
           });
-          // bedrooms
-          //     .where('bedroomId', isEqualTo: bedroomId)
-          //     .get()
-          //     .then((document)  {
-          //   Map<String, dynamic> data =
-          //       document.docs.single.data() as Map<String, dynamic>;
-          // });
         },
         child: Container(
           width: 60.0,

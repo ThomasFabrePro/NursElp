@@ -154,7 +154,7 @@ class SurveillanceCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 60,
+      height: 70,
       padding: EdgeInsets.symmetric(
         vertical: 12.0,
         horizontal: 24.0,
@@ -183,7 +183,7 @@ class SurveillanceCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    bedroomNumber.toString() ?? 'rien',
+                    title ?? '',
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,

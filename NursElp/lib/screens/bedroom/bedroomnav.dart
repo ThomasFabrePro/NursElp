@@ -1,8 +1,10 @@
 import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/screens/bedroom/BedroomPage.dart';
 import 'package:NursElp/screens/moves/movesmanagement.dart';
+import 'package:NursElp/screens/surveillances/ImportantSurveillancesManagementPage.dart';
 import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
 import 'package:NursElp/screens/tasks/TasksManagement.dart';
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +21,10 @@ class BedroomNav extends StatefulWidget {
 
 class _BedroomNavState extends State<BedroomNav> {
   int _currentIndex = 0;
+  BedroomService bedroomService = BedroomService();
   PageController _pageController;
   int bedroomNumber = 0;
+
   String bedroomId = '';
   String side = '';
   String doctor = '';
@@ -32,6 +36,8 @@ class _BedroomNavState extends State<BedroomNav> {
   bool sexe = false;
   bool isContagious = true;
   bool isPresent = true;
+
+  bool checkBedroom;
 
   List surveillances;
   List bedroomTasks;
@@ -69,59 +75,99 @@ class _BedroomNavState extends State<BedroomNav> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text("Chambre $bedroomNumber"),
+        //   centerTitle: true,
+        //   actions: <Widget>[
+        //     IconButton(
+        //         icon: Icon(Icons.delete_outline_rounded, size: 35),
+        //         onPressed: () {
+        //           bedroomService.deleteBedroom(bedroomId);
+        //           Navigator.pop(context);
+        //         })
+        //   ],
+        //   leading: Builder(
+        //     builder: (BuildContext context) {
+        //       return IconButton(
+        //         icon: const Icon(Icons.arrow_back),
+        //         onPressed: () async {
+        //           checkBedroom = await bedroomService.checkBedroomNumber(
+        //               bedroomNumber, groupId, bedroomId);
+        //           if (checkBedroom) {
+        //             print('bedroomNumber from Nav : $bedroomNumber');
+
+        //             Navigator.pop(context);
+        //           } else {
+        //             final snackBar = SnackBar(
+        //               content: Text(
+        //                   'Vous devez fournir un numéro de chambre valide'),
+        //             );
+        //             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        //           }
+        //         },
+        //       );
+        //     },
+        //   ),
+        // ),
+        body: SizedBox.expand(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _currentIndex = index);
+            },
+            children: <Widget>[
+              BedroomPage(
+                bedroom: widget.bedroom,
+              ),
+              SurveillancesManagementPage(
+                groupId: groupId,
+                bedroomId: bedroomId,
+                bedroomNumber: bedroomNumber,
+              ),
+              TasksManagementPage(),
+              MovesManagementPage(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: _currentIndex,
+          onItemSelected: (index) {
             setState(() => _currentIndex = index);
+            _pageController.jumpToPage(index);
           },
-          children: <Widget>[
-            BedroomPage(
-              bedroom: widget.bedroom,
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+              icon: Icon(Icons.hotel_rounded),
+              title: Text('Chambre'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
             ),
-            SurveillancesManagementPage(),
-            TasksManagementPage(),
-            MovesManagementPage(),
+            BottomNavyBarItem(
+              icon: Icon(Icons.airplay),
+              title: Text('Surveillances'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.article),
+              title: Text('Tâches'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.airport_shuttle),
+              title: Text('Déplacements'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-            icon: Icon(Icons.hotel_rounded),
-            title: Text('Chambre'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.airplay),
-            title: const Text('Surveillances'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.article),
-            title: Text('Tâches'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.airport_shuttle),
-            title: Text('Déplacements'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'package:NursElp/screens/bedroom/BedroomNav.dart';
-import 'package:NursElp/screens/bedroom/bedroomPage.dart';
 import 'package:NursElp/services/BedroomService.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +53,7 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                   ),
                 ],
               ),
-              AddBedroomButton(
+              BedroomAddButton(
                 groupId: groupId,
               ),
             ],

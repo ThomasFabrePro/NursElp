@@ -1,23 +1,24 @@
 import 'package:NursElp/models/SurveillancesModel.dart';
 import 'package:flutter/material.dart';
 
-class SurveillancePage extends StatefulWidget {
+class ImportantSurveillancePage extends StatefulWidget {
   final Surveillances surveillances;
-  const SurveillancePage({@required this.surveillances});
+  const ImportantSurveillancePage({@required this.surveillances});
 
   @override
-  _SurveillancePageState createState() => _SurveillancePageState();
+  _ImportantSurveillancePageState createState() =>
+      _ImportantSurveillancePageState();
 }
 
-class _SurveillancePageState extends State<SurveillancePage> {
+class _ImportantSurveillancePageState extends State<ImportantSurveillancePage> {
   String groupId = '';
   String surveillanceId = '';
   String bedroomId = '';
-  String notes = '';
   String title = '';
+  String notes = '';
   bool isDone = false;
   bool important = false;
-
+  int bedroomNumber;
   @override
   void initState() {
     if (widget.surveillances != null) {
@@ -28,6 +29,7 @@ class _SurveillancePageState extends State<SurveillancePage> {
       isDone = widget.surveillances.isDone;
       important = widget.surveillances.important;
       notes = widget.surveillances.notes;
+      bedroomNumber = widget.surveillances.bedroomNumber;
     }
     super.initState();
   }
