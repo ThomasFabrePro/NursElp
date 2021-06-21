@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 
 class BedroomPage extends StatefulWidget {
   final Bedroom bedroom;
+  final Function(int) onBedroomNumberChanged;
 
   const BedroomPage({
     Key key,
     this.bedroom,
+    this.onBedroomNumberChanged,
   }) : super(key: key);
   @override
   _BedroomPageState createState() => _BedroomPageState();
@@ -16,6 +18,8 @@ class BedroomPage extends StatefulWidget {
 
 class _BedroomPageState extends State<BedroomPage> {
   final double labelFontSize = 18.0;
+  Function(int) onBedroomNumberChanged;
+
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
   Bedroom bedroom;
@@ -45,6 +49,8 @@ class _BedroomPageState extends State<BedroomPage> {
 
   @override
   void initState() {
+    onBedroomNumberChanged = widget.onBedroomNumberChanged;
+
     bedroom = widget.bedroom;
     bedroomId = widget.bedroom.bedroomId;
     side = widget.bedroom.side;
@@ -84,7 +90,6 @@ class _BedroomPageState extends State<BedroomPage> {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () async {
                   if (bedroomNumber != 0) {
-                    print('bedroomNumber from back arrow : $bedroomNumber');
                     Navigator.pop(context);
                   } else {
                     final snackBar = SnackBar(
@@ -146,6 +151,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                       bedroomNumber = number;
                                       bedroomService.updateBedroom(
                                           bedroomId, number, 'bedroomNumber');
+                                      onBedroomNumberChanged(number);
                                     });
                                   } else {
                                     final snackBar = SnackBar(

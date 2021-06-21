@@ -22,6 +22,7 @@ class BedroomNav extends StatefulWidget {
 class _BedroomNavState extends State<BedroomNav> {
   int _currentIndex = 0;
   BedroomService bedroomService = BedroomService();
+  Bedroom bedroom;
   PageController _pageController;
   int bedroomNumber = 0;
 
@@ -47,6 +48,7 @@ class _BedroomNavState extends State<BedroomNav> {
 
   @override
   void initState() {
+    bedroom = widget.bedroom;
     bedroomNumber = widget.bedroom.bedroomNumber;
     bedroomId = widget.bedroom.bedroomId;
     side = widget.bedroom.side;
@@ -77,50 +79,22 @@ class _BedroomNavState extends State<BedroomNav> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text("Chambre $bedroomNumber"),
-        //   centerTitle: true,
-        //   actions: <Widget>[
-        //     IconButton(
-        //         icon: Icon(Icons.delete_outline_rounded, size: 35),
-        //         onPressed: () {
-        //           bedroomService.deleteBedroom(bedroomId);
-        //           Navigator.pop(context);
-        //         })
-        //   ],
-        //   leading: Builder(
-        //     builder: (BuildContext context) {
-        //       return IconButton(
-        //         icon: const Icon(Icons.arrow_back),
-        //         onPressed: () async {
-        //           checkBedroom = await bedroomService.checkBedroomNumber(
-        //               bedroomNumber, groupId, bedroomId);
-        //           if (checkBedroom) {
-        //             print('bedroomNumber from Nav : $bedroomNumber');
-
-        //             Navigator.pop(context);
-        //           } else {
-        //             final snackBar = SnackBar(
-        //               content: Text(
-        //                   'Vous devez fournir un numéro de chambre valide'),
-        //             );
-        //             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        //           }
-        //         },
-        //       );
-        //     },
-        //   ),
-        // ),
         body: SizedBox.expand(
           child: PageView(
             controller: _pageController,
             onPageChanged: (index) {
-              setState(() => _currentIndex = index);
+              setState(() {
+                _currentIndex = index;
+                bedroomNumber = bedroomNumber;
+              });
             },
             children: <Widget>[
               BedroomPage(
-                bedroom: widget.bedroom,
-              ),
+                  bedroom: bedroom,
+                  onBedroomNumberChanged: (int value) {
+                    setState(() => bedroomNumber =
+                        value); //pour transmettre aux autres pages le changement de numéro de chambre
+                  }),
               SurveillancesManagementPage(
                 groupId: groupId,
                 bedroomId: bedroomId,
@@ -147,7 +121,7 @@ class _BedroomNavState extends State<BedroomNav> {
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.airplay),
-              title: Text('Surveillances'),
+              title: Text('Surv.'),
               activeColor: Colors.redAccent,
               inactiveColor: Colors.black,
               textAlign: TextAlign.center,
@@ -161,7 +135,7 @@ class _BedroomNavState extends State<BedroomNav> {
             ),
             BottomNavyBarItem(
               icon: Icon(Icons.airport_shuttle),
-              title: Text('Déplacements'),
+              title: Text('Déplace.'),
               activeColor: Colors.redAccent,
               inactiveColor: Colors.black,
               textAlign: TextAlign.center,

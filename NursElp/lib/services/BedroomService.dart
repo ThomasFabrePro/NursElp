@@ -169,8 +169,7 @@ class _BedroomAddButtonState extends State<BedroomAddButton> {
   String groupId;
   String bedroomId = '';
   DocumentReference bedroom;
-  // CollectionReference bedrooms =
-  //     FirebaseFirestore.instance.collection('bedrooms');
+
   @override
   void initState() {
     groupId = widget.groupId;

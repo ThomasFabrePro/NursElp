@@ -1,7 +1,5 @@
-import 'package:NursElp/screens/guests/auth.dart';
 import 'package:NursElp/services/BedroomService.dart';
 import 'package:NursElp/services/SurveillanceService.dart';
-import 'package:NursElp/screens/surveillances/SurveillancePage.dart';
 import 'package:flutter/material.dart';
 
 class SurveillancesManagementPage extends StatefulWidget {
@@ -44,6 +42,24 @@ class _SurveillancesManagementPageState
             ),
           ),
           centerTitle: true,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () async {
+                  if (bedroomNumber != 0) {
+                    Navigator.pop(context);
+                  } else {
+                    final snackBar = SnackBar(
+                      content: Text(
+                          'Vous devez fournir un numéro de chambre valide'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+              );
+            },
+          ),
         ),
         body: Container(
           width: double.infinity,
