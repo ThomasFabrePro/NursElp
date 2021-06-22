@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(
-          bodyText2: TextStyle(fontSize: 18),
+          bodyText2: TextStyle(fontSize: 20),
         ),
         backgroundColor: Colors.grey[100],
         primaryColor: Colors.redAccent,
@@ -57,7 +57,11 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-//TODO piste de la vérification du numéro de chambre dans la bdd via chaque page de nav et non pas sur nav directement. chacun son appBar
+
+
+//TODO implementer la notion de side pour les chambres
 //TODO bouton quitter le groupe dans les settings du groupe
 
-//TODO BUG CONNU modification du num de chambre, puis navigation sur les autres pages de cette chambre. au retour sur les infos principales de la chambre l'affichage est du numéro est celui de l'ancien alors que la valeur a bien été changée
+
+//TODO ajouter les notif (pour les surv par ex)
+//TODO ajouter les examens dans les menus ?

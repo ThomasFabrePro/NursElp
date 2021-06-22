@@ -19,11 +19,11 @@ class SurveillanceService {
     surveillances.add({
       'surveillanceId': key,
       'groupId': groupId,
-      'title': 'No title yet',
+      'title': '',
       'isDone': false,
       'bedroomId': bedroomId,
       'important': false,
-      'note': 'No notes yet',
+      'note': '',
       'bedroomNumber': bedroomNumber
     });
 
@@ -38,17 +38,36 @@ class SurveillanceService {
       return surveillanceId;
     });
   }
+
+  void updateSurveillance(
+    String surveillanceId,
+    String field,
+    var value,
+  ) {
+    DocumentReference surveillance = FirebaseFirestore.instance
+        .collection('surveillances')
+        .doc(surveillanceId);
+    surveillance.update({field: value});
+  }
+
+  void deleteSurveillance(String surevillanceId) {
+    DocumentReference surveillance = FirebaseFirestore.instance
+        .collection('surveillances')
+        .doc(surevillanceId);
+    surveillance.delete();
+  }
 }
 
-class GetSurveillances extends StatefulWidget {
+class GetImportantSurveillances extends StatefulWidget {
   final String groupId;
-  const GetSurveillances({Key key, this.groupId}) : super(key: key);
+  const GetImportantSurveillances({Key key, this.groupId}) : super(key: key);
 
   @override
-  _GetSurveillancesState createState() => _GetSurveillancesState();
+  _GetImportantSurveillancesState createState() =>
+      _GetImportantSurveillancesState();
 }
 
-class _GetSurveillancesState extends State<GetSurveillances> {
+class _GetImportantSurveillancesState extends State<GetImportantSurveillances> {
   @override
   Widget build(BuildContext context) {
     CollectionReference surveillances =
@@ -76,10 +95,10 @@ class _GetSurveillancesState extends State<GetSurveillances> {
             (DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document?.data() as Map<String, dynamic>;
-              return SurveillanceCardWidget(
+              return ImportantSurveillanceCardWidget(
                   bedroomNumber: Surveillances.fromJson(data).bedroomNumber,
                   title: Surveillances.fromJson(data).title,
-                  important: Surveillances.fromJson(data).important,
+                  description: Surveillances.fromJson(data).description,
                   navigator: SurveillancePage(
                     surveillances: Surveillances.fromJson(data),
                   ));
@@ -94,7 +113,9 @@ class _GetSurveillancesState extends State<GetSurveillances> {
 class GetBedroomSurveillances extends StatefulWidget {
   final String groupId;
   final String bedroomId;
-  const GetBedroomSurveillances({Key key, this.groupId, this.bedroomId})
+  final int bedroomNumber;
+  const GetBedroomSurveillances(
+      {Key key, this.groupId, this.bedroomId, this.bedroomNumber})
       : super(key: key);
 
   @override
@@ -103,13 +124,15 @@ class GetBedroomSurveillances extends StatefulWidget {
 }
 
 class _GetBedroomSurveillancesState extends State<GetBedroomSurveillances> {
-  String groupId;
-  String bedroomId;
+  String groupId = '';
+  String bedroomId = '';
+  int bedroomNumber = 10;
   @override
   void initState() {
     super.initState();
     groupId = widget.groupId;
     bedroomId = widget.bedroomId;
+    bedroomNumber = widget.bedroomNumber;
   }
 
   Widget build(BuildContext context) {
@@ -142,6 +165,7 @@ class _GetBedroomSurveillancesState extends State<GetBedroomSurveillances> {
                   bedroomNumber: Surveillances.fromJson(data).bedroomNumber,
                   title: Surveillances.fromJson(data).title,
                   important: Surveillances.fromJson(data).important,
+                  description: Surveillances.fromJson(data).description,
                   navigator: SurveillancePage(
                     surveillances: Surveillances.fromJson(data),
                   ));
@@ -191,8 +215,10 @@ class _SurveillanceAddButtonState extends State<SurveillanceAddButton> {
       right: 0.0,
       child: GestureDetector(
         onTap: () async {
+          bedroomNumber = widget.bedroomNumber;
           surveillanceId = await surveillanceService.addSurveillance(
               bedroomId, groupId, bedroomNumber);
+
           surveillance = FirebaseFirestore.instance
               .collection('surveillances')
               .doc(surveillanceId);

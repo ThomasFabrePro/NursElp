@@ -1,14 +1,17 @@
 class Surveillances {
   final String groupId;
   final String surveillanceId;
-  final int bedroomNumber;
+  final String notes;
   final String bedroomId;
   final String title;
+  final String description;
   final bool isDone;
   final bool important;
-  final String notes;
+
+  final int bedroomNumber;
   //quel type pour la récurrence et le rappel?
   Surveillances({
+    this.description,
     this.bedroomNumber,
     this.groupId,
     this.surveillanceId,
@@ -27,7 +30,8 @@ class Surveillances {
         isDone = data['isDone'],
         important = data['important'],
         notes = data['notes'],
-        bedroomNumber = data['bedroomNumber'];
+        bedroomNumber = data['bedroomNumber'],
+        description = data['description'];
 
   Map<String, dynamic> toJson() => {
         'surveillanceId': surveillanceId,
@@ -37,5 +41,7 @@ class Surveillances {
         'bedroomId': bedroomId,
         'important': important,
         'note': notes,
+        'bedroomNumber': bedroomNumber,
+        'description': description,
       };
 }

@@ -6,11 +6,13 @@ import 'package:flutter/services.dart';
 class BedroomPage extends StatefulWidget {
   final Bedroom bedroom;
   final Function(int) onBedroomNumberChanged;
+  final int bedroomNumber;
 
   const BedroomPage({
     Key key,
     this.bedroom,
     this.onBedroomNumberChanged,
+    this.bedroomNumber,
   }) : super(key: key);
   @override
   _BedroomPageState createState() => _BedroomPageState();
@@ -65,7 +67,7 @@ class _BedroomPageState extends State<BedroomPage> {
     surveillances = widget.bedroom.surveillances;
     bedroomTasks = widget.bedroom.bedroomTasks;
     moves = widget.bedroom.moves;
-    bedroomNumber = widget.bedroom.bedroomNumber;
+    bedroomNumber = widget.bedroomNumber;
 
     super.initState();
   }
@@ -94,7 +96,9 @@ class _BedroomPageState extends State<BedroomPage> {
                   } else {
                     final snackBar = SnackBar(
                       content: Text(
-                          'Vous devez fournir un numéro de chambre valide'),
+                        'Vous devez fournir un numéro de chambre valide',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
@@ -146,7 +150,9 @@ class _BedroomPageState extends State<BedroomPage> {
                                   checkBedroom =
                                       await bedroomService.checkBedroomNumber(
                                           number, groupId, bedroomId);
-                                  if (checkBedroom && value != '') {
+                                  if (checkBedroom &&
+                                      value != '' &&
+                                      value != bedroomNumber.toString()) {
                                     setState(() {
                                       bedroomNumber = number;
                                       bedroomService.updateBedroom(
@@ -508,11 +514,13 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  arriving = value.toString();
-                                  bedroomService.updateBedroom(
-                                      bedroomId, arriving, 'arriving');
-                                }),
+                                onSubmitted: (value) {
+                                  if (value != arriving) {
+                                    arriving = value.toString();
+                                    bedroomService.updateBedroom(
+                                        bedroomId, arriving, 'arriving');
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -565,11 +573,13 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  leaving = value.toString();
-                                  bedroomService.updateBedroom(
-                                      bedroomId, leaving, 'leaving');
-                                }),
+                                onSubmitted: (value) {
+                                  if (value != leaving) {
+                                    leaving = value.toString();
+                                    bedroomService.updateBedroom(
+                                        bedroomId, leaving, 'leaving');
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,

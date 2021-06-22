@@ -73,10 +73,12 @@ class _SurveillancesManagementPageState
               GetBedroomSurveillances(
                 groupId: groupId,
                 bedroomId: bedroomId,
+                bedroomNumber: bedroomNumber,
               ), //transformer en GetBedroomSurveillances car page propre à la chambre
               SurveillanceAddButton(
                 bedroomId: bedroomId,
                 groupId: groupId,
+                bedroomNumber: bedroomNumber,
               )
               // Positioned(
               //   //Bouton ajouter

@@ -1,6 +1,5 @@
 import 'package:NursElp/screens/guests/auth.dart';
 import 'package:NursElp/services/SurveillanceService.dart';
-import 'package:NursElp/screens/surveillances/SurveillancePage.dart';
 import 'package:flutter/material.dart';
 
 class ImportantSurveillancesManagementPage extends StatefulWidget {
@@ -16,13 +15,19 @@ class ImportantSurveillancesManagementPage extends StatefulWidget {
 
 class _ImportantSurveillancesManagementPageState
     extends State<ImportantSurveillancesManagementPage> {
+  String groupId = '';
   @override
+  void initState() {
+    super.initState();
+    groupId = widget.groupId;
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Surveillances',
+            'Surveillances Importantes',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -38,7 +43,7 @@ class _ImportantSurveillancesManagementPageState
           color: Colors.grey[100],
           child: Stack(
             children: [
-              GetSurveillances(groupId: '7AbGe6aQJIOYSsq3QYEZ'),
+              GetImportantSurveillances(groupId: groupId),
               Positioned(
                 //Bouton ajouter
                 bottom: 24.0,

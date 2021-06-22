@@ -1,7 +1,6 @@
 import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/screens/bedroom/BedroomPage.dart';
 import 'package:NursElp/screens/moves/movesmanagement.dart';
-import 'package:NursElp/screens/surveillances/ImportantSurveillancesManagementPage.dart';
 import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
 import 'package:NursElp/screens/tasks/TasksManagement.dart';
 import 'package:NursElp/services/BedroomService.dart';
@@ -90,6 +89,7 @@ class _BedroomNavState extends State<BedroomNav> {
             },
             children: <Widget>[
               BedroomPage(
+                  bedroomNumber: bedroomNumber,
                   bedroom: bedroom,
                   onBedroomNumberChanged: (int value) {
                     setState(() => bedroomNumber =
