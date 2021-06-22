@@ -4,7 +4,12 @@ class UserModel {
   String uid;
   String nickname;
 
-  UserModel({this.uid, this.email, this.password, this.nickname});
+  UserModel({
+    this.uid,
+    this.email,
+    this.password,
+    this.nickname,
+  });
 
   set setUid(value) => uid = value;
   set setNickname(value) => nickname = value;

@@ -77,12 +77,21 @@ class BedroomCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        // border: Border.all(
+        //   color: Colors.redAccent,
+        //   width: 1,
+        // ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -168,12 +177,21 @@ class SurveillanceCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        // border: Border.all(
+        //   color: Colors.white,
+        //   width: 1,
+        // ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -215,7 +233,7 @@ class SurveillanceCardWidget extends StatelessWidget {
                 important
                     ? Icon(
                         Icons.warning,
-                        size: 32,
+                        size: 37,
                       )
                     : Container(),
               ],
@@ -254,12 +272,17 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 8,
+            blurRadius: 15,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -295,9 +318,11 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                           maxLines: 1,
                         ),
                       ),
-                      Text(isPresent
-                          ? 'isPresent = $isPresent'
-                          : "T'as pas l'info")
+                      // Text(
+                      //   isPresent
+                      //       ? 'isPresent = $isPresent'
+                      //       : "T'as pas l'info",
+                      // ),
                     ],
                   ),
                 ),
@@ -500,7 +525,16 @@ class MenuCardWidget extends StatelessWidget {
           begin: Alignment(1, 0),
           end: Alignment(-1, 0),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
+
       child: InkWell(
         onTap: () {
           Navigator.push(
