@@ -1,5 +1,7 @@
+import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/models/SurveillancesModel.dart';
 import 'package:NursElp/screens/surveillances/SurveillancePage.dart';
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -68,11 +70,14 @@ class GetImportantSurveillances extends StatefulWidget {
 }
 
 class _GetImportantSurveillancesState extends State<GetImportantSurveillances> {
+  CollectionReference surveillances =
+      FirebaseFirestore.instance.collection('surveillances');
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
+  BedroomService bedroomService = BedroomService();
+  bool isPresent;
   @override
   Widget build(BuildContext context) {
-    CollectionReference surveillances =
-        FirebaseFirestore.instance.collection('surveillances');
-
     return StreamBuilder<QuerySnapshot>(
       stream: surveillances
           .where('groupId', isEqualTo: widget.groupId)
@@ -95,6 +100,7 @@ class _GetImportantSurveillancesState extends State<GetImportantSurveillances> {
             (DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document?.data() as Map<String, dynamic>;
+
               return ImportantSurveillanceCardWidget(
                   bedroomNumber: Surveillances.fromJson(data).bedroomNumber,
                   title: Surveillances.fromJson(data).title,
@@ -240,9 +246,9 @@ class _SurveillanceAddButtonState extends State<SurveillanceAddButton> {
           height: 60.0,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.redAccent, Colors.red[300]],
-              begin: Alignment(0.0, -1.0),
-              end: Alignment(0.0, 1.0),
+              colors: [Colors.redAccent, Colors.deepOrange[400]],
+              begin: Alignment(1, 0),
+              end: Alignment(-1, 0),
             ),
             borderRadius: BorderRadius.circular(45.0),
           ),

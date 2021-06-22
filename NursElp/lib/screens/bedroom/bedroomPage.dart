@@ -78,6 +78,15 @@ class _BedroomPageState extends State<BedroomPage> {
         appBar: AppBar(
           title: Text("Chambre $bedroomNumber"),
           centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.delete_outline_rounded, size: 35),

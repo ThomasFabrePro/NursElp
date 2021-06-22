@@ -41,6 +41,15 @@ class _SurveillancesManagementPageState
               color: Colors.white,
             ),
           ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
           centerTitle: true,
           leading: Builder(
             builder: (BuildContext context) {

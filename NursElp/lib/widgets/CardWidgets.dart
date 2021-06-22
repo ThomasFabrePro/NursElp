@@ -231,9 +231,15 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
   final int bedroomNumber;
   final String title;
   final String description;
+  final bool isPresent;
   final Widget navigator;
-  ImportantSurveillanceCardWidget(
-      {this.bedroomNumber, this.title, this.navigator, this.description});
+  ImportantSurveillanceCardWidget({
+    this.bedroomNumber,
+    this.title,
+    this.navigator,
+    this.description,
+    this.isPresent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -289,6 +295,9 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                           maxLines: 1,
                         ),
                       ),
+                      Text(isPresent
+                          ? 'isPresent = $isPresent'
+                          : "T'as pas l'info")
                     ],
                   ),
                 ),
@@ -487,9 +496,9 @@ class MenuCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
-          colors: [Colors.redAccent, Colors.red[300]],
-          begin: Alignment(0.0, -1.0),
-          end: Alignment(0.0, 1.0),
+          colors: [Colors.redAccent, Colors.deepOrange[400]],
+          begin: Alignment(1, 0),
+          end: Alignment(-1, 0),
         ),
       ),
       child: InkWell(
@@ -513,70 +522,6 @@ class MenuCardWidget extends StatelessWidget {
               )),
         ),
       ),
-    );
-  }
-}
-
-//ignore: must_be_immutable
-class LabelAndTextField extends StatefulWidget {
-  LabelAndTextField(
-      {Key key,
-      this.labelText,
-      this.textFieldHint,
-      this.keyboardInputType,
-      this.textFieldWidth,
-      this.valueToSwitch});
-  final String labelText;
-  final String textFieldHint;
-  final TextInputType keyboardInputType;
-  final double textFieldWidth;
-  String valueToSwitch;
-
-  @override
-  _LabelAndTextFieldState createState() => _LabelAndTextFieldState();
-}
-
-class _LabelAndTextFieldState extends State<LabelAndTextField> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(widget.labelText),
-        Flexible(
-          child: Container(
-            width: widget.textFieldWidth,
-            height: 40.0,
-            margin: EdgeInsets.only(
-              left: 10.0,
-            ),
-            child: TextField(
-              keyboardType: widget.keyboardInputType,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-              onChanged: (value) => setState(() {
-                widget.valueToSwitch = value;
-                print(widget.valueToSwitch);
-              }),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: widget.textFieldHint,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                  ),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                contentPadding: EdgeInsets.only(
-                  bottom: 0.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

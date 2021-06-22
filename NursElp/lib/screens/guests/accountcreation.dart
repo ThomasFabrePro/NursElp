@@ -49,6 +49,15 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
         appBar: AppBar(
           title: Text('Nouveau Compte'),
           centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.only(right: 12.0, left: 12.0, top: 24),
@@ -57,9 +66,9 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.redAccent, Colors.red[300]],
-                  begin: Alignment(0.0, -1.0),
-                  end: Alignment(0.0, 1.0),
+                  colors: [Colors.redAccent, Colors.deepOrange[400]],
+                  begin: Alignment(1, 0),
+                  end: Alignment(-1, 0),
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),

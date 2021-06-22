@@ -104,6 +104,17 @@ class BedroomService {
       return result;
     });
   }
+
+  Future<bool> getBoolData(String bedroomId, String dataField) async {
+    bool dataToGet;
+    DocumentReference bedroom =
+        FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+    return bedroom.get().then((document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      dataToGet = data[dataField];
+      return dataToGet;
+    });
+  }
 }
 
 class GetBedrooms extends StatefulWidget {
@@ -203,9 +214,9 @@ class _BedroomAddButtonState extends State<BedroomAddButton> {
           height: 60.0,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.redAccent, Colors.red[300]],
-              begin: Alignment(0.0, -1.0),
-              end: Alignment(0.0, 1.0),
+              colors: [Colors.redAccent, Colors.deepOrange[400]],
+              begin: Alignment(1, 0),
+              end: Alignment(-1, 0),
             ),
             borderRadius: BorderRadius.circular(45.0),
           ),

@@ -17,12 +17,14 @@ class _TasksManagementPageState extends State<TasksManagementPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Container(
-            margin: EdgeInsets.only(left: 65.0),
-            child: Text(
-              'Liste des tâches',
-              style: TextStyle(
-                color: Colors.white,
+          title: Text('Liste des tâches'),
+          centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
               ),
             ),
           ),
@@ -95,9 +97,9 @@ class _TasksManagementPageState extends State<TasksManagementPage> {
                     height: 60.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.redAccent, Colors.red[300]],
-                        begin: Alignment(0.0, -1.0),
-                        end: Alignment(0.0, 1.0),
+                        colors: [Colors.redAccent, Colors.deepOrange[400]],
+                        begin: Alignment(1, 0),
+                        end: Alignment(-1, 0),
                       ),
                       borderRadius: BorderRadius.circular(45.0),
                     ),

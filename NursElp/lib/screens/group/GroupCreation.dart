@@ -25,6 +25,15 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                 fontSize: 20,
               )),
           centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -35,138 +44,11 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                 Container(
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.redAccent, Colors.red[300]],
-                      begin: Alignment(0.0, -1.0),
-                      end: Alignment(0.0, 1.0),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Rejoindre un groupe',
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        onChanged: (value) =>
-                            setState(() => groupToReachName = value),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Nom du groupe',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        onChanged: (value) =>
-                            setState(() => groupCode = int.parse(value)),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Code du groupe',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.contact_support, color: Colors.white),
-                          Text(
-                            'Se trouve dans les options du groupe',
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        onChanged: (value) =>
-                            setState(() => groupToReachPassword = value),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Mot de passe',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {
-                          //TODO envoie un mail au proprio pour avoir un nouveau mot de passe
-                        },
-                        child: Text(
-                          'Mot de passe oublié ?',
-                          style: TextStyle(
-                            fontSize: 14,
-                            decoration: TextDecoration.underline,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      JoinGroup(
-                          groupToReachName, groupToReachPassword, groupCode)
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
-                      colors: [Colors.redAccent, Colors.red[300]],
-                      begin: Alignment(0.0, -1.0),
-                      end: Alignment(0.0, 1.0),
+                      colors: [Colors.redAccent, Colors.deepOrange[400]],
+                      begin: Alignment(1, 0),
+                      end: Alignment(-1, 0),
                     ),
                   ),
                   child: Column(
@@ -291,6 +173,133 @@ class _GroupCreationPageState extends State<GroupCreationPage> {
                       ),
                       SizedBox(height: 20),
                       CreateGroup(groupName, groupPassword, numberMember),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.redAccent, Colors.deepOrange[400]],
+                      begin: Alignment(1, 0),
+                      end: Alignment(-1, 0),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Rejoindre un groupe',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        onChanged: (value) =>
+                            setState(() => groupToReachName = value),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Nom du groupe',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        onChanged: (value) =>
+                            setState(() => groupCode = int.parse(value)),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Code du groupe',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          Icon(Icons.contact_support, color: Colors.white),
+                          Text(
+                            'Se trouve dans les options du groupe',
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        onChanged: (value) =>
+                            setState(() => groupToReachPassword = value),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Mot de passe',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      GestureDetector(
+                        onTap: () {
+                          //TODO envoie un mail au proprio pour avoir un nouveau mot de passe
+                        },
+                        child: Text(
+                          'Mot de passe oublié ?',
+                          style: TextStyle(
+                            fontSize: 14,
+                            decoration: TextDecoration.underline,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      JoinGroup(
+                          groupToReachName, groupToReachPassword, groupCode)
                     ],
                   ),
                 ),

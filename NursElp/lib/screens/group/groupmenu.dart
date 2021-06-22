@@ -41,6 +41,15 @@ class _GroupMenuState extends State<GroupMenu> {
                   fontSize: 25,
                 )),
             //leading: Container(), //désactiver fleche de retour
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.redAccent, Colors.deepOrange[400]],
+                  begin: Alignment(1, 0),
+                  end: Alignment(-1, 0),
+                ),
+              ),
+            ),
             centerTitle: true,
             backgroundColor: Colors.red[400],
             actions: <Widget>[
