@@ -5,10 +5,14 @@ import 'package:flutter/services.dart';
 
 class BedroomPage extends StatefulWidget {
   final Bedroom bedroom;
+  final Function(int) onBedroomNumberChanged;
+  final int bedroomNumber;
 
   const BedroomPage({
     Key key,
     this.bedroom,
+    this.onBedroomNumberChanged,
+    this.bedroomNumber,
   }) : super(key: key);
   @override
   _BedroomPageState createState() => _BedroomPageState();
@@ -16,11 +20,13 @@ class BedroomPage extends StatefulWidget {
 
 class _BedroomPageState extends State<BedroomPage> {
   final double labelFontSize = 18.0;
+  Function(int) onBedroomNumberChanged;
+
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
   Bedroom bedroom;
 
-  String bedroomNumber = '';
+  int bedroomNumber = 0;
   String bedroomId = '';
   String side = ''; //TODO ajouter pour savoir si porte, fenetre, seul
   String doctor = '';
@@ -34,15 +40,19 @@ class _BedroomPageState extends State<BedroomPage> {
   bool isPresent = false;
 
   bool checkBedroom;
+  bool checkBedroom2;
 
   List surveillances;
   List bedroomTasks;
   List moves;
 
   int sector = 1;
+  int number = 0;
 
   @override
   void initState() {
+    onBedroomNumberChanged = widget.onBedroomNumberChanged;
+
     bedroom = widget.bedroom;
     bedroomId = widget.bedroom.bedroomId;
     side = widget.bedroom.side;
@@ -57,7 +67,7 @@ class _BedroomPageState extends State<BedroomPage> {
     surveillances = widget.bedroom.surveillances;
     bedroomTasks = widget.bedroom.bedroomTasks;
     moves = widget.bedroom.moves;
-    bedroomNumber = widget.bedroom.bedroomNumber;
+    bedroomNumber = widget.bedroomNumber;
 
     super.initState();
   }
@@ -76,6 +86,26 @@ class _BedroomPageState extends State<BedroomPage> {
                   Navigator.pop(context);
                 })
           ],
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () async {
+                  if (bedroomNumber != 0) {
+                    Navigator.pop(context);
+                  } else {
+                    final snackBar = SnackBar(
+                      content: Text(
+                        'Vous devez fournir un numéro de chambre valide',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+              );
+            },
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -95,7 +125,7 @@ class _BedroomPageState extends State<BedroomPage> {
                       child: Row(
                         children: [
                           Text(
-                            'Chambre',
+                            'Numéro',
                           ),
                           Flexible(
                             child: Container(
@@ -106,32 +136,34 @@ class _BedroomPageState extends State<BedroomPage> {
                               ),
                               child: TextField(
                                 controller: TextEditingController(
-                                  text: bedroomNumber,
+                                  text: bedroomNumber.toString(),
                                 ),
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
+                                enableSuggestions: false,
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
                                 onSubmitted: (value) async {
+                                  number = int.parse(value);
+
                                   checkBedroom =
                                       await bedroomService.checkBedroomNumber(
-                                          value, groupId, bedroomId);
-                                  if (checkBedroom && value != '') {
+                                          number, groupId, bedroomId);
+                                  if (checkBedroom &&
+                                      value != '' &&
+                                      value != bedroomNumber.toString()) {
                                     setState(() {
-                                      bedroomNumber = value;
+                                      bedroomNumber = number;
                                       bedroomService.updateBedroom(
-                                          bedroomId, value, 'bedroomNumber');
+                                          bedroomId, number, 'bedroomNumber');
+                                      onBedroomNumberChanged(number);
                                     });
                                   } else {
                                     final snackBar = SnackBar(
                                       content: Text(
-                                          'Ce numéro de chambre existe déjà !'),
-                                      // action: SnackBarAction(
-                                      //   label: 'Undo',
-                                      //   onPressed: () {
-                                      //   },
-                                      // ),
+                                        'Ce numéro de chambre existe déjà !',
+                                      ),
                                     );
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
@@ -482,11 +514,13 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  arriving = value.toString();
-                                  bedroomService.updateBedroom(
-                                      bedroomId, arriving, 'arriving');
-                                }),
+                                onSubmitted: (value) {
+                                  if (value != arriving) {
+                                    arriving = value.toString();
+                                    bedroomService.updateBedroom(
+                                        bedroomId, arriving, 'arriving');
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -539,11 +573,13 @@ class _BedroomPageState extends State<BedroomPage> {
                                 style: TextStyle(
                                   fontSize: 18.0,
                                 ),
-                                onSubmitted: (value) => setState(() {
-                                  leaving = value.toString();
-                                  bedroomService.updateBedroom(
-                                      bedroomId, leaving, 'leaving');
-                                }),
+                                onSubmitted: (value) {
+                                  if (value != leaving) {
+                                    leaving = value.toString();
+                                    bedroomService.updateBedroom(
+                                        bedroomId, leaving, 'leaving');
+                                  }
+                                },
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,

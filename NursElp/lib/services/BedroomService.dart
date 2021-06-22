@@ -9,9 +9,10 @@ class BedroomService {
   GroupService groupService = GroupService();
   CollectionReference bedrooms =
       FirebaseFirestore.instance.collection('bedrooms');
+
   Future<String> addBedroom(
     String groupId,
-  ) {
+  ) async {
     String bedroomCodeId = groupService.generateCode(4).toString();
     String bedroomId;
     final String day = DateTime.now().day.toString();
@@ -19,7 +20,7 @@ class BedroomService {
     bedrooms.add({
       'groupId': groupId,
       'isPresent': true,
-      'bedroomNumber': '000',
+      'bedroomNumber': 000,
       'sexe': false,
       'contagious': false,
       'doctor': '',
@@ -60,25 +61,46 @@ class BedroomService {
     bedroom.delete();
   }
 
+  Future<int> getBedroomNumber(String bedroomId) async {
+    int bedroomNumber;
+    DocumentReference bedroom =
+        FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+    return bedroom.get().then((document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      bedroomNumber = data['bedroomNumber'];
+      return bedroomNumber;
+    });
+  }
+
   Future<bool> checkBedroomNumber(
-      String bedroomNumber, String groupId, String bedroomId) async {
-    //Future<bool> exists;
+    int bedroomNumber,
+    String groupId,
+    String bedroomId,
+  ) async {
+    String testId;
     bool result;
-    // DocumentReference bedroom =
-    //     FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     return bedrooms
         .where('bedroomNumber', isEqualTo: bedroomNumber)
         .where('groupId', isEqualTo: groupId)
         .get()
         .then((querySnapshot) {
-      if (querySnapshot.docs.isEmpty) {
+      if (querySnapshot.docs.isEmpty && bedroomNumber != 0) {
         print('Unique bedroom number');
         result = true;
       } else {
-        print('bedroom number already exists');
-        result = false;
+        Map<String, dynamic> data =
+            querySnapshot.docs.single.data() as Map<String, dynamic>;
+        testId = data['bedroomId'];
+
+        if (testId == bedroomId) {
+          print("C'est déjà le numéro de cette chambre");
+          result = true;
+        } else {
+          print('bedroom number already exists');
+
+          result = false;
+        }
       }
-      print(result);
       return result;
     });
   }
@@ -93,11 +115,10 @@ class GetBedrooms extends StatefulWidget {
 }
 
 class _GetBedroomsState extends State<GetBedrooms> {
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
   @override
   Widget build(BuildContext context) {
-    CollectionReference bedrooms =
-        FirebaseFirestore.instance.collection('bedrooms');
-
     return StreamBuilder<QuerySnapshot>(
       stream: bedrooms
           .where('groupId', isEqualTo: widget.groupId)
@@ -131,6 +152,70 @@ class _GetBedroomsState extends State<GetBedrooms> {
           ).toList(),
         );
       },
+    );
+  }
+}
+
+class BedroomAddButton extends StatefulWidget {
+  final groupId;
+  const BedroomAddButton({Key key, this.groupId}) : super(key: key);
+
+  @override
+  _BedroomAddButtonState createState() => _BedroomAddButtonState();
+}
+
+class _BedroomAddButtonState extends State<BedroomAddButton> {
+  BedroomService bedroomService = BedroomService();
+  String groupId;
+  String bedroomId = '';
+  DocumentReference bedroom;
+
+  @override
+  void initState() {
+    groupId = widget.groupId;
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 24.0,
+      right: 0.0,
+      child: GestureDetector(
+        onTap: () async {
+          bedroomId = await bedroomService.addBedroom(groupId);
+          bedroom =
+              FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+          bedroom.get().then((document) {
+            Map<String, dynamic> data =
+                document?.data() as Map<String, dynamic>;
+            return Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BedroomNav(
+                  bedroom: Bedroom.fromJson(data),
+                ),
+              ),
+            );
+          });
+        },
+        child: Container(
+          width: 60.0,
+          height: 60.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.redAccent, Colors.red[300]],
+              begin: Alignment(0.0, -1.0),
+              end: Alignment(0.0, 1.0),
+            ),
+            borderRadius: BorderRadius.circular(45.0),
+          ),
+          child: Image(
+            image: AssetImage(
+              'assets/images/add_icon.png',
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

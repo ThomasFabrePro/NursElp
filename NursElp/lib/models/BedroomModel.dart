@@ -8,7 +8,7 @@ class Bedroom {
   final String arriving;
   final String leaving;
   final String side;
-  final String bedroomNumber;
+  final int bedroomNumber;
 
   final bool isPresent;
   final bool sexe;

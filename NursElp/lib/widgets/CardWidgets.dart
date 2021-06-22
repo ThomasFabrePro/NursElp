@@ -57,7 +57,7 @@ class TaskCardWidget extends StatelessWidget {
 }
 
 class BedroomCardWidget extends StatelessWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String leaving;
   final bool isPresent;
   final Widget navigator;
@@ -97,7 +97,7 @@ class BedroomCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    bedroomNumber ?? '',
+                    bedroomNumber.toString() ?? 0.toString(),
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,
@@ -143,20 +143,25 @@ class BedroomCardWidget extends StatelessWidget {
 }
 
 class SurveillanceCardWidget extends StatelessWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String title;
   final bool important;
+  final String description;
   final Widget navigator;
   SurveillanceCardWidget(
-      {this.bedroomNumber, this.title, this.navigator, this.important});
+      {this.bedroomNumber,
+      this.title,
+      this.navigator,
+      this.important,
+      this.description});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 60,
+      height: 70,
       padding: EdgeInsets.symmetric(
-        vertical: 12.0,
+        vertical: 8.0,
         horizontal: 24.0,
       ),
       margin: EdgeInsets.only(
@@ -182,14 +187,113 @@ class SurveillanceCardWidget extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    bedroomNumber ?? 'rien',
-                    style: TextStyle(
-                      color: Colors.red[900],
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title == '' || title == null ? 'Pas de titre' : title,
+                        style: TextStyle(
+                          color: Colors.red[800],
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          description ?? 'Pas de description',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                important
+                    ? Icon(
+                        Icons.warning,
+                        size: 32,
+                      )
+                    : Container(),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ImportantSurveillanceCardWidget extends StatelessWidget {
+  final int bedroomNumber;
+  final String title;
+  final String description;
+  final Widget navigator;
+  ImportantSurveillanceCardWidget(
+      {this.bedroomNumber, this.title, this.navigator, this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 70,
+      padding: EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 24.0,
+      ),
+      margin: EdgeInsets.only(
+        bottom: 12.0,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          border: Border.all(
+            color: Colors.redAccent,
+            width: 1,
+          )),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => navigator),
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title == '' || title == null ? 'Pas de titre' : title,
+                        style: TextStyle(
+                          color: Colors.red[800],
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          description ?? 'Pas de description',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Text(bedroomNumber.toString()),
                 ),
               ],
             ),
@@ -201,7 +305,7 @@ class SurveillanceCardWidget extends StatelessWidget {
 }
 
 class MoveCardWidget extends StatefulWidget {
-  final String bedroomNumber;
+  final int bedroomNumber;
   final String moveType;
   final Widget navigator;
   MoveCardWidget({
@@ -284,7 +388,7 @@ class _MoveCardWidgetState extends State<MoveCardWidget> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.bedroomNumber ?? '',
+                    widget.bedroomNumber.toString() ?? '',
                     style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 16.0,

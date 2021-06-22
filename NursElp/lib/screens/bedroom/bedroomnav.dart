@@ -3,6 +3,7 @@ import 'package:NursElp/screens/bedroom/BedroomPage.dart';
 import 'package:NursElp/screens/moves/movesmanagement.dart';
 import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
 import 'package:NursElp/screens/tasks/TasksManagement.dart';
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,11 @@ class BedroomNav extends StatefulWidget {
 
 class _BedroomNavState extends State<BedroomNav> {
   int _currentIndex = 0;
+  BedroomService bedroomService = BedroomService();
+  Bedroom bedroom;
   PageController _pageController;
-  String bedroomNumber = '';
+  int bedroomNumber = 0;
+
   String bedroomId = '';
   String side = '';
   String doctor = '';
@@ -33,6 +37,8 @@ class _BedroomNavState extends State<BedroomNav> {
   bool isContagious = true;
   bool isPresent = true;
 
+  bool checkBedroom;
+
   List surveillances;
   List bedroomTasks;
   List moves;
@@ -41,6 +47,7 @@ class _BedroomNavState extends State<BedroomNav> {
 
   @override
   void initState() {
+    bedroom = widget.bedroom;
     bedroomNumber = widget.bedroom.bedroomNumber;
     bedroomId = widget.bedroom.bedroomId;
     side = widget.bedroom.side;
@@ -69,59 +76,72 @@ class _BedroomNavState extends State<BedroomNav> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
+    return SafeArea(
+      child: Scaffold(
+        body: SizedBox.expand(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+                bedroomNumber = bedroomNumber;
+              });
+            },
+            children: <Widget>[
+              BedroomPage(
+                  bedroomNumber: bedroomNumber,
+                  bedroom: bedroom,
+                  onBedroomNumberChanged: (int value) {
+                    setState(() => bedroomNumber =
+                        value); //pour transmettre aux autres pages le changement de numéro de chambre
+                  }),
+              SurveillancesManagementPage(
+                groupId: groupId,
+                bedroomId: bedroomId,
+                bedroomNumber: bedroomNumber,
+              ),
+              TasksManagementPage(),
+              MovesManagementPage(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: _currentIndex,
+          onItemSelected: (index) {
             setState(() => _currentIndex = index);
+            _pageController.jumpToPage(index);
           },
-          children: <Widget>[
-            BedroomPage(
-              bedroom: widget.bedroom,
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+              icon: Icon(Icons.hotel_rounded),
+              title: Text('Chambre'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
             ),
-            SurveillancesManagementPage(),
-            TasksManagementPage(),
-            MovesManagementPage(),
+            BottomNavyBarItem(
+              icon: Icon(Icons.airplay),
+              title: Text('Surv.'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.article),
+              title: Text('Tâches'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              icon: Icon(Icons.airport_shuttle),
+              title: Text('Déplace.'),
+              activeColor: Colors.redAccent,
+              inactiveColor: Colors.black,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-            icon: Icon(Icons.hotel_rounded),
-            title: Text('Chambre'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: const Icon(Icons.airplay),
-            title: const Text('Surveillances'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.article),
-            title: Text('Tâches'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.airport_shuttle),
-            title: Text('Déplacements'),
-            activeColor: Colors.redAccent,
-            inactiveColor: Colors.black,
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }

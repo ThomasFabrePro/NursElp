@@ -1,6 +1,6 @@
 import 'package:NursElp/screens/bedroom/BedroomsManagement.dart';
 import 'package:NursElp/screens/group/GroupSettings.dart';
-import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
+import 'package:NursElp/screens/surveillances/ImportantSurveillancesManagementPage.dart';
 import 'package:flutter/material.dart';
 import '../bedroom/bedroomPage.dart';
 import '../moves/movesmanagement.dart';
@@ -99,7 +99,7 @@ class _GroupMenuState extends State<GroupMenu> {
                   ),
                   MenuCardWidget(
                     title: 'Surveillances importantes',
-                    navigator: SurveillancesManagementPage(),
+                    navigator: ImportantSurveillancesManagementPage(),
                   ),
                   MenuCardWidget(
                     title: 'Déplacements',

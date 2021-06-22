@@ -1,5 +1,3 @@
-import 'package:NursElp/screens/bedroom/BedroomNav.dart';
-import 'package:NursElp/screens/bedroom/bedroomPage.dart';
 import 'package:NursElp/services/BedroomService.dart';
 import 'package:flutter/material.dart';
 
@@ -55,34 +53,8 @@ class _BedroomManagementPageState extends State<BedroomManagementPage> {
                   ),
                 ],
               ),
-              Positioned(
-                //Bouton ajouter
-                bottom: 24.0,
-                right: 0.0,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      bedroomService.addBedroom(groupId);
-                    });
-                  },
-                  child: Container(
-                    width: 60.0,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.redAccent, Colors.red[300]],
-                        begin: Alignment(0.0, -1.0),
-                        end: Alignment(0.0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(45.0),
-                    ),
-                    child: Image(
-                      image: AssetImage(
-                        'assets/images/add_icon.png',
-                      ),
-                    ),
-                  ),
-                ),
+              BedroomAddButton(
+                groupId: groupId,
               ),
             ],
           ),
