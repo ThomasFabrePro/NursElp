@@ -59,9 +59,14 @@ class BedroomService {
     DocumentReference bedroom =
         FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     bedroom.delete();
-    // CollectionReference surveillances =
-    //     FirebaseFirestore.instance.collection('surveillances');
-    // surveillances.where('bedroomId', isEqualTo: bedroomId);
+    CollectionReference surveillances =
+        FirebaseFirestore.instance.collection('surveillances');
+    surveillances
+        .where('bedroomId', isEqualTo: bedroomId)
+        .get()
+        .then((QuerySnapshot doc) {
+      doc.docs.forEach((element) => element.reference.delete());
+    });
   }
 
   Future<bool> getBedroomPresence(String bedroomId) async {
