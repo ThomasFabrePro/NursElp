@@ -52,9 +52,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               SizedBox(
                 height: 10,
               ),
-              LabelAndTextField(
-                labelText: 'Pseudo',
-              ),
+              Text('pseudo'),
               SizedBox(
                 height: 25,
               ),

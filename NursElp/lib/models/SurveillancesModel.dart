@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Surveillances {
   final String groupId;
   final String surveillanceId;
@@ -7,10 +9,11 @@ class Surveillances {
   final String description;
   final bool isDone;
   final bool important;
-
+  bool isPresent;
   final int bedroomNumber;
-  //quel type pour la récurrence et le rappel?
+
   Surveillances({
+    this.isPresent,
     this.description,
     this.bedroomNumber,
     this.groupId,
@@ -22,6 +25,8 @@ class Surveillances {
     this.notes,
   });
 
+  set setIsPresent(value) => isPresent = value;
+
   Surveillances.fromJson(Map<String, dynamic> data)
       : groupId = data['groupId'],
         surveillanceId = data['surveillanceId'],
@@ -31,7 +36,8 @@ class Surveillances {
         important = data['important'],
         notes = data['notes'],
         bedroomNumber = data['bedroomNumber'],
-        description = data['description'];
+        description = data['description'],
+        isPresent = data['isPresent'];
 
   Map<String, dynamic> toJson() => {
         'surveillanceId': surveillanceId,
@@ -43,5 +49,6 @@ class Surveillances {
         'note': notes,
         'bedroomNumber': bedroomNumber,
         'description': description,
+        'isPresent': isPresent,
       };
 }

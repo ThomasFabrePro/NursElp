@@ -22,6 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text("Services"),
           centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
           leading: Container(),
           actions: <Widget>[
             IconButton(
@@ -60,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 60.0,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Colors.redAccent, Colors.red[300]],
-                          begin: Alignment(0.0, -1.0),
-                          end: Alignment(0.0, 1.0),
+                          colors: [Colors.redAccent, Colors.deepOrange[400]],
+                          begin: Alignment(1, 0),
+                          end: Alignment(-1, 0),
                         ),
                         borderRadius: BorderRadius.circular(45.0),
                       ),

@@ -41,10 +41,17 @@ class _SurveillancePageState extends State<SurveillancePage> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text(title == ''
-            ? 'Nouvelle surveillance $bedroomNumber'
-            : 'Surveillance $bedroomNumber'),
+        title: Text(title == '' ? 'Nouvelle surveillance ' : 'Surveillance '),
         centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.redAccent, Colors.deepOrange[400]],
+              begin: Alignment(1, 0),
+              end: Alignment(-1, 0),
+            ),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.delete_outline_rounded, size: 35),

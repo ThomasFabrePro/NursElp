@@ -1,5 +1,6 @@
 import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/services/BedroomService.dart';
+import 'package:NursElp/services/SurveillanceService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class _BedroomPageState extends State<BedroomPage> {
 
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
+  SurveillanceService surveillanceService = SurveillanceService();
   Bedroom bedroom;
 
   int bedroomNumber = 0;
@@ -78,11 +80,21 @@ class _BedroomPageState extends State<BedroomPage> {
         appBar: AppBar(
           title: Text("Chambre $bedroomNumber"),
           centerTitle: true,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.redAccent, Colors.deepOrange[400]],
+                begin: Alignment(1, 0),
+                end: Alignment(-1, 0),
+              ),
+            ),
+          ),
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.delete_outline_rounded, size: 35),
                 onPressed: () {
-                  bedroomService.deleteBedroom(bedroomId);
+                  bedroomService.deleteBedroomAndInfos(bedroomId);
+
                   Navigator.pop(context);
                 })
           ],
@@ -97,7 +109,7 @@ class _BedroomPageState extends State<BedroomPage> {
                     final snackBar = SnackBar(
                       content: Text(
                         'Vous devez fournir un numéro de chambre valide',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 15),
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -134,58 +146,71 @@ class _BedroomPageState extends State<BedroomPage> {
                               margin: EdgeInsets.only(
                                 left: 10.0,
                               ),
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: bedroomNumber.toString(),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 8,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
                                 ),
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                enableSuggestions: false,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                onSubmitted: (value) async {
-                                  number = int.parse(value);
+                                child: TextField(
+                                  controller: TextEditingController(
+                                    text: bedroomNumber.toString(),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  enableSuggestions: false,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                  onSubmitted: (value) async {
+                                    number = int.parse(value);
 
-                                  checkBedroom =
-                                      await bedroomService.checkBedroomNumber(
-                                          number, groupId, bedroomId);
-                                  if (checkBedroom &&
-                                      value != '' &&
-                                      value != bedroomNumber.toString()) {
-                                    setState(() {
-                                      bedroomNumber = number;
-                                      bedroomService.updateBedroom(
-                                          bedroomId, number, 'bedroomNumber');
-                                      onBedroomNumberChanged(number);
-                                    });
-                                  } else {
-                                    final snackBar = SnackBar(
-                                      content: Text(
-                                        'Ce numéro de chambre existe déjà !',
+                                    checkBedroom =
+                                        await bedroomService.checkBedroomNumber(
+                                            number, groupId, bedroomId);
+                                    if (checkBedroom &&
+                                        value != '' &&
+                                        value != bedroomNumber.toString()) {
+                                      setState(() {
+                                        bedroomNumber = number;
+                                        bedroomService.updateBedroom(
+                                            bedroomId, number, 'bedroomNumber');
+                                        onBedroomNumberChanged(number);
+                                      });
+                                    } else {
+                                      final snackBar = SnackBar(
+                                        content: Text(
+                                          'Ce numéro de chambre existe déjà !',
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey[200],
                                       ),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
+                                    contentPadding: EdgeInsets.only(
+                                      bottom: 0.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -505,40 +530,53 @@ class _BedroomPageState extends State<BedroomPage> {
                               margin: EdgeInsets.only(
                                 left: 10.0,
                               ),
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: arriving,
-                                ),
-                                keyboardType: TextInputType.datetime,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                onSubmitted: (value) {
-                                  if (value != arriving) {
-                                    arriving = value.toString();
-                                    bedroomService.updateBedroom(
-                                        bedroomId, arriving, 'arriving');
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: '20/01',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 8,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                  ],
+                                ),
+                                child: TextField(
+                                  controller: TextEditingController(
+                                    text: arriving,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
+                                  keyboardType: TextInputType.datetime,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                  onSubmitted: (value) {
+                                    if (value != arriving) {
+                                      arriving = value.toString();
+                                      bedroomService.updateBedroom(
+                                          bedroomId, arriving, 'arriving');
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hintText: '20/01',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey[200],
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                      bottom: 0.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -564,40 +602,53 @@ class _BedroomPageState extends State<BedroomPage> {
                               margin: EdgeInsets.only(
                                 left: 10.0,
                               ),
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: leaving,
-                                ),
-                                keyboardType: TextInputType.datetime,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                onSubmitted: (value) {
-                                  if (value != leaving) {
-                                    leaving = value.toString();
-                                    bedroomService.updateBedroom(
-                                        bedroomId, leaving, 'leaving');
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: '08/03',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 7,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                  ],
+                                ),
+                                child: TextField(
+                                  controller: TextEditingController(
+                                    text: leaving,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
+                                  keyboardType: TextInputType.datetime,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                  onSubmitted: (value) {
+                                    if (value != leaving) {
+                                      leaving = value.toString();
+                                      bedroomService.updateBedroom(
+                                          bedroomId, leaving, 'leaving');
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hintText: '08/03',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey[200],
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                      bottom: 0.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -623,38 +674,51 @@ class _BedroomPageState extends State<BedroomPage> {
                               margin: EdgeInsets.only(
                                 left: 10.0,
                               ),
-                              child: TextField(
-                                controller: TextEditingController(
-                                  text: doctor,
-                                ),
-                                keyboardType: TextInputType.name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                                onSubmitted: (value) => setState(() {
-                                  doctor = value;
-                                  bedroomService.updateBedroom(
-                                      bedroomId, doctor, 'doctor');
-                                }),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: 'Nom',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[200],
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 5,
+                                      blurRadius: 20,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
+                                  ],
+                                ),
+                                child: TextField(
+                                  controller: TextEditingController(
+                                    text: doctor,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent,
+                                  keyboardType: TextInputType.name,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                  onSubmitted: (value) => setState(() {
+                                    doctor = value;
+                                    bedroomService.updateBedroom(
+                                        bedroomId, doctor, 'doctor');
+                                  }),
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hintText: 'Nom',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey[200],
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
-                                    borderRadius: BorderRadius.circular(40),
-                                  ),
-                                  contentPadding: EdgeInsets.only(
-                                    bottom: 0.0,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.redAccent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                      bottom: 0.0,
+                                    ),
                                   ),
                                 ),
                               ),

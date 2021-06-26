@@ -77,12 +77,21 @@ class BedroomCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        // border: Border.all(
+        //   color: Colors.redAccent,
+        //   width: 1,
+        // ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -168,12 +177,21 @@ class SurveillanceCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        // border: Border.all(
+        //   color: Colors.white,
+        //   width: 1,
+        // ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -215,7 +233,7 @@ class SurveillanceCardWidget extends StatelessWidget {
                 important
                     ? Icon(
                         Icons.warning,
-                        size: 32,
+                        size: 37,
                       )
                     : Container(),
               ],
@@ -227,14 +245,27 @@ class SurveillanceCardWidget extends StatelessWidget {
   }
 }
 
-class ImportantSurveillanceCardWidget extends StatelessWidget {
+class ImportantSurveillanceCardWidget extends StatefulWidget {
   final int bedroomNumber;
   final String title;
   final String description;
+  final bool isPresent;
   final Widget navigator;
-  ImportantSurveillanceCardWidget(
-      {this.bedroomNumber, this.title, this.navigator, this.description});
+  ImportantSurveillanceCardWidget({
+    this.bedroomNumber,
+    this.title,
+    this.navigator,
+    this.description,
+    this.isPresent,
+  });
 
+  @override
+  _ImportantSurveillanceCardWidgetState createState() =>
+      _ImportantSurveillanceCardWidgetState();
+}
+
+class _ImportantSurveillanceCardWidgetState
+    extends State<ImportantSurveillanceCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -248,17 +279,22 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.redAccent,
-            width: 1,
-          )),
+        color: widget.isPresent ? Colors.white : Colors.grey,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 8,
+            blurRadius: 15,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => navigator),
+            MaterialPageRoute(builder: (context) => widget.navigator),
           );
         },
         child: Column(
@@ -272,9 +308,12 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title == '' || title == null ? 'Pas de titre' : title,
+                        widget.title == '' || widget.title == null
+                            ? 'Pas de titre'
+                            : widget.title,
+                        maxLines: 1,
                         style: TextStyle(
-                          color: Colors.red[800],
+                          color: Colors.red,
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -282,7 +321,7 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          description ?? 'Pas de description',
+                          widget.description ?? 'Pas de description',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -292,8 +331,26 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  child: Text(bedroomNumber.toString()),
+                Column(
+                  children: [
+                    Text(widget.bedroomNumber.toString()),
+                    widget.isPresent
+                        ? Text(
+                            'Présent',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          )
+                        : Text(
+                            'Absent',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                  ],
                 ),
               ],
             ),
@@ -487,11 +544,20 @@ class MenuCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
-          colors: [Colors.redAccent, Colors.red[300]],
-          begin: Alignment(0.0, -1.0),
-          end: Alignment(0.0, 1.0),
+          colors: [Colors.redAccent, Colors.deepOrange[400]],
+          begin: Alignment(1, 0),
+          end: Alignment(-1, 0),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
+
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -513,70 +579,6 @@ class MenuCardWidget extends StatelessWidget {
               )),
         ),
       ),
-    );
-  }
-}
-
-//ignore: must_be_immutable
-class LabelAndTextField extends StatefulWidget {
-  LabelAndTextField(
-      {Key key,
-      this.labelText,
-      this.textFieldHint,
-      this.keyboardInputType,
-      this.textFieldWidth,
-      this.valueToSwitch});
-  final String labelText;
-  final String textFieldHint;
-  final TextInputType keyboardInputType;
-  final double textFieldWidth;
-  String valueToSwitch;
-
-  @override
-  _LabelAndTextFieldState createState() => _LabelAndTextFieldState();
-}
-
-class _LabelAndTextFieldState extends State<LabelAndTextField> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(widget.labelText),
-        Flexible(
-          child: Container(
-            width: widget.textFieldWidth,
-            height: 40.0,
-            margin: EdgeInsets.only(
-              left: 10.0,
-            ),
-            child: TextField(
-              keyboardType: widget.keyboardInputType,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-              onChanged: (value) => setState(() {
-                widget.valueToSwitch = value;
-                print(widget.valueToSwitch);
-              }),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: widget.textFieldHint,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey[200],
-                  ),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                contentPadding: EdgeInsets.only(
-                  bottom: 0.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

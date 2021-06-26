@@ -32,17 +32,20 @@ class _ArrivingPageState extends State<ArrivingPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(
-                  top: 12,
-                  left: 24,
-                ),
-                child: LabelAndTextField(
-                  labelText: 'Chambre',
-                  textFieldHint: '200',
-                  keyboardInputType: TextInputType.number,
-                  textFieldWidth: 100,
-                ),
-              ),
+                  padding: EdgeInsets.only(
+                    top: 12,
+                    left: 24,
+                  ),
+                  child: Row(
+                    children: [
+                      Text('Chambre'),
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: '200',
+                        ),
+                      )
+                    ],
+                  )),
               Padding(
                 padding: const EdgeInsets.only(
                   top: 12,
