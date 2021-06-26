@@ -55,10 +55,24 @@ class BedroomService {
     doc.update({field: value});
   }
 
-  deleteBedroom(String bedroomId) {
+  deleteBedroomAndInfos(String bedroomId) {
     DocumentReference bedroom =
         FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     bedroom.delete();
+    // CollectionReference surveillances =
+    //     FirebaseFirestore.instance.collection('surveillances');
+    // surveillances.where('bedroomId', isEqualTo: bedroomId);
+  }
+
+  Future<bool> getBedroomPresence(String bedroomId) async {
+    bool isPresent;
+    DocumentReference bedroom =
+        FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
+    return bedroom.get().then((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      isPresent = data['isPresent'];
+      return isPresent;
+    });
   }
 
   Future<int> getBedroomNumber(String bedroomId) async {

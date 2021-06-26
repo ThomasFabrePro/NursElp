@@ -245,7 +245,7 @@ class SurveillanceCardWidget extends StatelessWidget {
   }
 }
 
-class ImportantSurveillanceCardWidget extends StatelessWidget {
+class ImportantSurveillanceCardWidget extends StatefulWidget {
   final int bedroomNumber;
   final String title;
   final String description;
@@ -260,6 +260,13 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
   });
 
   @override
+  _ImportantSurveillanceCardWidgetState createState() =>
+      _ImportantSurveillanceCardWidgetState();
+}
+
+class _ImportantSurveillanceCardWidgetState
+    extends State<ImportantSurveillanceCardWidget> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -272,7 +279,7 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: widget.isPresent ? Colors.white : Colors.grey,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
@@ -287,7 +294,7 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => navigator),
+            MaterialPageRoute(builder: (context) => widget.navigator),
           );
         },
         child: Column(
@@ -301,9 +308,12 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        title == '' || title == null ? 'Pas de titre' : title,
+                        widget.title == '' || widget.title == null
+                            ? 'Pas de titre'
+                            : widget.title,
+                        maxLines: 1,
                         style: TextStyle(
-                          color: Colors.red[800],
+                          color: Colors.red,
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -311,23 +321,36 @@ class ImportantSurveillanceCardWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          description ?? 'Pas de description',
+                          widget.description ?? 'Pas de description',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
                           maxLines: 1,
                         ),
                       ),
-                      // Text(
-                      //   isPresent
-                      //       ? 'isPresent = $isPresent'
-                      //       : "T'as pas l'info",
-                      // ),
                     ],
                   ),
                 ),
-                Container(
-                  child: Text(bedroomNumber.toString()),
+                Column(
+                  children: [
+                    Text(widget.bedroomNumber.toString()),
+                    widget.isPresent
+                        ? Text(
+                            'Présent',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          )
+                        : Text(
+                            'Absent',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                  ],
                 ),
               ],
             ),

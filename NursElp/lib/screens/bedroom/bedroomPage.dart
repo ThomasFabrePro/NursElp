@@ -1,5 +1,6 @@
 import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/services/BedroomService.dart';
+import 'package:NursElp/services/SurveillanceService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class _BedroomPageState extends State<BedroomPage> {
 
   int date = DateTime.now().day;
   BedroomService bedroomService = BedroomService();
+  SurveillanceService surveillanceService = SurveillanceService();
   Bedroom bedroom;
 
   int bedroomNumber = 0;
@@ -91,7 +93,8 @@ class _BedroomPageState extends State<BedroomPage> {
             IconButton(
                 icon: Icon(Icons.delete_outline_rounded, size: 35),
                 onPressed: () {
-                  bedroomService.deleteBedroom(bedroomId);
+                  bedroomService.deleteBedroomAndInfos(bedroomId);
+
                   Navigator.pop(context);
                 })
           ],
