@@ -1,13 +1,16 @@
+import 'package:NursElp/models/TodoModel.dart';
 import 'package:NursElp/screens/moves/Absence.dart';
 import 'package:NursElp/screens/moves/Bloc.dart';
 import 'package:NursElp/screens/moves/Leaving.dart';
 import 'package:NursElp/screens/moves/arriving.dart';
+import 'package:NursElp/services/TodoService.dart';
 import 'package:flutter/material.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final String title;
   final String description;
-  TaskCardWidget({this.title, this.description});
+  final Widget navigator;
+  TaskCardWidget({this.title, this.description, this.navigator});
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +31,35 @@ class TaskCardWidget extends StatelessWidget {
             color: Colors.red[300],
             width: 1,
           )),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title ?? 'Sans nom',
-            style: TextStyle(
-              color: Colors.red[900],
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 15.0,
-            ),
-            child: Text(
-              description ?? 'Sans description',
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => navigator));
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title ?? 'Sans nom',
               style: TextStyle(
+                color: Colors.red[900],
                 fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                top: 15.0,
+              ),
+              child: Text(
+                description ?? 'Sans description',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -79,10 +88,6 @@ class BedroomCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
-        // border: Border.all(
-        //   color: Colors.redAccent,
-        //   width: 1,
-        // ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -93,12 +98,10 @@ class BedroomCardWidget extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => navigator),
-          );
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => navigator),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -473,50 +476,84 @@ class _MoveCardWidgetState extends State<MoveCardWidget> {
   }
 }
 
-class TodoWidget extends StatelessWidget {
-  final String text;
-  final bool isDone;
-  TodoWidget({this.text, @required this.isDone});
+class TodoWidget extends StatefulWidget {
+  final Todo todo;
+  TodoWidget({this.todo});
 
   @override
+  _TodoWidgetState createState() => _TodoWidgetState();
+}
+
+class _TodoWidgetState extends State<TodoWidget> {
+  TodoService todoService = TodoService();
+  String title = '';
+  String taskId = '';
+  String todoId = '';
+  bool isDone = false;
+  @override
+  void initState() {
+    super.initState();
+    title = widget.todo.title;
+    taskId = widget.todo.taskId;
+    todoId = widget.todo.todoId;
+    isDone = widget.todo.isDone;
+  }
+
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 24.0,
-        vertical: 8.0,
+        horizontal: 8.0,
+        vertical: 12.0,
       ),
       child: Row(
         children: [
-          Container(
-            width: 20.0,
-            height: 20.0,
-            margin: EdgeInsets.only(
-              right: 12.0,
-            ),
-            decoration: BoxDecoration(
-              color: isDone ? Colors.red[900] : Colors.transparent,
-              borderRadius: BorderRadius.circular(6.0),
-              border: isDone
-                  ? null
-                  : Border.all(
-                      color: Colors.grey,
-                      width: 1.5,
-                    ),
-            ),
-            child: Image(
-              image: AssetImage(
-                'assets/images/check_icon.png',
+          InkWell(
+            onTap: () {
+              setState(() {
+                isDone = !isDone;
+                todoService.updateTodo(todoId, 'isDone', isDone);
+              });
+            },
+            child: Container(
+              width: 30.0,
+              height: 30.0,
+              margin: EdgeInsets.only(
+                right: 12.0,
+              ),
+              decoration: BoxDecoration(
+                color: isDone ? Colors.redAccent : Colors.transparent,
+                borderRadius: BorderRadius.circular(6.0),
+                border: isDone
+                    ? null
+                    : Border.all(
+                        color: Colors.grey,
+                        width: 1.5,
+                      ),
+              ),
+              child: Image(
+                image: AssetImage(
+                  'assets/images/check_icon.png',
+                ),
               ),
             ),
           ),
           Flexible(
-            child: Text(
-              text ?? 'Empty Todo',
+            child: TextField(
+              controller: TextEditingController(text: title ?? 'Todo sans nom'),
+              onSubmitted: (value) {
+                if (value != '') {
+                  setState(() {
+                    title = value;
+                    todoService.updateTodo(todoId, 'title', value);
+                  });
+                }
+              },
               style: TextStyle(
-                color: isDone ? Colors.red[900] : Colors.grey,
-                fontSize: 16.0,
+                color: isDone ? Colors.red[900] : Colors.grey[600],
+                fontSize: 19.0,
                 fontWeight: isDone ? FontWeight.bold : FontWeight.w500,
               ),
+              decoration: InputDecoration.collapsed(hintText: 'New todo'),
             ),
           ),
         ],

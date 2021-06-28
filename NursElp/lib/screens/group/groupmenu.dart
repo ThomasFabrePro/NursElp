@@ -1,10 +1,10 @@
 import 'package:NursElp/screens/bedroom/BedroomsManagement.dart';
 import 'package:NursElp/screens/group/GroupSettings.dart';
 import 'package:NursElp/screens/surveillances/ImportantSurveillancesManagementPage.dart';
+import 'package:NursElp/screens/tasks/TasksManagement.dart';
 import 'package:flutter/material.dart';
 import '../bedroom/bedroomPage.dart';
 import '../moves/movesmanagement.dart';
-import '../tasks/TasksManagement.dart';
 import '../../widgets/CardWidgets.dart';
 
 class GroupMenu extends StatefulWidget {

@@ -1,16 +1,26 @@
 class Todo {
-  final int id;
-  final int taskId;
+  final String todoId;
+  final String taskId;
   final String title;
-  final int isDone;
-  Todo({this.id, this.taskId, this.title, this.isDone});
+  final bool isDone;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'isDone': isDone,
-      'taskId': taskId,
-    };
-  }
+  Todo({
+    this.todoId,
+    this.taskId,
+    this.title,
+    this.isDone,
+  });
+
+  Todo.fromJson(Map<String, dynamic> data)
+      : todoId = data['todoId'],
+        taskId = data['taskId'],
+        title = data['title'],
+        isDone = data['isDone'];
+
+  Map<String, dynamic> toJson() => {
+        'todoId': todoId,
+        'title': title,
+        'isDone': isDone,
+        'taskId': taskId,
+      };
 }

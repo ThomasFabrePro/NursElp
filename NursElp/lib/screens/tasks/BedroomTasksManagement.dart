@@ -1,24 +1,25 @@
 import 'package:NursElp/services/BedroomService.dart';
 import 'package:NursElp/services/SurveillanceService.dart';
+import 'package:NursElp/services/TaskService.dart';
 import 'package:flutter/material.dart';
 
-class SurveillancesManagementPage extends StatefulWidget {
+class BedroomTasksManagementPage extends StatefulWidget {
   final String groupId;
   final String bedroomId;
   final int bedroomNumber;
-  const SurveillancesManagementPage({
+  const BedroomTasksManagementPage({
     Key key,
     this.groupId,
     this.bedroomId,
     this.bedroomNumber,
   }) : super(key: key);
   @override
-  _SurveillancesManagementPageState createState() =>
-      _SurveillancesManagementPageState();
+  _BedroomTasksManagementPageState createState() =>
+      _BedroomTasksManagementPageState();
 }
 
-class _SurveillancesManagementPageState
-    extends State<SurveillancesManagementPage> {
+class _BedroomTasksManagementPageState
+    extends State<BedroomTasksManagementPage> {
   String groupId = '';
   String bedroomId = '';
   int bedroomNumber = 0;
@@ -36,7 +37,7 @@ class _SurveillancesManagementPageState
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Surveillances $bedroomNumber',
+            'Liste des tâches $bedroomNumber',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -79,15 +80,13 @@ class _SurveillancesManagementPageState
           color: Colors.grey[100],
           child: Stack(
             children: [
-              GetBedroomSurveillances(
+              GetBedroomTasks(
                 groupId: groupId,
                 bedroomId: bedroomId,
-                bedroomNumber: bedroomNumber,
               ), //transformer en GetBedroomSurveillances car page propre à la chambre
-              SurveillanceAddButton(
+              TaskAddButton(
                 bedroomId: bedroomId,
                 groupId: groupId,
-                bedroomNumber: bedroomNumber,
               )
             ],
           ),

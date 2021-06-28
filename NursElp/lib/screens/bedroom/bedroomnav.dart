@@ -2,7 +2,7 @@ import 'package:NursElp/models/BedroomModel.dart';
 import 'package:NursElp/screens/bedroom/BedroomPage.dart';
 import 'package:NursElp/screens/moves/movesmanagement.dart';
 import 'package:NursElp/screens/surveillances/SurveillancesManagement.dart';
-import 'package:NursElp/screens/tasks/TasksManagement.dart';
+import 'package:NursElp/screens/tasks/BedroomTasksManagement.dart';
 import 'package:NursElp/services/BedroomService.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,11 @@ class _BedroomNavState extends State<BedroomNav> {
                 bedroomId: bedroomId,
                 bedroomNumber: bedroomNumber,
               ),
-              TasksManagementPage(),
+              BedroomTasksManagementPage(
+                groupId: groupId,
+                bedroomId: bedroomId,
+                bedroomNumber: bedroomNumber,
+              ),
               MovesManagementPage(),
             ],
           ),

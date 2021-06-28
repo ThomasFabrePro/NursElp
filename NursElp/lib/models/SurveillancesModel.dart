@@ -9,7 +9,7 @@ class Surveillances {
   final String description;
   final bool isDone;
   final bool important;
-  bool isPresent;
+  final bool isPresent;
   final int bedroomNumber;
 
   Surveillances({
@@ -24,8 +24,6 @@ class Surveillances {
     this.important,
     this.notes,
   });
-
-  set setIsPresent(value) => isPresent = value;
 
   Surveillances.fromJson(Map<String, dynamic> data)
       : groupId = data['groupId'],

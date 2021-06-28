@@ -1,4 +1,5 @@
 import 'package:NursElp/screens/guests/auth.dart';
+import 'package:NursElp/screens/surveillances/ImportantSurveillancesPage.dart';
 import 'package:NursElp/services/SurveillanceService.dart';
 import 'package:flutter/material.dart';
 
@@ -56,12 +57,13 @@ class _ImportantSurveillancesManagementPageState
               Positioned(
                 //Bouton ajouter
                 bottom: 24.0,
-                right: 24.0,
+                right: 0.0,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AuthPage()),
+                      MaterialPageRoute(
+                          builder: (context) => ImportantSurveillancePage()),
                     );
                   },
                   child: Container(

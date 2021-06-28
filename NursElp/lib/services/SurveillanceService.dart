@@ -13,7 +13,7 @@ class SurveillanceService {
   Future<String> addSurveillance(
     String bedroomId,
     String groupId,
-    int bedroomNumber,
+    int bedroomNumber, //TODO vérifier que tu puisses pas enlever ce champ
   ) async {
     String surveillanceId;
     String key = UniqueKey().toString();
@@ -41,11 +41,7 @@ class SurveillanceService {
     });
   }
 
-  void updateSurveillance(
-    String surveillanceId,
-    String field,
-    var value,
-  ) {
+  void updateSurveillance(String surveillanceId, String field, var value) {
     DocumentReference surveillance = FirebaseFirestore.instance
         .collection('surveillances')
         .doc(surveillanceId);
@@ -74,10 +70,8 @@ class _GetImportantSurveillancesState extends State<GetImportantSurveillances> {
       FirebaseFirestore.instance.collection('surveillances');
   CollectionReference bedrooms =
       FirebaseFirestore.instance.collection('bedrooms');
-  BedroomService bedroomService = BedroomService();
-  String testData;
+
   bool isPresent;
-  int intTest;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -121,90 +115,19 @@ class _GetImportantSurveillancesState extends State<GetImportantSurveillances> {
                         snapshot.data.data() as Map<String, dynamic>;
 
                     return ImportantSurveillanceCardWidget(
-                        bedroomNumber:
-                            Surveillances.fromJson(data).bedroomNumber,
-                        title: Surveillances.fromJson(data).title,
-                        description: Surveillances.fromJson(data).description,
-                        isPresent: bedroomData['isPresent'],
-                        navigator: SurveillancePage(
-                          surveillances: Surveillances.fromJson(data),
-                        ));
+                      bedroomNumber: Surveillances.fromJson(data).bedroomNumber,
+                      title: Surveillances.fromJson(data).title,
+                      description: Surveillances.fromJson(data).description,
+                      isPresent: bedroomData['isPresent'],
+                      navigator: SurveillancePage(
+                        surveillances: Surveillances.fromJson(data),
+                      ),
+                    );
                   }
 
-                  return Text("loading");
+                  return Center(child: Icon(Icons.autorenew));
                 },
               );
-            },
-          ).toList(),
-        );
-      },
-    );
-  }
-}
-
-class GetImportantSurveillances2 extends StatefulWidget {
-  final String groupId;
-  const GetImportantSurveillances2({Key key, this.groupId}) : super(key: key);
-
-  @override
-  _GetImportantSurveillances2State createState() =>
-      _GetImportantSurveillances2State();
-}
-
-class _GetImportantSurveillances2State
-    extends State<GetImportantSurveillances2> {
-  CollectionReference surveillances =
-      FirebaseFirestore.instance.collection('surveillances');
-  CollectionReference bedrooms =
-      FirebaseFirestore.instance.collection('bedrooms');
-  String testData;
-  bool isPresent = true;
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: surveillances
-          .where('groupId', isEqualTo: widget.groupId)
-          .where('important', isEqualTo: true)
-          .snapshots(includeMetadataChanges: true),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          print('erreur');
-          return Text('Something went wrong');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Icon(Icons.autorenew),
-          );
-        }
-        // snapshot.data.docs.map((DocumentSnapshot doc){
-        //   Map<String, dynamic>
-        // });
-        // //TODO TENTER AVEC UN DEUXIEME STREAM BUILDER
-        // return StreamBuilder<QuerySnapshot>(stream: ,)
-        return ListView(
-          children: snapshot.data.docs.map(
-            (DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document?.data() as Map<String, dynamic>;
-
-              DocumentReference bedroom = bedrooms.doc(data['bedroomId']);
-
-              bedroom.get().then((DocumentSnapshot doc) {
-                Map<String, dynamic> bedroomData =
-                    doc?.data() as Map<String, dynamic>;
-                print(bedroomData['bedroomId']);
-                return isPresent = bedroomData['isPresent'];
-              });
-
-              return ImportantSurveillanceCardWidget(
-                  bedroomNumber: Surveillances.fromJson(data).bedroomNumber,
-                  title: Surveillances.fromJson(data).title,
-                  description: Surveillances.fromJson(data).description,
-                  isPresent: isPresent,
-                  navigator: SurveillancePage(
-                    surveillances: Surveillances.fromJson(data),
-                  ));
             },
           ).toList(),
         );
@@ -229,19 +152,16 @@ class GetBedroomSurveillances extends StatefulWidget {
 class _GetBedroomSurveillancesState extends State<GetBedroomSurveillances> {
   String groupId = '';
   String bedroomId = '';
-  int bedroomNumber = 10;
+  CollectionReference surveillances =
+      FirebaseFirestore.instance.collection('surveillances');
   @override
   void initState() {
     super.initState();
     groupId = widget.groupId;
     bedroomId = widget.bedroomId;
-    bedroomNumber = widget.bedroomNumber;
   }
 
   Widget build(BuildContext context) {
-    CollectionReference surveillances =
-        FirebaseFirestore.instance.collection('surveillances');
-
     return StreamBuilder<QuerySnapshot>(
       stream: surveillances
           .where('groupId', isEqualTo: groupId)
