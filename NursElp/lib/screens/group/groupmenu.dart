@@ -104,28 +104,32 @@ class _GroupMenuState extends State<GroupMenu> {
                   ),
                   MenuCardWidget(
                     title: 'Liste des tâches',
-                    navigator: TasksManagementPage(),
+                    navigator: TasksManagementPage(
+                      groupId: groupId,
+                    ),
                   ),
                   MenuCardWidget(
                     title: 'Surveillances importantes',
-                    navigator: ImportantSurveillancesManagementPage(),
+                    navigator: ImportantSurveillancesManagementPage(
+                      groupId: groupId,
+                    ),
                   ),
-                  MenuCardWidget(
-                    title: 'Déplacements',
-                    navigator: MovesManagementPage(),
-                  ),
-                  MenuCardWidget(
-                    title: 'Bloc Notes',
-                    navigator: BedroomPage(),
-                  ),
-                  MenuCardWidget(
-                    title: 'Historique des tâches',
-                    navigator: BedroomPage(),
-                  ),
-                  MenuCardWidget(
-                    title: 'Annuaire interne',
-                    navigator: BedroomPage(),
-                  )
+                  // MenuCardWidget(
+                  //   title: 'Déplacements',
+                  //   navigator: MovesManagementPage(),
+                  // ),
+                  // MenuCardWidget(
+                  //   title: 'Bloc Notes',
+                  //   navigator: BedroomPage(),
+                  // ),
+                  // MenuCardWidget(
+                  //   title: 'Historique des tâches',
+                  //   navigator: BedroomPage(),
+                  // ),
+                  // MenuCardWidget(
+                  //   title: 'Annuaire interne',
+                  //   navigator: BedroomPage(),
+                  // )
                 ],
               ),
             ),

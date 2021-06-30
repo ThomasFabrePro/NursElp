@@ -45,7 +45,7 @@ class BedroomService {
     });
   }
 
-  updateBedroom(
+  void updateBedroom(
     String bedroomId,
     var value,
     String field,
@@ -55,18 +55,28 @@ class BedroomService {
     doc.update({field: value});
   }
 
-  deleteBedroomAndInfos(String bedroomId) {
+  deleteBedroomAndInfos(String bedroomId, groupId) {
+    //TODO ajouter les déplacements
     DocumentReference bedroom =
         FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
-    bedroom.delete();
     CollectionReference surveillances =
         FirebaseFirestore.instance.collection('surveillances');
-    surveillances
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    bedroom.delete();
+
+    surveillances //supprimes toutes les surveillances associées à cette tache
+        .where('bedroomId', isEqualTo: bedroomId)
+        .where('groupId', isEqualTo: groupId)
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((element) => element.reference.delete());
+    });
+    tasks
+        .where('groupId', isEqualTo: groupId)
         .where('bedroomId', isEqualTo: bedroomId)
         .get()
-        .then((QuerySnapshot doc) {
-      doc.docs.forEach((element) => element.reference.delete());
-    });
+        .then((QuerySnapshot snapshot) =>
+            snapshot.docs.forEach((element) => element.reference.delete()));
   }
 
   Future<bool> getBedroomPresence(String bedroomId) async {
@@ -77,6 +87,19 @@ class BedroomService {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       isPresent = data['isPresent'];
       return isPresent;
+    });
+  }
+
+  Future<String> getBedroomId(int bedroomNumber, String groupId) {
+    String bedroomId;
+    return bedrooms
+        .where('bedroomNumber', isEqualTo: bedroomNumber)
+        .where('groupId', isEqualTo: groupId)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      bedroomId = querySnapshot.docs.single.id;
+      querySnapshot.docs.single.reference.update({'bedroomId': bedroomId});
+      return bedroomId;
     });
   }
 
@@ -104,7 +127,7 @@ class BedroomService {
         .get()
         .then((querySnapshot) {
       if (querySnapshot.docs.isEmpty && bedroomNumber != 0) {
-        print('Unique bedroom number');
+        //numéro de chambre unique
         result = true;
       } else {
         Map<String, dynamic> data =
@@ -112,10 +135,10 @@ class BedroomService {
         testId = data['bedroomId'];
 
         if (testId == bedroomId) {
-          print("C'est déjà le numéro de cette chambre");
+          //C'est déjà le numéro de la chambre
           result = true;
         } else {
-          print('bedroom number already exists');
+          //Le numéro existe dejà
 
           result = false;
         }

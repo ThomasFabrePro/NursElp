@@ -1,5 +1,6 @@
 import 'package:NursElp/models/TaskModel.dart';
 import 'package:NursElp/screens/tasks/taskpage.dart';
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:NursElp/widgets/CardWidgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,9 +37,15 @@ class TaskService {
     String field,
     var value,
   ) {
-    DocumentReference surveillance =
+    DocumentReference task =
         FirebaseFirestore.instance.collection('tasks').doc(taskId);
-    surveillance.update({field: value});
+    task.update({field: value});
+  }
+
+  void deleteTask(String taskId) {
+    DocumentReference task =
+        FirebaseFirestore.instance.collection('tasks').doc(taskId);
+    task.delete();
   }
 }
 
@@ -101,6 +108,48 @@ class _GetBedroomTasksState extends State<GetBedroomTasks> {
   }
 }
 
+class GetTasks extends StatelessWidget {
+  final String groupId;
+  const GetTasks({Key key, this.groupId}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+    return StreamBuilder<QuerySnapshot>(
+      stream: tasks
+          .where('groupId', isEqualTo: groupId)
+          .snapshots(includeMetadataChanges: true),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print('erreur');
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Icon(Icons.autorenew),
+          );
+        }
+
+        return ListView(
+          children: snapshot.data.docs.map(
+            (DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document?.data() as Map<String, dynamic>;
+              return TaskCardWidget(
+                  title: Task.fromJson(data).title,
+                  description: Task.fromJson(data).description,
+                  navigator: TaskPage(
+                    task: Task.fromJson(data),
+                  ));
+            },
+          ).toList(),
+        );
+      },
+    );
+  }
+}
+
 class TaskAddButton extends StatefulWidget {
   final String bedroomId;
   final String groupId;
@@ -113,9 +162,11 @@ class TaskAddButton extends StatefulWidget {
 
 class _TaskAddButtonState extends State<TaskAddButton> {
   TaskService taskService = TaskService();
+  BedroomService bedroomService = BedroomService();
   String bedroomId = '';
   String groupId = '';
   String taskId = '';
+  List<String> bedroomList = ['Aucune'];
   DocumentReference task;
 
   @override
@@ -131,7 +182,6 @@ class _TaskAddButtonState extends State<TaskAddButton> {
       right: 0.0,
       child: GestureDetector(
         onTap: () async {
-          //bedroomNumber = widget.bedroomNumber;
           taskId = await taskService.addTask(bedroomId, groupId);
 
           task = FirebaseFirestore.instance.collection('tasks').doc(taskId);
@@ -167,5 +217,70 @@ class _TaskAddButtonState extends State<TaskAddButton> {
         ),
       ),
     );
+  }
+}
+
+class TaskDropDownButton extends StatefulWidget {
+  final String groupId;
+  const TaskDropDownButton({Key key, this.groupId}) : super(key: key);
+
+  @override
+  _TaskDropDownButtonState createState() => _TaskDropDownButtonState();
+}
+
+class _TaskDropDownButtonState extends State<TaskDropDownButton> {
+  String groupId = '';
+  String dropdownValue = 'aucune';
+  List<String> bedroomList;
+  String bedroomNumber = '';
+  BedroomService bedroomService = BedroomService();
+  bool bedroomTest;
+  CollectionReference bedrooms =
+      FirebaseFirestore.instance.collection('bedrooms');
+  @override
+  void initState() {
+    super.initState();
+    groupId = widget.groupId;
+  }
+
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        //TODO tester avec le futurebuilder
+        stream: bedrooms.where('groupId', isEqualTo: groupId).snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            print('erreur');
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Icon(Icons.autorenew),
+            );
+          }
+
+          return DropdownButton<String>(
+            value: dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.deepPurple),
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue.toString();
+              });
+            },
+            items: bedroomList.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          );
+        });
   }
 }

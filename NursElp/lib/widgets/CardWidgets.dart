@@ -16,7 +16,7 @@ class TaskCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 90,
+      height: 50,
       padding: EdgeInsets.symmetric(
         vertical: 12.0,
         horizontal: 24.0,
@@ -25,12 +25,13 @@ class TaskCardWidget extends StatelessWidget {
         bottom: 12.0,
       ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: Colors.red[300],
-            width: 1,
-          )),
+        gradient: LinearGradient(
+          colors: [Colors.redAccent, Colors.deepOrange[400]],
+          begin: Alignment(1, 0),
+          end: Alignment(-1, 0),
+        ),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -42,20 +43,9 @@ class TaskCardWidget extends StatelessWidget {
             Text(
               title ?? 'Sans nom',
               style: TextStyle(
-                color: Colors.red[900],
-                fontSize: 16.0,
+                color: Colors.white,
+                fontSize: 19.0,
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 15.0,
-              ),
-              child: Text(
-                description ?? 'Sans description',
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
               ),
             ),
           ],
@@ -521,7 +511,17 @@ class _TodoWidgetState extends State<TodoWidget> {
                 right: 12.0,
               ),
               decoration: BoxDecoration(
-                color: isDone ? Colors.redAccent : Colors.transparent,
+                gradient: isDone
+                    ? LinearGradient(
+                        colors: [Colors.redAccent, Colors.deepOrange[400]],
+                        begin: Alignment(1, 0),
+                        end: Alignment(-1, 0),
+                      )
+                    : LinearGradient(
+                        colors: [Colors.transparent, Colors.transparent],
+                        begin: Alignment(1, 0),
+                        end: Alignment(-1, 0),
+                      ),
                 borderRadius: BorderRadius.circular(6.0),
                 border: isDone
                     ? null
@@ -549,7 +549,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                 }
               },
               style: TextStyle(
-                color: isDone ? Colors.red[900] : Colors.grey[600],
+                color: isDone ? Colors.redAccent : Colors.grey[600],
                 fontSize: 19.0,
                 fontWeight: isDone ? FontWeight.bold : FontWeight.w500,
               ),

@@ -1,3 +1,4 @@
+import 'package:NursElp/services/BedroomService.dart';
 import 'package:NursElp/services/TaskService.dart';
 import 'package:NursElp/services/TodoService.dart';
 import 'package:flutter/material.dart';
@@ -23,23 +24,29 @@ class _TaskPageState extends State<TaskPage> {
   String taskDescription = "";
   String groupId = '';
   String bedroomId = '';
+  String newId = '';
   String todoTitle = '';
+
+  int bedroomNumber = 0;
+  int number = 0;
+
+  bool checkBedroom = false;
 
   FocusNode _titleFocus;
   FocusNode _descriptionFocus;
   FocusNode _todoFocus;
 
+  BedroomService bedroomService = BedroomService();
+
   @override
   void initState() {
-    if (widget.task != null) {
-      //   //Set visibility to true
-      //   _contentVisible = true;
-      bedroomId = widget.task.bedroomId;
-      groupId = widget.task.groupId;
-      taskDescription = widget.task.description;
-      taskTitle = widget.task.title;
-      taskId = widget.task.taskId;
-    }
+    bedroomId = widget.task.bedroomId;
+    groupId = widget.task.groupId;
+    taskDescription = widget.task.description;
+    taskTitle = widget.task.title;
+    taskId = widget.task.taskId;
+    bedroomNumber = widget.task.bedroomNumber;
+
     _titleFocus = FocusNode();
     _descriptionFocus = FocusNode();
     _todoFocus = FocusNode();
@@ -92,6 +99,15 @@ class _TaskPageState extends State<TaskPage> {
               );
             },
           ),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.delete_outline_rounded, size: 35),
+                onPressed: () {
+                  taskService.deleteTask(taskId);
+
+                  Navigator.pop(context);
+                })
+          ],
           centerTitle: true,
         ),
         body: Container(
@@ -102,6 +118,112 @@ class _TaskPageState extends State<TaskPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Chambre',
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: 120.0,
+                            height: 40.0,
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 8,
+                                    blurRadius: 20,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: TextField(
+                                controller: TextEditingController(
+                                  text: bedroomNumber.toString(), //A tester
+                                ),
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                enableSuggestions: false,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                                onSubmitted: (value) async {
+                                  number = int.parse(value);
+
+                                  checkBedroom =
+                                      await bedroomService.checkBedroomNumber(
+                                          number, groupId, bedroomId);
+                                  if (number == 0) {
+                                    taskService.updateTask(
+                                        taskId, 'bedroomNumber', number);
+                                    taskService.updateTask(
+                                        taskId, 'bedroomId', '');
+                                    return;
+                                  } else if (!checkBedroom &&
+                                      number != bedroomNumber) {
+                                    setState(() {
+                                      bedroomNumber = number;
+                                    });
+                                    newId = await bedroomService.getBedroomId(
+                                        bedroomNumber, groupId);
+                                    taskService.updateTask(
+                                        taskId, 'bedroomId', newId);
+                                    taskService.updateTask(
+                                        taskId, 'bedroomNumber', bedroomNumber);
+                                  } else {
+                                    setState(() {
+                                      value = bedroomNumber.toString();
+                                    }); //TODO snackbar pour quand c'est le meme numéro qu'avant
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        "La chambre $number n'existe pas",
+                                      ),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[200],
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.redAccent,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  contentPadding: EdgeInsets.only(
+                                    bottom: 0.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Icon(Icons.contact_support, color: Colors.redAccent),
+                        Expanded(
+                          child: Text(
+                            'Entrez 0 pour ne choisir aucune chambre',
+                            maxLines: 3,
+                            style: TextStyle(fontSize: 11.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     TextField(
                       controller: TextEditingController(text: taskTitle),
                       style: TextStyle(fontSize: 24),
@@ -151,7 +273,7 @@ class _TaskPageState extends State<TaskPage> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.red,
-                            width: 2,
+                            width: 1,
                           ),
                         ),
                         hintText: 'Entrez une description',

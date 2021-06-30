@@ -93,7 +93,7 @@ class _BedroomPageState extends State<BedroomPage> {
             IconButton(
                 icon: Icon(Icons.delete_outline_rounded, size: 35),
                 onPressed: () {
-                  bedroomService.deleteBedroomAndInfos(bedroomId);
+                  bedroomService.deleteBedroomAndInfos(bedroomId, groupId);
 
                   Navigator.pop(context);
                 })

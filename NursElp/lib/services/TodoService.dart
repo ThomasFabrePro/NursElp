@@ -63,39 +63,35 @@ class _GetTodosState extends State<GetTodos> {
   }
 
   Widget build(BuildContext context) {
-    return Scrollbar(
-      controller: scrollController,
-      isAlwaysShown: true,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: todos
-            .where('taskId', isEqualTo: taskId)
-            .snapshots(includeMetadataChanges: true),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print('erreur');
-            return Text('Something went wrong');
-          }
+    return StreamBuilder<QuerySnapshot>(
+      stream: todos
+          .where('taskId', isEqualTo: taskId)
+          .snapshots(includeMetadataChanges: true),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print('erreur');
+          return Text('Something went wrong');
+        }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Icon(Icons.autorenew),
-            );
-          }
-
-          return ListView(
-            controller: scrollController,
-            children: snapshot.data.docs.map(
-              (DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document?.data() as Map<String, dynamic>;
-                return TodoWidget(
-                  todo: Todo.fromJson(data),
-                );
-              },
-            ).toList(),
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Icon(Icons.autorenew),
           );
-        },
-      ),
+        }
+
+        return ListView(
+          controller: scrollController,
+          children: snapshot.data.docs.map(
+            (DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document?.data() as Map<String, dynamic>;
+              return TodoWidget(
+                todo: Todo.fromJson(data),
+              );
+            },
+          ).toList(),
+        );
+      },
     );
   }
 }
