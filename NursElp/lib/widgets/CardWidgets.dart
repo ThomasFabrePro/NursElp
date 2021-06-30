@@ -544,8 +544,8 @@ class _TodoWidgetState extends State<TodoWidget> {
                 if (value != '') {
                   setState(() {
                     title = value;
-                    todoService.updateTodo(todoId, 'title', value);
                   });
+                  todoService.updateTodo(todoId, 'title', value);
                 }
               },
               style: TextStyle(

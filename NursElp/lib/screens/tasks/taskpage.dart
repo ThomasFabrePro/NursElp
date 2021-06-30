@@ -104,7 +104,6 @@ class _TaskPageState extends State<TaskPage> {
                 icon: Icon(Icons.delete_outline_rounded, size: 35),
                 onPressed: () {
                   taskService.deleteTask(taskId);
-
                   Navigator.pop(context);
                 })
           ],
