@@ -83,7 +83,7 @@ class _BedroomTasksManagementPageState
               GetBedroomTasks(
                 groupId: groupId,
                 bedroomId: bedroomId,
-              ), //transformer en GetBedroomSurveillances car page propre à la chambre
+              ),
               TaskAddButton(
                 bedroomId: bedroomId,
                 groupId: groupId,

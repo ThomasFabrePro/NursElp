@@ -109,7 +109,7 @@ class BedroomService {
         FirebaseFirestore.instance.collection('bedrooms').doc(bedroomId);
     return bedroom.get().then((document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-      bedroomNumber = data['bedroomNumber'] ?? 0;
+      bedroomNumber = data['bedroomNumber'];
       return bedroomNumber;
     });
   }
