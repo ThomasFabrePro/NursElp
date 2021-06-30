@@ -11,12 +11,14 @@ class TodoService {
   ) async {
     String todoId;
     String key = UniqueKey().toString();
+    int createdAt = DateTime.now().millisecondsSinceEpoch;
 
     todos.add({
       'isDone': false,
       'taskId': taskId,
       'todoId': key,
       'title': title,
+      'createdAt': createdAt,
     });
 
     return todos
@@ -66,11 +68,12 @@ class _GetTodosState extends State<GetTodos> {
     return StreamBuilder<QuerySnapshot>(
       stream: todos
           .where('taskId', isEqualTo: taskId)
+          .orderBy('createdAt', descending: false)
           .snapshots(includeMetadataChanges: true),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           print('erreur');
-          return Text('Something went wrong');
+          return Text('Something went wrong, call admin');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {

@@ -10,7 +10,14 @@ class TaskCardWidget extends StatelessWidget {
   final String title;
   final String description;
   final Widget navigator;
-  TaskCardWidget({this.title, this.description, this.navigator});
+  final bool displayBedroomNumber;
+  final int bedroomNumber;
+  TaskCardWidget(
+      {this.title,
+      this.description,
+      this.navigator,
+      this.displayBedroomNumber,
+      this.bedroomNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +44,25 @@ class TaskCardWidget extends StatelessWidget {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => navigator));
         },
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title ?? 'Sans nom',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 19.0,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                title ?? 'Sans nom',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
+            bedroomNumber != null
+                ? Text(
+                    bedroomNumber.toString(),
+                    style: TextStyle(color: Colors.white),
+                  )
+                : Container(),
           ],
         ),
       ),

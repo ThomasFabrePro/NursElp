@@ -238,6 +238,10 @@ class _TaskPageState extends State<TaskPage> {
                       maxLines: 1,
                       decoration: InputDecoration(
                         hintText: 'Titre',
+                        labelStyle: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 21.0,
+                        ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.red),
                         ),

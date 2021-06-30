@@ -8,20 +8,22 @@ import 'package:flutter/material.dart';
 
 class TaskService {
   CollectionReference tasks = FirebaseFirestore.instance.collection('tasks');
+  BedroomService bedroomService = BedroomService();
 
   Future<String> addTask(
     String bedroomId,
     String groupId,
-  ) {
+  ) async {
     String taskId;
     String key = UniqueKey().toString();
-
+    int bedroomNumber = await bedroomService.getBedroomNumber(bedroomId);
     tasks.add({
       'taskId': key,
       'groupId': groupId,
       'title': '',
       'description': '',
-      'bedroomId': bedroomId,
+      'bedroomId': bedroomId ?? '',
+      'bedroomNumber': bedroomNumber ?? 0,
     });
     return tasks.where('taskId', isEqualTo: key).get().then((querySnapshot) {
       taskId = querySnapshot.docs.single.id;
@@ -139,6 +141,8 @@ class GetTasks extends StatelessWidget {
               return TaskCardWidget(
                   title: Task.fromJson(data).title,
                   description: Task.fromJson(data).description,
+                  displayBedroomNumber: true,
+                  bedroomNumber: Task.fromJson(data).bedroomNumber,
                   navigator: TaskPage(
                     task: Task.fromJson(data),
                   ));
