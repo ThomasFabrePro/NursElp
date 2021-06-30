@@ -288,9 +288,23 @@ class _BedroomPageState extends State<BedroomPage> {
                                 left: 40.0,
                               ),
                               decoration: BoxDecoration(
-                                color: isMale
-                                    ? Colors.red[600]
-                                    : Colors.transparent,
+                                gradient: isMale
+                                    ? LinearGradient(
+                                        colors: [
+                                          Colors.redAccent,
+                                          Colors.deepOrange[400]
+                                        ],
+                                        begin: Alignment(1, 0),
+                                        end: Alignment(-1, 0),
+                                      )
+                                    : LinearGradient(
+                                        colors: [
+                                          Colors.transparent,
+                                          Colors.transparent
+                                        ],
+                                        begin: Alignment(1, 0),
+                                        end: Alignment(-1, 0),
+                                      ),
                                 borderRadius: BorderRadius.circular(6.0),
                                 border: isMale
                                     ? null
@@ -316,7 +330,7 @@ class _BedroomPageState extends State<BedroomPage> {
                               child: Text(
                                 'Homme',
                                 style: TextStyle(
-                                  color: isMale ? Colors.red[600] : Colors.grey,
+                                  color: isMale ? Colors.red : Colors.grey,
                                   fontSize: 16.0,
                                   fontWeight: isMale
                                       ? FontWeight.bold
@@ -344,9 +358,23 @@ class _BedroomPageState extends State<BedroomPage> {
                                 left: 40.0,
                               ),
                               decoration: BoxDecoration(
-                                color: !isMale
-                                    ? Colors.red[600]
-                                    : Colors.transparent,
+                                gradient: !isMale
+                                    ? LinearGradient(
+                                        colors: [
+                                          Colors.redAccent,
+                                          Colors.deepOrange[400]
+                                        ],
+                                        begin: Alignment(1, 0),
+                                        end: Alignment(-1, 0),
+                                      )
+                                    : LinearGradient(
+                                        colors: [
+                                          Colors.transparent,
+                                          Colors.transparent
+                                        ],
+                                        begin: Alignment(1, 0),
+                                        end: Alignment(-1, 0),
+                                      ),
                                 borderRadius: BorderRadius.circular(6.0),
                                 border: !isMale
                                     ? null
@@ -372,8 +400,7 @@ class _BedroomPageState extends State<BedroomPage> {
                               child: Text(
                                 'Femme',
                                 style: TextStyle(
-                                  color:
-                                      !isMale ? Colors.red[600] : Colors.grey,
+                                  color: !isMale ? Colors.red : Colors.grey,
                                   fontSize: 16.0,
                                   fontWeight: !isMale
                                       ? FontWeight.bold
@@ -414,9 +441,23 @@ class _BedroomPageState extends State<BedroomPage> {
                                   left: 40.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: isContagious
-                                      ? Colors.red[600]
-                                      : Colors.transparent,
+                                  gradient: isContagious
+                                      ? LinearGradient(
+                                          colors: [
+                                            Colors.redAccent,
+                                            Colors.deepOrange[400]
+                                          ],
+                                          begin: Alignment(1, 0),
+                                          end: Alignment(-1, 0),
+                                        )
+                                      : LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.transparent
+                                          ],
+                                          begin: Alignment(1, 0),
+                                          end: Alignment(-1, 0),
+                                        ),
                                   borderRadius: BorderRadius.circular(6.0),
                                   border: isContagious
                                       ? null
@@ -442,9 +483,8 @@ class _BedroomPageState extends State<BedroomPage> {
                                 child: Text(
                                   'Oui',
                                   style: TextStyle(
-                                    color: isContagious
-                                        ? Colors.red[600]
-                                        : Colors.grey,
+                                    color:
+                                        isContagious ? Colors.red : Colors.grey,
                                     fontSize: 16.0,
                                     fontWeight: isContagious
                                         ? FontWeight.bold
@@ -472,9 +512,23 @@ class _BedroomPageState extends State<BedroomPage> {
                                   left: 40.0,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: !isContagious
-                                      ? Colors.red[600]
-                                      : Colors.transparent,
+                                  gradient: !isContagious
+                                      ? LinearGradient(
+                                          colors: [
+                                            Colors.redAccent,
+                                            Colors.deepOrange[400]
+                                          ],
+                                          begin: Alignment(1, 0),
+                                          end: Alignment(-1, 0),
+                                        )
+                                      : LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.transparent
+                                          ],
+                                          begin: Alignment(1, 0),
+                                          end: Alignment(-1, 0),
+                                        ),
                                   borderRadius: BorderRadius.circular(6.0),
                                   border: !isContagious
                                       ? null
@@ -501,7 +555,7 @@ class _BedroomPageState extends State<BedroomPage> {
                                   'Non',
                                   style: TextStyle(
                                     color: !isContagious
-                                        ? Colors.red[600]
+                                        ? Colors.red
                                         : Colors.grey,
                                     fontSize: 16.0,
                                     fontWeight: !isContagious

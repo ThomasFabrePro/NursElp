@@ -50,6 +50,7 @@ class TaskCardWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 title ?? 'Sans nom',
+                maxLines: 1,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 19.0,
@@ -57,7 +58,7 @@ class TaskCardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            bedroomNumber != null
+            bedroomNumber != null && bedroomNumber != 0
                 ? Text(
                     bedroomNumber.toString(),
                     style: TextStyle(color: Colors.white),
@@ -581,8 +582,8 @@ class MenuCardWidget extends StatelessWidget {
   final double boxMenuHeight = 65;
   final Widget navigator;
   final String title;
-
-  MenuCardWidget({this.navigator, this.title});
+  final Icon icon;
+  MenuCardWidget({this.navigator, this.title, this.icon});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -617,18 +618,24 @@ class MenuCardWidget extends StatelessWidget {
             MaterialPageRoute(builder: (context) => navigator),
           );
         },
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 20,
-            horizontal: 30,
-          ),
-          child: Text(title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              )),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            icon == null ? Container() : icon,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 10,
+              ),
+              child: Text(title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  )),
+            ),
+          ],
         ),
       ),
     );

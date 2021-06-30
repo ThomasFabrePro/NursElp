@@ -16,7 +16,11 @@ class TaskService {
   ) async {
     String taskId;
     String key = UniqueKey().toString();
-    int bedroomNumber = await bedroomService.getBedroomNumber(bedroomId);
+    int bedroomNumber = 0;
+    if (bedroomId != null) {
+      bedroomNumber = await bedroomService.getBedroomNumber(bedroomId);
+    }
+
     tasks.add({
       'taskId': key,
       'groupId': groupId,
@@ -141,7 +145,6 @@ class GetTasks extends StatelessWidget {
               return TaskCardWidget(
                   title: Task.fromJson(data).title,
                   description: Task.fromJson(data).description,
-                  displayBedroomNumber: true,
                   bedroomNumber: Task.fromJson(data).bedroomNumber,
                   navigator: TaskPage(
                     task: Task.fromJson(data),

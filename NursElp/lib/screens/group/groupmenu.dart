@@ -98,24 +98,40 @@ class _GroupMenuState extends State<GroupMenu> {
                   ),
                   MenuCardWidget(
                     title: 'Gestion des chambres',
+                    icon: Icon(
+                      Icons.hotel_rounded,
+                      color: Colors.white,
+                    ),
                     navigator: BedroomManagementPage(
                       groupId: groupId,
                     ),
                   ),
                   MenuCardWidget(
                     title: 'Liste des tâches',
+                    icon: Icon(
+                      Icons.article,
+                      color: Colors.white,
+                    ),
                     navigator: TasksManagementPage(
                       groupId: groupId,
                     ),
                   ),
                   MenuCardWidget(
                     title: 'Surveillances importantes',
+                    icon: Icon(
+                      Icons.airplay,
+                      color: Colors.white,
+                    ),
                     navigator: ImportantSurveillancesManagementPage(
                       groupId: groupId,
                     ),
                   ),
                   // MenuCardWidget(
                   //   title: 'Déplacements',
+                  // icon: Icon(
+                  //     Icons.airport_shuttle,
+                  //     color: Colors.white,
+                  //   ),
                   //   navigator: MovesManagementPage(),
                   // ),
                   // MenuCardWidget(
